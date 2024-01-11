@@ -1,49 +1,35 @@
 
 @import '../../../../../assets/styles/variables.css';
 
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-}
-
-.img-titulo img{
-    width: 40px;
-    margin-right: 10px;
-    margin-top: -10px;
-    margin-left: -8px; 
-    text-align: center;
-}
-
-
 .body{
-    height: 100vh;
+    height: 100dvh;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 10%;
     background: var(--background-gradient);
 }
 
 .container{
+    margin-top: 10px;
+    margin-bottom: 10px;
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 5px 10px rgba(0,0,0,0.1);
     overflow: hidden;
-    margin: 0 20px;
-    width: 40dvw;
+    width: 60dvw;
 }
 
 .container .forms{
     display: flex;     
-    width: 40dvw;
+    width: 100%;
     align-items: center;
     transition: height 0.2s ease;
 }
 
 .container .form{
     padding: 30px;
-    width: 40dvw;
+    width: 100%;
     background-color: #fff;
     transition: margin-left 0.18s ease;
 }
@@ -84,7 +70,7 @@ mat-icon{
     left: 0;
     bottom: 0;
     height: 3px;
-    width: 40px;
+    width: 30px;
     background-color: var(--tertiary-color);
     border-radius: 25px;
 }
@@ -93,7 +79,6 @@ mat-icon{
     position: relative;
     height: 45px;
     width: 100%;
-    margin-top: 30px;
 }
 
 .mat-form-field{
@@ -133,7 +118,6 @@ small{
 }
 
 .form .button{
-    margin-top: 20px;
     display: block;
 }
 
@@ -147,10 +131,15 @@ small{
     color: #fff;
     font-size: 17px;
     font-weight: 500;
+    margin-top: 10px;
     letter-spacing: 1px;
     border-radius: 6px;
     background: var(--button-gradient);
     cursor: pointer;
+}
+
+.form .button input:disabled{
+    color: var(--disabled-color);
 }
 
 .input-field input{
@@ -176,20 +165,83 @@ small{
     cursor: pointer;
 }
 
+.container-names {
+    display: grid;
+    grid-column-gap: 20px; 
+    grid-template-columns: 1fr 1fr;
+  }
 
-@media only screen and (max-width: 1000px) {
+
+
+  @media only screen and (max-width: 1200px) {
+    .container-names {
+        grid-template-columns: 1fr;
+      }
+
+      .body{
+        height: 100dvh;
+        overflow: scroll;
+        display: flex;
+        align-items: center;
+        padding-top: 10%;
+        padding-bottom: 1%;
+        justify-content: center;
+        background: var(--background-gradient);
+    }
+
     .container{
         background-color: #fff;
         border-radius: 10px;
         box-shadow: 0 5px 10px rgba(0,0,0,0.1);
         overflow: hidden;
-        margin: 0 20px;
         width: 60dvw;
     }
     
     .container .forms{
         display: flex;     
+        width: 100%;
+        align-items: center;
+        transition: height 0.2s ease;
+    }
+    
+    .container .form{
+        padding: 30px;
         width: 60dvw;
+        background-color: #fff;
+        transition: margin-left 0.18s ease;
+    }
+    
+    .container.active .login{
+        opacity: 0;     
+        width: 60dvw;
+        transition: margin-left 0.18s ease, opacity 0.15s ease;
+    }
+  }
+@media only screen and (max-width: 900px) {
+
+    .container-names {
+        grid-template-columns: 1fr;
+      }
+
+    .body{
+        height: 100dvh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--background-gradient);
+    }
+
+    .container{
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        overflow: hidden;
+        width: 60dvw;
+    }
+    
+    .container .forms{
+        display: flex;     
+        width: 100%;
         align-items: center;
         transition: height 0.2s ease;
     }
@@ -209,19 +261,30 @@ small{
 }
 
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 700px) {
+
+    .container-names {
+        grid-template-columns: 1fr;
+      }
+    .body{
+        height: 100dvh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--background-gradient);
+    }
+    
     .container{
         background-color: #fff;
         border-radius: 10px;
         box-shadow: 0 5px 10px rgba(0,0,0,0.1);
         overflow: hidden;
-        margin: 0 20px;
         width: 90dvw;
     }
     
     .container .forms{
         display: flex;     
-        width: 90dvw;
+        width: 100%;
         align-items: center;
         transition: height 0.2s ease;
     }

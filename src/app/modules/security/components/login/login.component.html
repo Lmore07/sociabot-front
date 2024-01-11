@@ -1,4 +1,8 @@
 <div class="body">
+  @if (spinnerStatus) {
+  <loading></loading>
+  }
+  <p-toast key="informationToast"></p-toast>
   <div class="container">
     <div class="forms">
       <div class="form login">
@@ -6,47 +10,32 @@
           <span class="title">Inicio de sesión</span>
         </div>
         <div>
-          <form [formGroup]="loginFormGroup" (ngSubmit)="callLogin()">
+          <form [formGroup]="loginFormGroup">
             <div class="field-container">
               <mat-form-field appearance="fill" class="mat-form-field">
                 <input
                   formControlName="email"
                   class="input"
                   matInput
+                  type="email"
                   placeholder="Email"
-                  [ngClass]="{
-                    'is-invalid':
-                      (loginFormGroup.get('email')?.hasError('required') &&
-                        loginFormGroup.get('email')?.touched) ||
-                      loginFormGroup.get('email')?.hasError('pattern'),
-                    'is-valid':
-                      loginFormGroup.get('email')?.touched &&
-                      loginFormGroup.get('email')?.hasError('pattern') == false
-                  }"
                 />
-                <div
-                  class="validators"
-                  *ngIf="
-                    loginFormGroup.get('email')?.hasError('required') &&
-                    loginFormGroup.get('email')?.touched
-                  "
-                >
-                  <small>¡Este campo es requerido!</small>
-                </div>
-                <div
-                  class="validators"
-                  *ngIf="
-                    loginFormGroup.get('email')?.hasError('pattern') &&
-                    loginFormGroup.get('email')?.touched
-                  "
-                >
-                  <small>¡El campo no coincide con un formato de correo válido!</small>
-                </div>
                 <mat-icon
                   matIconPrefix
                   svgIcon="iconMail"
                   aria-hidden="false"
                 ></mat-icon>
+                <mat-hint>Ingrese su correo electronico</mat-hint>
+                @if (loginFormGroup.get('email')?.hasError('required') &&
+                loginFormGroup.get('email')?.touched) {
+                <mat-error>¡El correo es requerido!</mat-error>
+                } @if (loginFormGroup.get('email')?.hasError('pattern') &&
+                loginFormGroup.get('email')?.touched) {
+                <mat-error
+                  >¡El campo no coincide con un formato de correo
+                  válido!</mat-error
+                >
+                }
               </mat-form-field>
             </div>
             <div class="field-container">
@@ -64,13 +53,18 @@
                   mat-icon-button
                   matSuffix
                   (click)="hide = !hide"
-                  [attr.aria-label]="'Hide password'"
                   [attr.aria-pressed]="hide"
                 >
                   <mat-icon
+                    color=""
                     [svgIcon]="hide ? 'iconEyeOff' : 'iconEyeOn'"
                   ></mat-icon>
                 </button>
+                <mat-hint>Ingrese su contraseña</mat-hint>
+                @if (loginFormGroup.get('password')?.hasError('required') &&
+                loginFormGroup.get('password')?.touched) {
+                <mat-error>¡La contraseña es requerida!</mat-error>
+                }
               </mat-form-field>
             </div>
             <div class="checkbox-text">
@@ -80,7 +74,11 @@
             </div>
 
             <div class="input-field button">
-              <input type="submit" value="Iniciar Sesión" />
+              <input
+                (click)="buttonLogin()"
+                type="submit"
+                value="Iniciar Sesión"
+              />
             </div>
           </form>
         </div>
@@ -88,10 +86,7 @@
         <div class="login-signup">
           <span class="text"
             >¿No estás registrado?
-            <a
-              (click)="openSignUp()"
-              [ngSwitch]="index"
-              class="text signup-link"
+            <a routerLink="/register" class="text signup-link"
               >Regístrate ahora
             </a>
           </span>

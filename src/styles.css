@@ -2,3 +2,12 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Poppins, "Helvetica Neue", sans-serif; }
+
+mat-hint{
+    font-size: small;
+    color: var(--tertiary-color);
+}
+
+mat-error{
+    font-size: small;
+}

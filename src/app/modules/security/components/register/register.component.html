@@ -1,0 +1,187 @@
+<div class="body">
+  <div class="container">
+    <div class="forms">
+      <div class="form login">
+        <div class="img-titulo">
+          <span class="title">Registro de Usuario</span>
+        </div>
+        <div>
+          <form [formGroup]="signUpFormGroup" (ngSubmit)="callSignUpService()">
+            <div class="container-names">
+              <!-- NOMBRE -->
+              <div class="field-container">
+                <mat-form-field appearance="fill" class="mat-form-field">
+                  <input
+                    formControlName="firstName"
+                    class="input"
+                    type="text"
+                    matInput
+                    placeholder="Nombre"
+                  />
+                  <mat-icon
+                    matIconPrefix
+                    svgIcon="iconLetter"
+                    aria-hidden="false"
+                  ></mat-icon>
+                  <mat-hint>Ingrese su nombre</mat-hint>
+                  @if (signUpFormGroup.get('firstName')?.hasError('required') &&
+                  signUpFormGroup.get('firstName')?.touched) {
+                  <mat-error>¡Este campo es requerido!</mat-error>
+                  }
+                </mat-form-field>
+              </div>
+              <!-- APELLIDO -->
+              <div class="field-container">
+                <mat-form-field appearance="fill" class="mat-form-field">
+                  <input
+                    formControlName="lastName"
+                    class="input"
+                    type="text"
+                    matInput
+                    placeholder="Apellido"
+                  />
+                  <mat-icon
+                    matIconPrefix
+                    svgIcon="iconLetter"
+                    aria-hidden="false"
+                  ></mat-icon>
+                  <mat-hint>Ingrese su apellido</mat-hint>
+                  @if (signUpFormGroup.get('lastName')?.hasError('required') &&
+                  signUpFormGroup.get('lastName')?.touched) {
+                  <mat-error>¡Este campo es requerido!</mat-error>
+                  }
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="container-names">
+              <!-- ROL -->
+              <div class="field-container">
+                <mat-form-field
+                  hideRequiredMarker
+                  appearance="fill"
+                  class="mat-form-field"
+                >
+                  <mat-label>Rol dentro del colegio</mat-label>
+                  <mat-select formControlName="role">
+                    <mat-option value="STUDENT">Estudiante</mat-option>
+                    <mat-option value="TEACHER">Profesor</mat-option>
+                  </mat-select>
+                  <mat-icon
+                    matIconPrefix
+                    svgIcon="iconRole"
+                    aria-hidden="false"
+                  ></mat-icon>
+                  <mat-hint>Elija su rol</mat-hint>
+                  @if (signUpFormGroup.get('role')?.hasError('required') &&
+                  signUpFormGroup.get('role')?.touched) {
+                  <mat-error>¡Este campo es requerido!</mat-error>
+                  }
+                </mat-form-field>
+              </div>
+              <!-- FECHA DE NACIMIENTO -->
+              <div class="field-container">
+                <mat-form-field appearance="fill" class="mat-form-field">
+                  <input
+                    [matDatepicker]="picker"
+                    formControlName="birthDate"
+                    class="input"
+                    matInput
+                    placeholder="Fecha de Nacimiento"
+                  />
+                  <mat-datepicker-toggle
+                    matIconSuffix
+                    [for]="picker"
+                  ></mat-datepicker-toggle>
+                  <mat-datepicker touchUi #picker></mat-datepicker>
+                  <mat-icon
+                    matIconPrefix
+                    svgIcon="iconCake"
+                    aria-hidden="false"
+                  ></mat-icon>
+                  <mat-hint>Ingrese su fecha de nacimiento</mat-hint>
+                  @if (signUpFormGroup.get('birthDate')?.hasError('required') &&
+                  signUpFormGroup.get('birthDate')?.touched) {
+                  <mat-error>¡Este campo es requerido!</mat-error>
+                  }
+                </mat-form-field>
+              </div>
+            </div>
+
+            <!-- CORREO ELECTRONICO -->
+            <div class="field-container">
+              <mat-form-field appearance="fill" class="mat-form-field">
+                <input
+                  formControlName="email"
+                  class="input"
+                  type="email"
+                  matInput
+                  placeholder="Correo Electrónico"
+                />
+                <mat-icon
+                  matIconPrefix
+                  svgIcon="iconMail"
+                  aria-hidden="false"
+                ></mat-icon>
+                <mat-hint>Ingrese su correo electrónico</mat-hint>
+                @if (signUpFormGroup.get('email')?.hasError('required') &&
+                signUpFormGroup.get('email')?.touched) {
+                <mat-error>¡Este campo es requerido!</mat-error>
+                }@if (signUpFormGroup.get('email')?.hasError('pattern') &&
+                signUpFormGroup.get('email')?.touched) {
+                <mat-error
+                  >¡El campo no coincide con un formato de correo
+                  válido!</mat-error
+                >
+                }
+              </mat-form-field>
+            </div>
+            <!-- CONTRASEÑA -->
+            <div class="field-container">
+              <mat-form-field appearance="fill" class="mat-form-field">
+                <mat-icon matIconPrefix svgIcon="iconLock"></mat-icon>
+                <input
+                  [type]="hide ? 'password' : 'text'"
+                  class="input"
+                  maxlength="20"
+                  matInput
+                  formControlName="password"
+                  placeholder="Contraseña"
+                />
+                <button
+                  mat-icon-button
+                  matSuffix
+                  (click)="hide = !hide"
+                  [attr.aria-pressed]="hide"
+                >
+                  <mat-icon
+                    [svgIcon]="hide ? 'iconEyeOff' : 'iconEyeOn'"
+                  ></mat-icon>
+                </button>
+                <mat-hint>Ingrese su contraseña</mat-hint>
+                @if (signUpFormGroup.get('password')?.hasError('required') &&
+                signUpFormGroup.get('password')?.touched) {
+                <mat-error>¡La contraseña es requerida!</mat-error>
+                } @if (signUpFormGroup.get('password')?.hasError('pattern') &&
+                signUpFormGroup.get('password')?.touched) {
+                <mat-error
+                  >¡La contraseña no tiene el formato correcto!</mat-error
+                >
+                }
+              </mat-form-field>
+            </div>
+            <div class="input-field button">
+              <input type="submit" value="Registrate" />
+            </div>
+          </form>
+        </div>
+
+        <div class="login-signup">
+          <span class="text"
+            >Ya estás registrado?
+            <a routerLink="/login" class="text signup-link">Inicia Sesión </a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
