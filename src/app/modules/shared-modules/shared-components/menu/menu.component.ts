@@ -3,13 +3,14 @@ import { MENU_ICON } from '../../../../../assets/svg/icons-svg';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { MenuItem } from 'primeng/api';
-import { RouterOutlet } from '@angular/router';
+import { ActivatedRoute, RouterOutlet, UrlSegment } from '@angular/router';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { SidebarModule } from 'primeng/sidebar';
 import { ButtonModule } from 'primeng/button';
 import { AvatarModule } from 'primeng/avatar';
-import {MatSidenav, MatSidenavModule} from '@angular/material/sidenav';
-import {MatToolbarModule} from '@angular/material/toolbar';
+import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { UserType } from '../../../security/enums/user-type.enum';
 
 @Component({
   selector: 'app-menu',
@@ -22,30 +23,43 @@ import {MatToolbarModule} from '@angular/material/toolbar';
     MatToolbarModule,
     MatIconModule,
     SidebarModule,
-    MatSidenavModule
+    MatSidenavModule,
   ],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.css',
 })
 export class MenuComponent {
-
+  //VARIABLES
   items!: MenuItem[];
   @ViewChild('sidenav') sidenav!: MatSidenav;
+  menuType!: UserType;
 
   constructor(
     public iconRegistry: MatIconRegistry,
     public sanitizer: DomSanitizer,
+    private route: ActivatedRoute
   ) {
     this.registerIcons();
+    this.assignMenuByType();
   }
 
-
-  sidebarOpen = true;
+  assignMenuByType() {
+    this.route.url.subscribe((url) => {
+      const routeAux = url.map((seg) => seg.path).join('/');
+      console.log(routeAux);
+      if (routeAux.includes('student')) {
+        this.menuType = UserType.STUDENT;
+        this.items = this.menuStudent();
+      } else {
+        this.menuType = UserType.TEACHER;
+        this.items = this.menuTeacher();
+      }
+    });
+  }
 
   toggleSidebar() {
-    this.sidenav.toggle(); 
+    this.sidenav.toggle();
   }
-
 
   registerIcons() {
     this.iconRegistry.addSvgIconLiteral(
@@ -54,8 +68,8 @@ export class MenuComponent {
     );
   }
 
-  ngOnInit() {
-    this.items = [
+  menuStudent() {
+    return [
       {
         label: 'File',
         icon: 'pi pi-fw pi-file',
@@ -129,5 +143,9 @@ export class MenuComponent {
         ],
       },
     ];
+  }
+
+  menuTeacher() {
+    return [];
   }
 }

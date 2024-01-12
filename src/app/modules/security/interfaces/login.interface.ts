@@ -1,3 +1,5 @@
+import { UserType } from "../enums/user-type.enum";
+
 export interface GeneralLoginResponse {
   statusCode: number;
   message: string;
@@ -17,5 +19,5 @@ export interface LoginRequest {
 
 export interface TokenDecode {
   email: string;
-  role: string;
+  role: UserType;
 }
