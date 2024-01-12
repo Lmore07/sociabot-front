@@ -6,6 +6,10 @@ import {
   LoginRequest,
 } from '../interfaces/login.interface';
 import { Observable } from 'rxjs';
+import {
+  GeneralSignUpResponse,
+  SignUpRequest,
+} from '../interfaces/register.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -24,6 +28,13 @@ export class SecurityService {
       {
         headers: { password: loginData.password, email: loginData.email },
       }
+    );
+  }
+
+  signUp(signUpData: SignUpRequest): Observable<GeneralSignUpResponse> {
+    return this.http.post<GeneralSignUpResponse>(
+      environment.apiUrl + '/users',
+      signUpData
     );
   }
 }

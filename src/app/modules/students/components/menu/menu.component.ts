@@ -1,33 +1,51 @@
-import { Component } from '@angular/core';
-import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
-import { DomSanitizer } from '@angular/platform-browser';
-import { RouterOutlet } from '@angular/router';
-import { MenuItem } from 'primeng/api';
-import { PanelMenuModule } from 'primeng/panelmenu';
+import { Component, ViewChild } from '@angular/core';
 import { MENU_ICON } from '../../../../../assets/svg/icons-svg';
+import { DomSanitizer } from '@angular/platform-browser';
+import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
+import { MenuItem } from 'primeng/api';
+import { RouterOutlet } from '@angular/router';
+import { PanelMenuModule } from 'primeng/panelmenu';
+import { SidebarModule } from 'primeng/sidebar';
+import { ButtonModule } from 'primeng/button';
+import { AvatarModule } from 'primeng/avatar';
+import {MatSidenav, MatSidenavModule} from '@angular/material/sidenav';
+import {MatToolbarModule} from '@angular/material/toolbar';
 
 @Component({
-  selector: 'app-home',
+  selector: 'app-menu',
   standalone: true,
-  imports: [RouterOutlet, PanelMenuModule, MatIconModule],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.css',
+  imports: [
+    RouterOutlet,
+    AvatarModule,
+    ButtonModule,
+    PanelMenuModule,
+    MatToolbarModule,
+    MatIconModule,
+    SidebarModule,
+    MatSidenavModule
+  ],
+  templateUrl: './menu.component.html',
+  styleUrl: './menu.component.css',
 })
-export class HomeComponent {
+export class MenuComponent {
+
   items!: MenuItem[];
+  @ViewChild('sidenav') sidenav!: MatSidenav;
 
   constructor(
     public iconRegistry: MatIconRegistry,
-    public sanitizer: DomSanitizer
+    public sanitizer: DomSanitizer,
   ) {
     this.registerIcons();
   }
 
+
   sidebarOpen = true;
 
   toggleSidebar() {
-    this.sidebarOpen = !this.sidebarOpen;
+    this.sidenav.toggle(); 
   }
+
 
   registerIcons() {
     this.iconRegistry.addSvgIconLiteral(
@@ -61,33 +79,8 @@ export class HomeComponent {
             icon: 'pi pi-fw pi-trash',
           },
           {
-            separator: true,
-          },
-          {
             label: 'Export',
             icon: 'pi pi-fw pi-external-link',
-          },
-        ],
-      },
-      {
-        label: 'Edit',
-        icon: 'pi pi-fw pi-pencil',
-        items: [
-          {
-            label: 'Left',
-            icon: 'pi pi-fw pi-align-left',
-          },
-          {
-            label: 'Right',
-            icon: 'pi pi-fw pi-align-right',
-          },
-          {
-            label: 'Center',
-            icon: 'pi pi-fw pi-align-center',
-          },
-          {
-            label: 'Justify',
-            icon: 'pi pi-fw pi-align-justify',
           },
         ],
       },
@@ -102,26 +95,6 @@ export class HomeComponent {
           {
             label: 'Delete',
             icon: 'pi pi-fw pi-user-minus',
-          },
-          {
-            label: 'Search',
-            icon: 'pi pi-fw pi-users',
-            items: [
-              {
-                label: 'Filter',
-                icon: 'pi pi-fw pi-filter',
-                items: [
-                  {
-                    label: 'Print',
-                    icon: 'pi pi-fw pi-print',
-                  },
-                ],
-              },
-              {
-                icon: 'pi pi-fw pi-bars',
-                label: 'List',
-              },
-            ],
           },
         ],
       },

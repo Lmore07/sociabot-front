@@ -11,12 +11,20 @@ import * as _moment from 'moment';
 import { default as _rollupMoment } from 'moment';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
+import {
+  DateAdapter,
+  MAT_DATE_FORMATS,
+  MAT_DATE_LOCALE,
+  MatNativeDateModule,
+} from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { DomSanitizer } from '@angular/platform-browser';
+import { ToastModule } from 'primeng/toast';
+import { KeyFilterModule } from 'primeng/keyfilter';
+import { MessageService } from 'primeng/api';
 import { roleUserValidator } from '../../validators/role.validator';
 import {
   CAKE_ICON,
@@ -29,7 +37,13 @@ import {
   ROLE_ICON,
 } from '../../../../../assets/svg/icons-svg';
 import { Router, RouterLink } from '@angular/router';
-import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
+import {
+  MAT_MOMENT_DATE_ADAPTER_OPTIONS,
+  MomentDateAdapter,
+} from '@angular/material-moment-adapter';
+import { dateRangeValidator } from '../../validators/dateBirthday.validator';
+import { SecurityService } from '../../services/security.service';
+import { LoadingComponent } from '../../../shared-modules/shared-components/loading/loading.component';
 
 const moment = _rollupMoment || _moment;
 export const MY_FORMATS = {
@@ -54,13 +68,18 @@ export const MY_FORMATS = {
     MatNativeDateModule,
     MatDatepickerModule,
     MatInputModule,
+    ToastModule,
+    KeyFilterModule,
     MatButtonModule,
     MatIconModule,
+    LoadingComponent,
     MatChipsModule,
     MatSelectModule,
     RouterLink,
   ],
   providers: [
+    MessageService,
+    SecurityService,
     { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },
     {
       provide: DateAdapter,
@@ -72,21 +91,27 @@ export const MY_FORMATS = {
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
 })
-
 export class RegisterComponent {
   //VARIABLES
   spinnerStatus = false;
   hide = true;
   signUpFormGroup!: FormGroup;
+  minDate!: Date;
+  maxDate!: Date;
+  blockSpace: RegExp = /[^s]/;
+  allowLetters: RegExp = /^[a-zA-ZÀ-ÿ\s]{1,50}$/;
 
   constructor(
     public iconRegistry: MatIconRegistry,
     public sanitizer: DomSanitizer,
     public router: Router,
+    private securityService: SecurityService,
+    private messageService: MessageService,
     public loginFormBuilder: FormBuilder
   ) {
     this.registerIcons();
     this.configureSignUpForm();
+    this.minAndMaxDate();
   }
 
   registerIcons() {
@@ -124,6 +149,16 @@ export class RegisterComponent {
     );
   }
 
+  minAndMaxDate() {
+    const currentDate = new Date();
+    this.maxDate = new Date();
+    this.minDate = new Date(
+      currentDate.getFullYear() - 80,
+      currentDate.getMonth(),
+      currentDate.getDate()
+    );
+  }
+
   configureSignUpForm() {
     this.signUpFormGroup = this.loginFormBuilder.group({
       email: [
@@ -146,15 +181,60 @@ export class RegisterComponent {
         ],
       ],
       role: ['', [Validators.required, roleUserValidator()]],
-      firstName: ['', [Validators.required]],
-      lastName: ['', [Validators.required]],
-      birthDate: [moment(), [Validators.required]],
+      firstName: [
+        '',
+        [Validators.required, Validators.pattern(/^[a-zA-ZÀ-ÿ\s]{1,50}$/)],
+      ],
+      lastName: [
+        '',
+        [Validators.required, Validators.pattern(/^[a-zA-ZÀ-ÿ\s]{1,50}$/)],
+      ],
+      birthDate: ['', [Validators.required, dateRangeValidator()]],
     });
   }
 
-  callSignUpService() {}
+  callSignUpService() {
+    this.signUpFormGroup.markAllAsTouched();
+    console.log(this.signUpFormGroup);
+    if (this.signUpFormGroup.invalid) {
+      this.showToast(
+        'informationToast',
+        'error',
+        'Ocurrió un error',
+        'Verifica los datos ingresados'
+      );
+    } else {
+      this.securityService.signUp(this.signUpFormGroup.value).subscribe(
+        (data) => {
+          this.showToast(
+            'informationToast',
+            'success',
+            'Registro exitoso',
+            'Vuelva a iniciar sesión'
+          );
+          setTimeout(() => {
+            this.router.navigateByUrl('/login');
+          }, 1000);
+        },
+        (error) => {
+          this.showToast(
+            'informationToast',
+            'error',
+            'Ocurrió un error',
+            'Por favor, revisa que todo este correcto'
+          );
+        }
+      );
+    }
+  }
 
-  backToLogin() {
-    this.router.navigateByUrl('/login');
+  showToast(keyToast: string, type: string, title: string, message: string) {
+    this.messageService.clear();
+    this.messageService.add({
+      key: keyToast,
+      severity: type,
+      summary: title,
+      detail: message,
+    });
   }
 }

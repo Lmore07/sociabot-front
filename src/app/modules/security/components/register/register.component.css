@@ -291,7 +291,7 @@ small{
     
     .container .form{
         padding: 30px;
-        width: 90dvw;
+        width: 100%;
         background-color: #fff;
         transition: margin-left 0.18s ease;
     }

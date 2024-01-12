@@ -1,4 +1,8 @@
 <div class="body">
+  @if (spinnerStatus) {
+  <loading></loading>
+  }
+  <p-toast key="informationToast"></p-toast>
   <div class="container">
     <div class="forms">
       <div class="form login">
@@ -6,7 +10,7 @@
           <span class="title">Registro de Usuario</span>
         </div>
         <div>
-          <form [formGroup]="signUpFormGroup" (ngSubmit)="callSignUpService()">
+          <form [formGroup]="signUpFormGroup">
             <div class="container-names">
               <!-- NOMBRE -->
               <div class="field-container">
@@ -14,6 +18,8 @@
                   <input
                     formControlName="firstName"
                     class="input"
+                    maxlength="50"
+                    [pKeyFilter]="allowLetters"
                     type="text"
                     matInput
                     placeholder="Nombre"
@@ -27,6 +33,9 @@
                   @if (signUpFormGroup.get('firstName')?.hasError('required') &&
                   signUpFormGroup.get('firstName')?.touched) {
                   <mat-error>¡Este campo es requerido!</mat-error>
+                  }@if (signUpFormGroup.get('firstName')?.hasError('pattern') &&
+                  signUpFormGroup.get('firstName')?.touched) {
+                  <mat-error>¡Ingrese un nombre válido!</mat-error>
                   }
                 </mat-form-field>
               </div>
@@ -36,7 +45,9 @@
                   <input
                     formControlName="lastName"
                     class="input"
+                    [pKeyFilter]="allowLetters"
                     type="text"
+                    maxlength="50"
                     matInput
                     placeholder="Apellido"
                   />
@@ -49,6 +60,9 @@
                   @if (signUpFormGroup.get('lastName')?.hasError('required') &&
                   signUpFormGroup.get('lastName')?.touched) {
                   <mat-error>¡Este campo es requerido!</mat-error>
+                  } @if (signUpFormGroup.get('lastName')?.hasError('pattern') &&
+                  signUpFormGroup.get('lastName')?.touched) {
+                  <mat-error>¡Ingrese un apellido válido!</mat-error>
                   }
                 </mat-form-field>
               </div>
@@ -83,6 +97,8 @@
                 <mat-form-field appearance="fill" class="mat-form-field">
                   <input
                     [matDatepicker]="picker"
+                    [min]="minDate"
+                    [max]="maxDate"
                     formControlName="birthDate"
                     class="input"
                     matInput
@@ -102,6 +118,11 @@
                   @if (signUpFormGroup.get('birthDate')?.hasError('required') &&
                   signUpFormGroup.get('birthDate')?.touched) {
                   <mat-error>¡Este campo es requerido!</mat-error>
+                  }@if (signUpFormGroup.get('birthDate')?.hasError('dateRange')
+                  && signUpFormGroup.get('birthDate')?.touched) {
+                  <mat-error>
+                    {{ signUpFormGroup.get('birthDate')?.errors?.['dateRange'].message }}
+                  </mat-error>
                   }
                 </mat-form-field>
               </div>
@@ -113,6 +134,7 @@
                 <input
                   formControlName="email"
                   class="input"
+                  maxlength="100"
                   type="email"
                   matInput
                   placeholder="Correo Electrónico"
@@ -170,7 +192,11 @@
               </mat-form-field>
             </div>
             <div class="input-field button">
-              <input type="submit" value="Registrate" />
+              <input
+                (click)="callSignUpService()"
+                type="submit"
+                value="Registrate"
+              />
             </div>
           </form>
         </div>
