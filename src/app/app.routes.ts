@@ -2,9 +2,9 @@ import { Routes } from '@angular/router';
 import { LoginComponent } from './modules/security/components/login/login.component';
 import { RegisterComponent } from './modules/security/components/register/register.component';
 import { HomeComponent } from './modules/students/components/home/home.component';
-import { authGuard } from './modules/security/guards/auth.guard';
+import { authGuard } from './modules/shared-modules/guards/auth.guard';
 import { MenuComponent } from './modules/shared-modules/shared-components/menu/menu.component';
-import { roleGuard } from './modules/security/guards/role.guard';
+import { roleGuard } from './modules/shared-modules/guards/role.guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },

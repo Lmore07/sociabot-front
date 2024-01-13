@@ -128,6 +128,30 @@
               </div>
             </div>
 
+            <!-- GENERO -->
+            <div class="field-container">
+              <mat-form-field
+                hideRequiredMarker
+                appearance="fill"
+                class="mat-form-field"
+              >
+                <mat-label>Género</mat-label>
+                <mat-select formControlName="gender">
+                  <mat-option value="MALE">Masculino</mat-option>
+                  <mat-option value="FEMALE">Femenino</mat-option>
+                </mat-select>
+                <mat-icon
+                  matIconPrefix
+                  svgIcon="iconRole"
+                  aria-hidden="false"
+                ></mat-icon>
+                <mat-hint>Elija su género</mat-hint>
+                @if (signUpFormGroup.get('gender')?.hasError('required') &&
+                signUpFormGroup.get('gender')?.touched) {
+                <mat-error>¡Este campo es requerido!</mat-error>
+                }
+              </mat-form-field>
+            </div>
             <!-- CORREO ELECTRONICO -->
             <div class="field-container">
               <mat-form-field appearance="fill" class="mat-form-field">

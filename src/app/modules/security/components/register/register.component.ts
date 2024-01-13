@@ -181,6 +181,7 @@ export class RegisterComponent {
         ],
       ],
       role: ['', [Validators.required, roleUserValidator()]],
+      gender: ['', [Validators.required]],
       firstName: [
         '',
         [Validators.required, Validators.pattern(/^[a-zA-ZÀ-ÿ\s]{1,50}$/)],

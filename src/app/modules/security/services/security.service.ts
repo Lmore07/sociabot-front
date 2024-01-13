@@ -1,6 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { environment } from '../../../../environments/environment';
 import {
   GeneralLoginResponse,
   LoginRequest,
@@ -10,6 +9,7 @@ import {
   GeneralSignUpResponse,
   SignUpRequest,
 } from '../interfaces/register.interface';
+import { environment } from '../../../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root',

@@ -126,6 +126,9 @@ export class LoginComponent {
             this.router.navigateByUrl('/students');
           }, 1000);
         } else {
+          setTimeout(() => {
+            this.router.navigateByUrl('/teachers');
+          }, 1000);
         }
       },
       (err) => {
