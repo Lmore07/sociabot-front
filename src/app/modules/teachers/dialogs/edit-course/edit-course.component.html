@@ -1,0 +1,74 @@
+@if (spinnerStatus) {
+<loading></loading>
+}
+<div mat-dialog-content></div>
+<div class="container">
+  <div class="forms">
+    <div class="form login">
+      <div class="img-titulo">
+        <span class="title">Editar Curso</span>
+      </div>
+      <div>
+        <form [formGroup]="editCourseFormGroup">
+          <div class="container-names">
+            <!-- NOMBRE DE CURSO -->
+            <div class="field-container">
+              <mat-form-field appearance="fill" class="mat-form-field">
+                <input
+                  formControlName="name"
+                  class="input"
+                  maxlength="50"
+                  type="text"
+                  matInput
+                  placeholder="Nombre de curso"
+                />
+                <mat-icon
+                  matIconPrefix
+                  svgIcon="iconLetter"
+                  aria-hidden="false"
+                ></mat-icon>
+                <mat-hint>Ingrese el nombre del curso</mat-hint>
+                @if (editCourseFormGroup.get('name')?.hasError('required') &&
+                editCourseFormGroup.get('name')?.touched) {
+                <mat-error>¡Este campo es requerido!</mat-error>
+                }
+              </mat-form-field>
+            </div>
+            <!-- DESCRIPCION -->
+            <div class="field-container">
+              <mat-form-field appearance="fill" class="mat-form-field">
+                <input
+                  formControlName="description"
+                  class="input"
+                  type="text"
+                  maxlength="50"
+                  matInput
+                  placeholder="Descripción"
+                />
+                <mat-icon
+                  matIconPrefix
+                  svgIcon="iconLetter"
+                  aria-hidden="false"
+                ></mat-icon>
+                <mat-hint>Ingrese la descripción</mat-hint>
+                @if
+                (editCourseFormGroup.get('description')?.hasError('required') &&
+                editCourseFormGroup.get('description')?.touched) {
+                <mat-error>¡Este campo es requerido!</mat-error>
+                }
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="input-field button">
+            <input
+              (click)="callServiceEditCourse()"
+              type="submit"
+              value="Guardar"
+            />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions></div>

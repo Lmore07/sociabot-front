@@ -9,6 +9,13 @@ import { CoursesResponse } from '../../interfaces/courses.interface';
 import { TagModule } from 'primeng/tag';
 import { TooltipModule } from 'primeng/tooltip';
 import { PrimeIcons } from 'primeng/api';
+import { MatDialog } from '@angular/material/dialog';
+import { ViewStudentsComponent } from '../../dialogs/view-students/view-students.component';
+import { AddCourseComponent } from '../../dialogs/add-course/add-course.component';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
+import { LoadingComponent } from '../../../shared-modules/shared-components/loading/loading.component';
+import { EditCourseComponent } from '../../dialogs/edit-course/edit-course.component';
 
 @Component({
   selector: 'app-courses',
@@ -17,24 +24,33 @@ import { PrimeIcons } from 'primeng/api';
     TableModule,
     ToolbarModule,
     ButtonModule,
+    ToastModule,
     SelectButtonModule,
     ReactiveFormsModule,
     TagModule,
     TooltipModule,
+    LoadingComponent,
   ],
+  providers: [MessageService],
   templateUrl: './courses.component.html',
   styleUrl: './courses.component.css',
 })
 export class CoursesComponent {
   courses!: CoursesResponse[];
   formGroup!: FormGroup;
+  spinnerStatus = false;
 
   stateOptions: any[] = [
     { label: 'Activos', value: true },
     { label: 'Inactivos', value: false },
   ];
 
-  constructor(private teacherService: TeacherService) {}
+  constructor(
+    private teacherService: TeacherService,
+    public dialogStudents: MatDialog,
+    public dialogAdCourse: MatDialog,
+    private messageService: MessageService
+  ) {}
 
   ngOnInit() {
     this.formGroup = new FormGroup({
@@ -44,13 +60,32 @@ export class CoursesComponent {
   }
 
   getCourses() {
+    this.spinnerStatus = true;
     this.teacherService
       .getMyCoursesByTeacher(this.formGroup.value['status'])
-      .subscribe((data) => {
-        console.log(data);
-        this.courses = data.data;
-      });
+      .subscribe(
+        (data) => {
+          console.log(data);
+          this.spinnerStatus = false;
+          this.courses = data.data;
+        },
+        (error) => {
+          this.spinnerStatus = false;
+        }
+      );
   }
+
+  showToast(keyToast: string, type: string, title: string, message: string) {
+    this.messageService.clear();
+    this.messageService.add({
+      key: keyToast,
+      severity: type,
+      summary: title,
+      detail: message,
+    });
+  }
+
+  exportToExcel() {}
 
   getSeverity(status: boolean) {
     switch (status) {
@@ -59,6 +94,70 @@ export class CoursesComponent {
       case false:
         return 'danger';
     }
+  }
+
+  openDialogStudent(courseId: string, courseName: string): void {
+    const dialogRef = this.dialogStudents.open(ViewStudentsComponent, {
+      data: { courseId: courseId, courseName: courseName },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('The dialog was closed');
+    });
+  }
+
+  openDialogAddCourse(): void {
+    const dialogRef = this.dialogStudents.open(AddCourseComponent, {
+      data: {},
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(result);
+      if (result) {
+        this.showToast(
+          'informationToast',
+          'success',
+          'Proceso exitoso',
+          'Curso creado correctamente'
+        );
+        this.getCourses();
+      } else {
+        this.showToast(
+          'informationToast',
+          'error',
+          'Ocurrió un error',
+          'Fallo al crear el curso'
+        );
+      }
+      console.log('The dialog was closed');
+    });
+  }
+
+  openDialogEditCourse(courseDescription: string, courseName: string): void {
+    const dialogRef = this.dialogStudents.open(EditCourseComponent, {
+      data: { name: courseName, courseDescription: courseDescription },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(result);
+      if (result) {
+        this.showToast(
+          'informationToast',
+          'success',
+          'Proceso exitoso',
+          'Curso editado correctamente'
+        );
+        this.getCourses();
+      } else {
+        this.showToast(
+          'informationToast',
+          'error',
+          'Ocurrió un error',
+          'Fallo al editar el curso'
+        );
+      }
+      console.log('The dialog was closed');
+    });
   }
 
   handleChange(e: any) {
