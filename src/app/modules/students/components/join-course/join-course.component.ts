@@ -4,12 +4,13 @@ import { ButtonModule } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
 import { CoursesService } from '../../services/courses.service';
 import { MessageService } from 'primeng/api';
+import {ToastModule} from 'primeng/toast';
 
 
 @Component({
   selector: 'app-join-course',
   standalone: true,
-  imports: [CardModule, ButtonModule, FormsModule],
+  imports: [CardModule, ButtonModule, FormsModule, ToastModule],
   templateUrl: './join-course.component.html',
   styleUrl: './join-course.component.css',
   providers: [MessageService]
@@ -23,7 +24,7 @@ export class JoinCourseComponent {
 
   async joinCourse() {
     this.service.joinCourse(this.licenseKey).subscribe((data: any) => {
-      alert(data.message);
+      // alert(data.message);
       this.showToast(
         'informationToast',
         'success',
