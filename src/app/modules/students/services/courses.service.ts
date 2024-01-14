@@ -15,4 +15,11 @@ export class CoursesService {
       environment.apiUrl + '/course-students/my-courses?status=' + status,
     );
   }
+
+  joinCourse(code: string) {
+    return this.http.post(
+      environment.apiUrl + '/course-students/join',
+      { courseCode: code }
+    );
+  }
 }
