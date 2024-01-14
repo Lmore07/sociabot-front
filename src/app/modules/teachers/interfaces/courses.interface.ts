@@ -18,3 +18,4 @@ export interface CoursesRequest {
   name: string;
   description: string;
 }
+
