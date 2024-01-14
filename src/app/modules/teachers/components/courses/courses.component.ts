@@ -13,9 +13,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { ViewStudentsComponent } from '../../dialogs/view-students/view-students.component';
 import { AddCourseComponent } from '../../dialogs/add-course/add-course.component';
 import { ToastModule } from 'primeng/toast';
-import { MessageService } from 'primeng/api';
+import { MessageService, ConfirmationService } from 'primeng/api';
 import { LoadingComponent } from '../../../shared-modules/shared-components/loading/loading.component';
 import { EditCourseComponent } from '../../dialogs/edit-course/edit-course.component';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @Component({
   selector: 'app-courses',
@@ -28,10 +29,11 @@ import { EditCourseComponent } from '../../dialogs/edit-course/edit-course.compo
     SelectButtonModule,
     ReactiveFormsModule,
     TagModule,
+    ConfirmDialogModule,
     TooltipModule,
     LoadingComponent,
   ],
-  providers: [MessageService],
+  providers: [MessageService, ConfirmationService],
   templateUrl: './courses.component.html',
   styleUrl: './courses.component.css',
 })
@@ -49,6 +51,7 @@ export class CoursesComponent {
     private teacherService: TeacherService,
     public dialogStudents: MatDialog,
     public dialogAdCourse: MatDialog,
+    private confirmationService: ConfirmationService,
     private messageService: MessageService
   ) {}
 
@@ -65,7 +68,6 @@ export class CoursesComponent {
       .getMyCoursesByTeacher(this.formGroup.value['status'])
       .subscribe(
         (data) => {
-          console.log(data);
           this.spinnerStatus = false;
           this.courses = data.data;
         },
@@ -133,9 +135,13 @@ export class CoursesComponent {
     });
   }
 
-  openDialogEditCourse(courseDescription: string, courseName: string): void {
+  openDialogEditCourse(
+    courseName: string,
+    courseDescription: string,
+    courseId: string
+  ): void {
     const dialogRef = this.dialogStudents.open(EditCourseComponent, {
-      data: { name: courseName, courseDescription: courseDescription },
+      data: { name: courseName, description: courseDescription, id: courseId },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -156,7 +162,6 @@ export class CoursesComponent {
           'Fallo al editar el curso'
         );
       }
-      console.log('The dialog was closed');
     });
   }
 
@@ -169,5 +174,67 @@ export class CoursesComponent {
       return PrimeIcons.THUMBS_DOWN_FILL;
     }
     return PrimeIcons.THUMBS_UP_FILL;
+  }
+
+  activaOrDesactivateCourse(status: boolean, event: Event, courseId: string) {
+    this.confirmationService.confirm({
+      target: event.target as EventTarget,
+      message: this.messageToastFailed(status, 1),
+      header: 'Confirmación',
+      icon: 'pi pi-info-circle',
+      acceptButtonStyleClass: 'p-button-danger p-button-text',
+      rejectButtonStyleClass: 'p-button-text p-button-text',
+      acceptIcon: 'none',
+      rejectIcon: 'none',
+      accept: () => {
+        this.callServiceChangeStatus(status, courseId);
+      },
+      reject: () => {
+        this.showToast(
+          'informationToast',
+          'error',
+          'Ocurrió un error',
+          this.messageToastFailed(status, 3)
+        );
+      },
+    });
+  }
+
+  messageToastFailed(status: boolean, caseMessage: number) {
+    let message = '';
+    let stringStatus = status ? 'desactivar' : 'activar';
+    switch (caseMessage) {
+      case 1:
+        message = '¿Esta seguro de ' + stringStatus + ' el curso?';
+        break;
+      case 2:
+        message = 'El curso se logro ' + stringStatus + ' correctamente';
+        break;
+      case 3:
+        message = 'El curso no se logro ' + stringStatus + ' correctamente';
+        break;
+    }
+    console.log(message);
+    return message;
+  }
+
+  callServiceChangeStatus(status: boolean, courseId: string) {
+    this.spinnerStatus = true;
+    this.teacherService.changeStatusCourse(courseId).subscribe(
+      (data) => {
+        this.spinnerStatus = false;
+        console.log(data);
+        this.showToast(
+          'informationToast',
+          'success',
+          'Proceso exitoso',
+          this.messageToastFailed(status, 2)
+        );
+        this.getCourses();
+      },
+      (error) => {
+        this.spinnerStatus = false;
+      }
+    );
   }
 }

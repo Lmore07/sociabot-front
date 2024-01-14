@@ -44,4 +44,11 @@ export class TeacherService {
       null
     );
   }
+
+  editCourse(courseId: string, course: CoursesRequest) {
+    return this.http.put<GeneralCourseStudentsResponse>(
+      environment.apiUrl + '/courses/' + courseId,
+      course
+    );
+  }
 }

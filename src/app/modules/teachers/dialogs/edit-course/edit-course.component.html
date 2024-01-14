@@ -51,9 +51,8 @@
                   aria-hidden="false"
                 ></mat-icon>
                 <mat-hint>Ingrese la descripción</mat-hint>
-                @if
-                (editCourseFormGroup.get('description')?.hasError('required') &&
-                editCourseFormGroup.get('description')?.touched) {
+                @if(editCourseFormGroup.get('description')?.hasError('required')
+                && editCourseFormGroup.get('description')?.touched) {
                 <mat-error>¡Este campo es requerido!</mat-error>
                 }
               </mat-form-field>

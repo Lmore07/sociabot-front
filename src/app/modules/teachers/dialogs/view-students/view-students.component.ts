@@ -39,6 +39,7 @@ registerLocaleData(localeEs);
 export class ViewStudentsComponent {
   students!: any[];
   formGroup!: FormGroup;
+  today = new Date();
 
   stateOptions: any[] = [
     { label: 'Activos', value: true },
@@ -88,5 +89,11 @@ export class ViewStudentsComponent {
       return PrimeIcons.THUMBS_DOWN_FILL;
     }
     return PrimeIcons.THUMBS_UP_FILL;
+  }
+
+  ageCalculate(birthDate: Date) {
+    const fechaNacimientoDate = new Date(birthDate);
+    let edad = this.today.getFullYear() - fechaNacimientoDate.getFullYear();
+    return edad + ' años';
   }
 }

@@ -2,6 +2,7 @@
 @if (spinnerStatus) {
 <loading></loading>
 }
+<p-confirmDialog></p-confirmDialog>
 <div class="card">
   <p-toolbar styleClass="mb-4 gap-2">
     <ng-template pTemplate="left">
@@ -38,7 +39,6 @@
       ></button>
     </ng-template>
   </p-toolbar>
-
   <div class="table">
     <p-table
       [paginator]="true"
@@ -56,23 +56,23 @@
           <th>Acciones</th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-product let-columns="columns">
+      <ng-template pTemplate="body" let-course let-columns="columns">
         <tr>
-          <td>{{ product.name }}</td>
-          <td>{{ product.description }}</td>
-          <td><p-tag [value]="product.code" severity="info"></p-tag></td>
+          <td>{{ course.name }}</td>
+          <td>{{ course.description }}</td>
+          <td><p-tag [value]="course.code" severity="info"></p-tag></td>
           <td>
             <p-tag
-              [value]="product.status ? 'Activo' : 'Inactivo'"
-              [severity]="getSeverity(product.status)"
+              [value]="course.status ? 'Activo' : 'Inactivo'"
+              [severity]="getSeverity(course.status)"
             ></p-tag>
           </td>
           <td>
-            @if (product.status) {
+            @if (course.status) {
             <button
               pButton
               pRipple
-              (click)="openDialogStudent(product.id, product.name)"
+              (click)="openDialogStudent(course.id, course.name)"
               pTooltip="Ver Alumnos"
               tooltipPosition="top"
               icon="pi pi-users"
@@ -82,7 +82,9 @@
             <button
               pButton
               pRipple
-              (click)="openDialogEditCourse(product.name, product.description)"
+              (click)="
+                openDialogEditCourse(course.name, course.description, course.id)
+              "
               pTooltip="Editar curso"
               tooltipPosition="top"
               icon="pi pi-pencil"
@@ -91,7 +93,10 @@
             <button
               pButton
               pRipple
-              [pTooltip]="product.status ? 'Desactivar curso' : 'Activar curso'"
+              (click)="
+                activaOrDesactivateCourse(course.status, $event, course.id)
+              "
+              [pTooltip]="course.status ? 'Desactivar curso' : 'Activar curso'"
               tooltipPosition="top"
               [icon]="iconActions()"
               class="p-button-rounded p-button-danger"
