@@ -39,7 +39,7 @@ export class HomeComponent {
   ngOnInit() {
     this.items = [
       {
-        label: 'File',
+        label: 'Cursos',
         icon: 'pi pi-fw pi-file',
         items: [
           {
@@ -92,7 +92,7 @@ export class HomeComponent {
         ],
       },
       {
-        label: 'Users',
+        label: 'Userss',
         icon: 'pi pi-fw pi-user',
         items: [
           {

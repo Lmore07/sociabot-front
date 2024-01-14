@@ -71,77 +71,31 @@ export class MenuComponent {
   menuStudent() {
     return [
       {
-        label: 'File',
+        label: 'Cursos',
         icon: 'pi pi-fw pi-file',
         items: [
           {
-            label: 'New',
+            label: 'Ver',
+            icon: 'pi pi-fw pi-eye',
+          },
+          {
+            label: 'Nuevo',
             icon: 'pi pi-fw pi-plus',
-            items: [
-              {
-                label: 'Bookmark',
-                icon: 'pi pi-fw pi-bookmark',
-              },
-              {
-                label: 'Video',
-                icon: 'pi pi-fw pi-video',
-              },
-            ],
           },
           {
-            label: 'Delete',
-            icon: 'pi pi-fw pi-trash',
-          },
-          {
-            label: 'Export',
-            icon: 'pi pi-fw pi-external-link',
+            label: 'Lecciones',
+            icon: 'pi pi-fw pi-book',
           },
         ],
       },
       {
-        label: 'Users',
+        label: 'Perfil',
         icon: 'pi pi-fw pi-user',
-        items: [
-          {
-            label: 'New',
-            icon: 'pi pi-fw pi-user-plus',
-          },
-          {
-            label: 'Delete',
-            icon: 'pi pi-fw pi-user-minus',
-          },
-        ],
       },
       {
-        label: 'Events',
-        icon: 'pi pi-fw pi-calendar',
-        items: [
-          {
-            label: 'Edit',
-            icon: 'pi pi-fw pi-pencil',
-            items: [
-              {
-                label: 'Save',
-                icon: 'pi pi-fw pi-calendar-plus',
-              },
-              {
-                label: 'Delete',
-                icon: 'pi pi-fw pi-calendar-minus',
-              },
-            ],
-          },
-          {
-            label: 'Archieve',
-            icon: 'pi pi-fw pi-calendar-times',
-            items: [
-              {
-                label: 'Remove',
-                icon: 'pi pi-fw pi-calendar-minus',
-              },
-            ],
-          },
-        ],
-      },
+        label: 'Progresos',
+        icon: 'pi pi-fw pi-chart-line',
+        },
     ];
   }
 
