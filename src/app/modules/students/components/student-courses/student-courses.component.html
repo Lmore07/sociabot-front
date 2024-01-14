@@ -1,0 +1,86 @@
+<div class="card">
+    <p-toolbar styleClass="mb-4 gap-2">
+      <ng-template pTemplate="left">
+        <div class="flex justify-content-center">
+          <form [formGroup]="formGroup">
+            <p-selectButton
+              (onChange)="handleChange($event)"
+              [unselectable]="true"
+              [options]="stateOptions"
+              formControlName="status"
+              optionLabel="label"
+              optionValue="value"
+            ></p-selectButton>
+          </form>
+        </div>
+      </ng-template>
+  
+      <ng-template pTemplate="right">
+        <button
+          pButton
+          pRipple
+          label="Ingresar a un curso"
+          icon="pi pi-plus"
+          class="p-button-success margin-button"
+        ></button>
+        <button
+          pButton
+          pRipple
+          label="Exportar"
+          icon="pi pi-upload"
+          class="p-button-help"
+        ></button>
+      </ng-template>
+    </p-toolbar>
+  
+    <div class="table">
+      <p-table
+        [paginator]="true"
+        [rows]="5"
+        [rowsPerPageOptions]="[5, 10, 20]"
+        [value]="courses"
+        [tableStyle]="{ 'min-width': '50rem' }"
+      >
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th>Curso</th>
+            <th>Profesor</th>
+            <!-- <th>Estado</th> -->
+            <th>Acciones</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product let-columns="columns">
+          <tr>
+            <td>{{ product.course.name }}</td>
+            <td>{{ product.course.teacher.firstName }} {{ product.course.teacher.lastName }}</td>
+            <!-- <td>{{ product.code }}</td> -->
+            <!-- <td>
+              <p-tag
+                [value]="product.status ? 'Activo' : 'Inactivo'"
+                [severity]="getSeverity(product.status)"
+              ></p-tag>
+            </td> -->
+            <td>
+              <!-- <button
+                pButton
+                pRipple
+                pTooltip="Editar curso"
+                tooltipPosition="top"
+                icon="pi pi-pencil"
+                class="p-button-rounded p-button-success margin-button"
+              ></button> -->
+              <button
+                pButton
+                pRipple
+                [pTooltip]="product.status ? 'Salir del curso' : 'Activar curso'"
+                tooltipPosition="top"
+                [icon]="iconActions()"
+                class="p-button-rounded p-button-danger margin-button"
+              ></button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+  

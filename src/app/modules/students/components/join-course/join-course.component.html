@@ -1,1 +1,16 @@
-<p>join-course works!</p>
+<p-toast key="informationToast"></p-toast>
+<div class="tw-flex tw-justify-center tw-h-screen">
+    <p-card header="Unirse a un curso" subheader="Ingresa el código proporcionado por tu profesor" [style]="{ width: '360px' }">
+        <ng-template pTemplate="header">
+            <img alt="Card" src="https://primefaces.org/cdn/primeng/images/usercard.png" />
+        </ng-template>
+        <div class="flex items-center justify-center w-full">
+            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="license" type="text" placeholder="ABCD-1234" [(ngModel)]="licenseKey">
+        </div>
+        <ng-template pTemplate="footer">
+            <p-button label="Ingresar" icon="pi pi-check" (onClick)="joinCourse()"></p-button>
+            <p-button label="Cancelar" icon="pi pi-times" styleClass="p-button-secondary"
+                [style]="{ 'margin-left': '.5em' }"></p-button>
+        </ng-template>
+    </p-card>
+</div>
