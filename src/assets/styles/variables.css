@@ -1,0 +1,11 @@
+
+
+:root {
+    --primary-color: #d9ba87;
+    --secondary-color: #ded8ca;
+    --tertiary-color: #cfa168;
+    --quaternary-color: #b67540;
+    --disabled-color: #e1c294;
+    --background-gradient: linear-gradient(to bottom, #d9ba87 0%, #ded8ca 100%);
+    --button-gradient: linear-gradient(to right, #cfa168 0%, #b67540 100%)
+  }

@@ -1,0 +1,63 @@
+@import '../../../../../assets/styles/variables.css';
+
+.bouncing-balls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .ball {
+    width: 20px;
+    height: 20px;
+    background-color: var(--tertiary-color);
+    border-radius: 50%;
+    margin: 0 5px;
+    animation: bounce 0.5s alternate infinite ease-in-out;
+  }
+  .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      /* Fondo semitransparente */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+  }
+  
+  .modal-content {
+      background: #ffffff00;
+      /* Fondo blanco del modal */
+      padding: 20px;
+      border-width: 0px;
+      border-radius: 10px;
+  }
+  
+  .loading {
+      text-align: center;
+      padding: 20px;
+  }
+  
+  .ball1 {
+    animation-delay: 0.2s;
+  }
+  
+  .ball2 {
+    animation-delay: 0.4s;
+  }
+  
+  .ball3 {
+    animation-delay: 0.6s;
+  }
+  
+  @keyframes bounce {
+    0% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(-20px);
+    }
+  }

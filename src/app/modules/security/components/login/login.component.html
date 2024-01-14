@@ -1,0 +1,97 @@
+<div class="body">
+  @if (spinnerStatus) {
+  <loading></loading>
+  }
+  <p-toast key="informationToast"></p-toast>
+  <div class="container">
+    <div class="forms">
+      <div class="form login">
+        <div class="img-titulo">
+          <span class="title">Inicio de sesión</span>
+        </div>
+        <div>
+          <form [formGroup]="loginFormGroup">
+            <div class="field-container">
+              <mat-form-field appearance="fill" class="mat-form-field">
+                <input
+                  formControlName="email"
+                  class="input"
+                  matInput
+                  type="email"
+                  placeholder="Email"
+                />
+                <mat-icon
+                  matIconPrefix
+                  svgIcon="iconMail"
+                  aria-hidden="false"
+                ></mat-icon>
+                <mat-hint>Ingrese su correo electronico</mat-hint>
+                @if (loginFormGroup.get('email')?.hasError('required') &&
+                loginFormGroup.get('email')?.touched) {
+                <mat-error>¡El correo es requerido!</mat-error>
+                } @if (loginFormGroup.get('email')?.hasError('pattern') &&
+                loginFormGroup.get('email')?.touched) {
+                <mat-error
+                  >¡El campo no coincide con un formato de correo
+                  válido!</mat-error
+                >
+                }
+              </mat-form-field>
+            </div>
+            <div class="field-container">
+              <mat-form-field appearance="fill" class="mat-form-field">
+                <mat-icon matIconPrefix svgIcon="iconLock"></mat-icon>
+                <input
+                  [type]="hide ? 'password' : 'text'"
+                  class="input"
+                  maxlength="20"
+                  matInput
+                  formControlName="password"
+                  placeholder="Contraseña"
+                />
+                <button
+                  mat-icon-button
+                  matSuffix
+                  (click)="hide = !hide"
+                  [attr.aria-pressed]="hide"
+                >
+                  <mat-icon
+                    color=""
+                    [svgIcon]="hide ? 'iconEyeOff' : 'iconEyeOn'"
+                  ></mat-icon>
+                </button>
+                <mat-hint>Ingrese su contraseña</mat-hint>
+                @if (loginFormGroup.get('password')?.hasError('required') &&
+                loginFormGroup.get('password')?.touched) {
+                <mat-error>¡La contraseña es requerida!</mat-error>
+                }
+              </mat-form-field>
+            </div>
+            <div class="checkbox-text">
+              <a (click)="forgotPassword()" class="text"
+                >Olvidé mi contraseña</a
+              >
+            </div>
+
+            <div class="input-field button">
+              <input
+                (click)="buttonLogin()"
+                type="submit"
+                value="Iniciar Sesión"
+              />
+            </div>
+          </form>
+        </div>
+
+        <div class="login-signup">
+          <span class="text"
+            >¿No estás registrado?
+            <a routerLink="/register" class="text signup-link"
+              >Regístrate ahora
+            </a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

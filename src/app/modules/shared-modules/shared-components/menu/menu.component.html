@@ -1,0 +1,21 @@
+<mat-sidenav-container class="example-container">
+  <mat-sidenav #sidenav mode="side" opened>
+    <aside>
+      <div class="card flex justify-content-center">
+        <p-panelMenu [model]="items" [style]="{ width: '300px' }"></p-panelMenu>
+      </div>
+    </aside>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <header>
+      <div class="button">
+        <i
+          (click)="toggleSidebar()"
+          class="pi pi-bars"
+          style="font-size: 2.5rem"
+        ></i>
+      </div>
+    </header>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
