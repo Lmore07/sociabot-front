@@ -1,3 +1,7 @@
+<p-toast key="informationToast"></p-toast>
+@if (spinnerStatus) {
+<loading></loading>
+}
 <div class="card">
   <p-toolbar styleClass="mb-4 gap-2">
     <ng-template pTemplate="left">
@@ -21,11 +25,13 @@
         pRipple
         label="Nuevo Curso"
         icon="pi pi-plus"
+        (click)="openDialogAddCourse()"
         class="p-button-success margin-button"
       ></button>
       <button
         pButton
         pRipple
+        (click)="exportToExcel()"
         label="Exportar"
         icon="pi pi-upload"
         class="p-button-help"
@@ -44,7 +50,7 @@
       <ng-template pTemplate="header" let-columns>
         <tr>
           <th>Nombre</th>
-          <th>Description</th>
+          <th>Descripción</th>
           <th>Código</th>
           <th>Estado</th>
           <th>Acciones</th>
@@ -54,7 +60,7 @@
         <tr>
           <td>{{ product.name }}</td>
           <td>{{ product.description }}</td>
-          <td>{{ product.code }}</td>
+          <td><p-tag [value]="product.code" severity="info"></p-tag></td>
           <td>
             <p-tag
               [value]="product.status ? 'Activo' : 'Inactivo'"
@@ -62,9 +68,21 @@
             ></p-tag>
           </td>
           <td>
+            @if (product.status) {
             <button
               pButton
               pRipple
+              (click)="openDialogStudent(product.id, product.name)"
+              pTooltip="Ver Alumnos"
+              tooltipPosition="top"
+              icon="pi pi-users"
+              class="p-button-rounded p-button-info margin-button"
+            ></button>
+            }
+            <button
+              pButton
+              pRipple
+              (click)="openDialogEditCourse(product.name, product.description)"
               pTooltip="Editar curso"
               tooltipPosition="top"
               icon="pi pi-pencil"
@@ -76,7 +94,7 @@
               [pTooltip]="product.status ? 'Desactivar curso' : 'Activar curso'"
               tooltipPosition="top"
               [icon]="iconActions()"
-              class="p-button-rounded p-button-warning"
+              class="p-button-rounded p-button-danger"
             ></button>
           </td>
         </tr>
