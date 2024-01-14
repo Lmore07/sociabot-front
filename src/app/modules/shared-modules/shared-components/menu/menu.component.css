@@ -1,5 +1,8 @@
 @import '../../../../../assets/styles/variables.css';
 
+*{
+  overflow: hidden;
+}
   .example-container {
     position: absolute;
     top: 0;
@@ -24,8 +27,7 @@
 
   mat-sidenav{
     padding-top: 60px;
-    padding-right: 10px;
-    width: 300px;
+    width: 250px;
     background: var(--background-gradient);
   }
 
@@ -42,5 +44,5 @@
   mat-sidenav-content {
     padding-top: 80px;
     padding-left: 16px;
-    margin-left: 0;
+    padding-right: 16px;
   }
