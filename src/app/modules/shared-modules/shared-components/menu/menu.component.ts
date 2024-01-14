@@ -73,14 +73,17 @@ export class MenuComponent {
       {
         label: 'Cursos',
         icon: 'pi pi-fw pi-file',
+        routerLink: '/students/courses',
         items: [
           {
             label: 'Ver',
             icon: 'pi pi-fw pi-eye',
+            routerLink: '/students/courses',
           },
           {
             label: 'Nuevo',
             icon: 'pi pi-fw pi-plus',
+            routerLink: '/students/courses/join',
           },
           {
             label: 'Lecciones',
