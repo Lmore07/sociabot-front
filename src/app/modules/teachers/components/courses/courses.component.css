@@ -1,0 +1,16 @@
+.card {
+    background: rgb(237, 237, 237);
+    padding: 2rem;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+
+.table {
+    padding-top: 1rem;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+
+.margin-button{
+    margin-right: 10px;
+}

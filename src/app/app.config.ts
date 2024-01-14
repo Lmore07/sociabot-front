@@ -15,11 +15,17 @@ import {
 } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { MatNativeDateModule } from '@angular/material/core';
+import { AuthInterceptor } from './modules/shared-modules/shared-interceptors/auth.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     provideClientHydration(),
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    },
     provideHttpClient(withFetch(), withInterceptorsFromDi()),
     provideAnimations(),
     importProvidersFrom(MatNativeDateModule),

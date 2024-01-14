@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { MENU_ICON } from '../../../../../assets/svg/icons-svg';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
-import { MenuItem } from 'primeng/api';
+import { MenuItem, PrimeIcons } from 'primeng/api';
 import { ActivatedRoute, RouterOutlet, UrlSegment } from '@angular/router';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { SidebarModule } from 'primeng/sidebar';
@@ -100,6 +100,17 @@ export class MenuComponent {
   }
 
   menuTeacher() {
-    return [];
+    return [
+      {
+        label: 'Inicio',
+        icon: PrimeIcons.HOME,
+        routerLink: '/teachers/home',
+      },
+      {
+        label: 'Cursos',
+        icon: PrimeIcons.BOOK,
+        routerLink: '/teachers/courses',
+      },
+    ];
   }
 }
