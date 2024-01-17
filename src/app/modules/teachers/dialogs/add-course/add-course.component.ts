@@ -45,8 +45,8 @@ export class AddCourseComponent {
     private teacherService: TeacherService,
     private formAddCourseBuilder: FormBuilder,
     public iconRegistry: MatIconRegistry,
-    private messageService: MessageService,
-    public sanitizer: DomSanitizer
+    public sanitizer: DomSanitizer,
+    private messageService: MessageService
   ) {
     this.registerIcons();
     this.createFormAddCourse();
@@ -67,16 +67,36 @@ export class AddCourseComponent {
   }
 
   callServiceAddCourse() {
-    this.spinnerStatus = true;
-    this.teacherService.addCourse(this.addCourseFormGroup.value).subscribe(
-      (data) => {
-        this.spinnerStatus = false;
-        this.dialogRef.close(true);
-      },
-      (error) => {
-        this.spinnerStatus = false;
-        this.dialogRef.close(false);
-      }
-    );
+    this.addCourseFormGroup.markAllAsTouched();
+    if (this.addCourseFormGroup.valid) {
+      this.spinnerStatus = true;
+      this.teacherService.addCourse(this.addCourseFormGroup.value).subscribe(
+        (data) => {
+          this.spinnerStatus = false;
+          this.dialogRef.close(true);
+        },
+        (error) => {
+          this.spinnerStatus = false;
+          this.dialogRef.close(false);
+        }
+      );
+    } else {
+      this.showToast(
+        'informationToast',
+        'error',
+        'Ocurrió un error',
+        'Por favor, ingrese todos los campos'
+      );
+    }
+  }
+
+  showToast(keyToast: string, type: string, title: string, message: string) {
+    this.messageService.clear();
+    this.messageService.add({
+      key: keyToast,
+      severity: type,
+      summary: title,
+      detail: message,
+    });
   }
 }

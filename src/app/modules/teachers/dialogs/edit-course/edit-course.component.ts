@@ -8,7 +8,6 @@ import { LETTER_ICON } from '../../../../../assets/svg/icons-svg';
 import { CommonModule } from '@angular/common';
 import { LoadingComponent } from '../../../shared-modules/shared-components/loading/loading.component';
 import { ToastModule } from 'primeng/toast';
-import { MessageService } from 'primeng/api';
 import {
   FormBuilder,
   FormGroup,
@@ -31,7 +30,7 @@ import { TeacherService } from '../../services/teacher.service';
     LoadingComponent,
     ToastModule,
   ],
-  providers: [MessageService],
+  providers: [],
   templateUrl: './edit-course.component.html',
   styleUrl: './edit-course.component.css',
 })
@@ -45,11 +44,14 @@ export class EditCourseComponent {
     private teacherService: TeacherService,
     private formAddCourseBuilder: FormBuilder,
     public iconRegistry: MatIconRegistry,
-    private messageService: MessageService,
     public sanitizer: DomSanitizer
   ) {
     this.registerIcons();
     this.createFormAddCourse();
+  }
+
+  ngOnInit() {
+    console.log(this.data);
   }
 
   registerIcons() {
@@ -68,15 +70,17 @@ export class EditCourseComponent {
 
   callServiceEditCourse() {
     this.spinnerStatus = true;
-    this.teacherService.addCourse(this.editCourseFormGroup.value).subscribe(
-      (data) => {
-        this.spinnerStatus = false;
-        this.dialogRef.close(true);
-      },
-      (error) => {
-        this.spinnerStatus = false;
-        this.dialogRef.close(false);
-      }
-    );
+    this.teacherService
+      .editCourse(this.data.id, this.editCourseFormGroup.value)
+      .subscribe(
+        (data) => {
+          this.spinnerStatus = false;
+          this.dialogRef.close(true);
+        },
+        (error) => {
+          this.spinnerStatus = false;
+          this.dialogRef.close(false);
+        }
+      );
   }
 }
