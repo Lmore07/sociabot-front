@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>Esudiantes del curso: {{ data.courseName }}</h1>
+<h1 mat-dialog-title>Estudiantes del curso: {{ data.courseName }}</h1>
 <div mat-dialog-content>
   <div class="card">
     <p-toolbar styleClass="mb-4 gap-2">
@@ -40,7 +40,7 @@
             <th>Nombre</th>
             <th>Género</th>
             <th>Correo Electrónico</th>
-            <th>Fecha de Nacimiento</th>
+            <th>Edad</th>
             <th>Acciones</th>
           </tr>
         </ng-template>
@@ -55,9 +55,7 @@
             <td>
               {{ student.student.email }}
             </td>
-            <td>
-              {{ student.student.birthDate | date }}
-            </td>
+            <td>{{ ageCalculate(student.student.birthDate) }}</td>
             <td>
               <button
                 pButton
