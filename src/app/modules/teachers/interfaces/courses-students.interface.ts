@@ -1,22 +1,15 @@
-export interface GeneralCourseStudentsResponse {
-  statusCode: number;
-  message: string;
-  data: CourseStudentsResponse[];
-  error?: string;
-}
-
 export interface CourseStudentsResponse {
   student: StudentResponse;
   id: string;
-  createdAt: Date;
-  updatedAt: Date;
+  created_at: Date;
+  updated_at: Date;
 }
 
 export interface StudentResponse {
   id: string;
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
   email: string;
   gender: string;
-  birthDate: Date;
+  birth_date: Date;
 }

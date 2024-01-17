@@ -1,30 +1,23 @@
 import { UserType } from '../enums/user-type.enum';
 
-export interface GeneralSignUpResponse {
-  statusCode: number;
-  message: string;
-  data: SignUpResponse;
-  error?: string;
-}
-
 export interface SignUpResponse {
   id: string;
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
   email: string;
   password: string;
-  birthDate: Date;
-  createdAt: Date;
+  birth_date: Date;
+  created_at: Date;
   updateAt: Date;
   role: UserType;
   status: boolean;
 }
 
 export interface SignUpRequest {
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
   email: string;
   password: string;
-  birthDate: Date;
+  birth_date: Date;
   role: UserType;
 }

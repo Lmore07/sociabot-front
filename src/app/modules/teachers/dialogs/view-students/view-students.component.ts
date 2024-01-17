@@ -64,7 +64,7 @@ export class ViewStudentsComponent {
       .getStudentsByCourse(this.data.courseId, this.formGroup.value['status'])
       .subscribe((data) => {
         console.log(data);
-        this.students = data.data;
+        this.students = data.data!;
       });
   }
   onNoClick(): void {
@@ -91,8 +91,8 @@ export class ViewStudentsComponent {
     return PrimeIcons.THUMBS_UP_FILL;
   }
 
-  ageCalculate(birthDate: Date) {
-    const fechaNacimientoDate = new Date(birthDate);
+  ageCalculate(birth_date: Date) {
+    const fechaNacimientoDate = new Date(birth_date);
     let edad = this.today.getFullYear() - fechaNacimientoDate.getFullYear();
     return edad + ' años';
   }

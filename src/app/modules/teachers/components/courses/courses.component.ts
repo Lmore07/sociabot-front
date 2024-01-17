@@ -69,7 +69,7 @@ export class CoursesComponent {
       .subscribe(
         (data) => {
           this.spinnerStatus = false;
-          this.courses = data.data;
+          this.courses = data.data!;
         },
         (error) => {
           this.spinnerStatus = false;

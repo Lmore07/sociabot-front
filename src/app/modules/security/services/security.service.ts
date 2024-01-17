@@ -1,15 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {
-  GeneralLoginResponse,
-  LoginRequest,
-} from '../interfaces/login.interface';
+import { LoginRequest, LoginResponse } from '../interfaces/login.interface';
 import { Observable } from 'rxjs';
 import {
-  GeneralSignUpResponse,
   SignUpRequest,
+  SignUpResponse,
 } from '../interfaces/register.interface';
 import { environment } from '../../../../environments/environment.development';
+import { GeneralResponse } from '../../shared-modules/interfaces/global.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -21,8 +19,8 @@ export class SecurityService {
   constructor(private http: HttpClient) {}
 
   //FUNCTIONS
-  login(loginData: LoginRequest): Observable<GeneralLoginResponse> {
-    return this.http.post<GeneralLoginResponse>(
+  login(loginData: LoginRequest): Observable<GeneralResponse<LoginResponse>> {
+    return this.http.post<GeneralResponse<LoginResponse>>(
       environment.apiUrl + '/auth/login',
       null,
       {
@@ -31,8 +29,10 @@ export class SecurityService {
     );
   }
 
-  signUp(signUpData: SignUpRequest): Observable<GeneralSignUpResponse> {
-    return this.http.post<GeneralSignUpResponse>(
+  signUp(
+    signUpData: SignUpRequest
+  ): Observable<GeneralResponse<SignUpResponse>> {
+    return this.http.post<GeneralResponse<SignUpResponse>>(
       environment.apiUrl + '/users',
       signUpData
     );
