@@ -21,6 +21,7 @@ import { CommonModule } from '@angular/common';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { DropdownModule } from 'primeng/dropdown';
 import { AddModuleComponent } from '../../dialogs/modules/add-module/add-module.component';
+import { MoveModuleComponent } from '../../dialogs/modules/move-module/move-module.component';
 
 @Component({
   selector: 'app-modules',
@@ -153,7 +154,35 @@ export class ModulesComponent {
     }
   }
 
-  openDialogStudent(moduleId: string, moduleName: string): void {}
+  openDialogMoveModule(id: string, name: string) {
+    const dialogRef = this.dialogAddmodule.open(MoveModuleComponent, {
+      data: { id, name },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(result);
+      if (result) {
+        this.showToast(
+          'informationToast',
+          'success',
+          'Proceso exitoso',
+          'Módulo creado correctamente'
+        );
+      } else {
+        this.showToast(
+          'informationToast',
+          'error',
+          'Ocurrió un error',
+          'Fallo al crear el módulo'
+        );
+      }
+      if (this.selectedCourse) {
+        this.filterByCourse();
+      } else {
+        this.getAllModules();
+      }
+      console.log('The dialog was closed');
+    });
+  }
 
   openDialogAddmodule(): void {
     const dialogRef = this.dialogAddmodule.open(AddModuleComponent, {
@@ -187,11 +216,44 @@ export class ModulesComponent {
 
   openDialogEditmodule(
     moduleName: string,
-    moduleDescription: string,
+    moduleGoals: string,
+    isPublic: boolean,
     moduleId: string
-  ): void {}
+  ): void {
+    const dialogRef = this.dialogAddmodule.open(AddModuleComponent, {
+      data: {
+        form: { name: moduleName, goals: moduleGoals, isPublic: isPublic },
+        id: moduleId,
+      },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(result);
+      if (result) {
+        this.showToast(
+          'informationToast',
+          'success',
+          'Proceso exitoso',
+          'Módulo creado correctamente'
+        );
+      } else {
+        this.showToast(
+          'informationToast',
+          'error',
+          'Ocurrió un error',
+          'Fallo al crear el módulo'
+        );
+      }
+      if (this.selectedCourse) {
+        this.filterByCourse();
+      } else {
+        this.getAllModules();
+      }
+      console.log('The dialog was closed');
+    });
+  }
 
   handleChange(e: any) {
+    this.selectedCourse = null;
     this.getAllModules();
   }
 
@@ -234,17 +296,41 @@ export class ModulesComponent {
         message = '¿Esta seguro de ' + stringStatus + ' el curso?';
         break;
       case 2:
-        message = 'El curso se logro ' + stringStatus + ' correctamente';
+        message = 'El módulo se logro ' + stringStatus + ' correctamente';
         break;
       case 3:
-        message = 'El curso no se logro ' + stringStatus + ' correctamente';
+        message = 'El módulo no se logro ' + stringStatus + ' correctamente';
         break;
     }
-    console.log(message);
     return message;
   }
 
   callServiceChangeStatus(status: boolean, moduleId: string) {
     this.spinnerStatus = true;
+    this.moduleService.changeStatusModule(moduleId).subscribe(
+      (response) => {
+        this.spinnerStatus = false;
+        this.showToast(
+          'informationToast',
+          'success',
+          'Proceso exitoso',
+          this.messageToastFailed(status, 2)
+        );
+        if (this.selectedCourse) {
+          this.filterByCourse();
+        } else {
+          this.getAllModules();
+        }
+      },
+      (error) => {
+        this.spinnerStatus = false;
+        this.showToast(
+          'informationToast',
+          'error',
+          'Ocurrió un error',
+          this.messageToastFailed(status, 3)
+        );
+      }
+    );
   }
 }

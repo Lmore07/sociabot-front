@@ -87,13 +87,29 @@
           <td>{{ module.isPublic ? "Si" : "No" }}</td>
           <td>{{ module.course.name }}</td>
           <td>
+            @if (module.status){
+            <button
+              pButton
+              pRipple
+              (click)="openDialogMoveModule(module.id, module.course.name)"
+              pTooltip="Mover módulo"
+              tooltipPosition="top"
+              icon="pi pi-arrows-alt"
+              class="p-button-rounded p-button-warning margin-button"
+            ></button>
+            }
             <button
               pButton
               pRipple
               (click)="
-                openDialogEditmodule(module.name, module.description, module.id)
+                openDialogEditmodule(
+                  module.name,
+                  module.goals,
+                  module.isPublic,
+                  module.id
+                )
               "
-              pTooltip="Editar curso"
+              pTooltip="Editar módulo"
               tooltipPosition="top"
               icon="pi pi-pencil"
               class="p-button-rounded p-button-success margin-button"

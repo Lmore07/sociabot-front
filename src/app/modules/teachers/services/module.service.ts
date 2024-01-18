@@ -45,8 +45,8 @@ export class ModuleService {
 
   moveModuleToAnotherCourse(moduleId: string, courseId: string) {
     return this.http.patch<GeneralResponse>(
-      environment.apiUrl + '/modules/' + moduleId + '/move',
-      { courseId }
+      environment.apiUrl + '/modules/' + moduleId + '/move?newCourseId=' + courseId,
+      { }
     );
   }
 }

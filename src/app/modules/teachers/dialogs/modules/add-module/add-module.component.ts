@@ -19,10 +19,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { Observable, map, startWith } from 'rxjs';
+import { Observable, map, skip, startWith } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { ModuleService } from '../../../services/module.service';
 import { TeacherService } from '../../../services/teacher.service';
+import { CoursesResponse } from '../../../interfaces/courses.interface';
 
 @Component({
   selector: 'app-add-module',
@@ -50,6 +51,7 @@ export class AddModuleComponent {
   formGroup!: FormGroup;
   filteredOptions!: Observable<any[]>;
   myControl = new FormControl<any>('', [Validators.required]);
+  courses!: CoursesResponse[];
 
   constructor(
     public dialogRef: MatDialogRef<AddModuleComponent>,
@@ -71,7 +73,7 @@ export class AddModuleComponent {
 
   getCourses() {
     this.teacherService.getMyCoursesByTeacher(true).subscribe((response) => {
-      this.data = Array.from(
+      this.courses = Array.from(
         new Set(
           response.data!.map((course) =>
             JSON.stringify({
@@ -81,11 +83,18 @@ export class AddModuleComponent {
           )
         )
       ).map((course) => JSON.parse(course));
+      if (this.data != null) {
+        let defaultValue = response.data!.find(
+          (course) => course.name === this.data.form.name
+        );
+        this.myControl.patchValue(defaultValue);
+      }
       this.filteredOptions = this.myControl!.valueChanges.pipe(
+        skip(1),
         startWith(''),
         map((value: any) => {
           const name = typeof value === 'string' ? value : value?.name;
-          return name ? this._filter(name as string) : this.data.slice();
+          return name ? this._filter(name as string) : this.courses.slice();
         })
       );
     });
@@ -97,7 +106,7 @@ export class AddModuleComponent {
 
   private _filter(name: string) {
     const filterValue = name.toLowerCase();
-    return this.data.filter((option: { name: string; id: string }) =>
+    return this.courses.filter((option: { name: string; id: string }) =>
       option.name.toLowerCase().includes(filterValue)
     );
   }
@@ -115,34 +124,70 @@ export class AddModuleComponent {
       goals: ['', [Validators.required]],
       isPublic: [true, [Validators.required]],
     });
+    if (this.data != null) {
+      this.addModuleFormGroup.patchValue(this.data.form);
+    }
   }
 
   callServiceAddModule() {
-    console.log(this.myControl.value.id);
-    console.log(this.addModuleFormGroup.value);
     this.addModuleFormGroup.markAllAsTouched();
-    if (this.addModuleFormGroup.valid && this.myControl.valid) {
-      this.spinnerStatus = true;
-      this.moduleService
-        .createModule(this.addModuleFormGroup.value, this.myControl.value.id)
-        .subscribe(
-          (data) => {
-            this.spinnerStatus = false;
-            this.dialogRef.close(true);
-          },
-          (error) => {
-            this.spinnerStatus = false;
-            this.dialogRef.close(false);
-          }
+    if (this.data) {
+      if (this.addModuleFormGroup.valid) {
+        this.spinnerStatus = true;
+        this.editModuleService();
+      } else {
+        this.showToast(
+          'informationToast',
+          'error',
+          'Ocurrió un error',
+          'Por favor, ingrese todos los campos'
         );
+      }
     } else {
-      this.showToast(
-        'informationToast',
-        'error',
-        'Ocurrió un error',
-        'Por favor, ingrese todos los campos'
-      );
+      if (this.addModuleFormGroup.valid && this.myControl.valid) {
+        this.spinnerStatus = true;
+        this.addModuleService();
+      } else {
+        this.showToast(
+          'informationToast',
+          'error',
+          'Ocurrió un error',
+          'Por favor, ingrese todos los campos'
+        );
+      }
     }
+  }
+
+  addModuleService() {
+    this.moduleService
+      .createModule(this.addModuleFormGroup.value, this.myControl.value.id)
+      .subscribe(
+        (data) => {
+          this.spinnerStatus = false;
+          this.dialogRef.close(true);
+        },
+        (error) => {
+          this.spinnerStatus = false;
+          this.dialogRef.close(false);
+        }
+      );
+  }
+
+  editModuleService() {
+    console.log(this.myControl.value);
+    console.log(this.addModuleFormGroup.value);
+    this.moduleService
+      .updateModule(this.addModuleFormGroup.value, this.data.id)
+      .subscribe(
+        (data) => {
+          this.spinnerStatus = false;
+          this.dialogRef.close(true);
+        },
+        (error) => {
+          this.spinnerStatus = false;
+          this.dialogRef.close(false);
+        }
+      );
   }
 
   showToast(keyToast: string, type: string, title: string, message: string) {

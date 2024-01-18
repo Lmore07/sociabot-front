@@ -7,10 +7,11 @@
   <div class="forms">
     <div class="form login">
       <div class="img-titulo">
-        <span class="title">Registro de Módulo</span>
+        <span class="title">{{ data ? "Editar" : "Registrar" }} Módulo</span>
       </div>
       <div>
         <form [formGroup]="addModuleFormGroup">
+          @if (data==null){
           <div class="field-container">
             <mat-form-field
               appearance="fill"
@@ -32,6 +33,7 @@
               <mat-hint>Seleccione el curso</mat-hint>
               <mat-autocomplete
                 #auto="matAutocomplete"
+                [autoActiveFirstOption]="false"
                 [displayWith]="displayFn"
               >
                 @for (option of filteredOptions | async; track option._id) {
@@ -40,13 +42,16 @@
                 </mat-option>
                 }
               </mat-autocomplete>
-              @if (myControl?.hasError('required') && myControl?.touched) {
+              @if (myControl.hasError('required') && myControl.touched) {
               <mat-error>¡Este campo es requerido!</mat-error>
               }
             </mat-form-field>
           </div>
+          }
+
           <div class="container-names">
             <!-- NOMBRE DE MÓDULO -->
+
             <div class="field-container">
               <mat-form-field appearance="fill" class="mat-form-field">
                 <input
