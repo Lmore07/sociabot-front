@@ -1,0 +1,119 @@
+<p-toast key="informationToast"></p-toast>
+@if (spinnerStatus) {
+<loading></loading>
+}
+<p-confirmDialog></p-confirmDialog>
+<div class="card">
+  <p-toolbar styleClass="mb-4 gap-2">
+    <ng-template pTemplate="left">
+      <div class="flex justify-content-center">
+        <form [formGroup]="formGroup">
+          <p-selectButton
+            (onChange)="handleChange($event)"
+            [unselectable]="true"
+            [options]="stateOptions"
+            formControlName="status"
+            optionLabel="label"
+            optionValue="value"
+          ></p-selectButton>
+        </form>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="right">
+      <button
+        pButton
+        pRipple
+        label="Nuevo Módulo"
+        icon="pi pi-plus"
+        (click)="openDialogAddmodule()"
+        class="p-button-success margin-button"
+      ></button>
+      <button
+        pButton
+        pRipple
+        (click)="exportToExcel()"
+        label="Exportar"
+        icon="pi pi-upload"
+        class="p-button-help"
+      ></button>
+    </ng-template>
+  </p-toolbar>
+  <div class="table">
+    <p-table
+      [paginator]="true"
+      [rows]="5"
+      #dt1
+      [rowsPerPageOptions]="[5, 10, 20]"
+      [value]="modules"
+      [tableStyle]="{ 'min-width': '50rem' }"
+    >
+      <ng-template pTemplate="caption">
+        <p-dropdown
+          [options]="coursesNames"
+          [(ngModel)]="selectedCourse"
+          (onChange)="filterByCourse()"
+          optionLabel="name"
+          [filter]="true"
+          filterBy="name"
+          [showClear]="true"
+          placeholder="Selecciona un curso"
+        >
+          <ng-template pTemplate="selectedItem">
+            <div class="flex align-items-center gap-2" *ngIf="selectedCourse">
+              <div>{{ selectedCourse.name }}</div>
+            </div>
+          </ng-template>
+          <ng-template let-course pTemplate="item">
+            <div class="flex align-items-center gap-2">
+              <div>{{ course.name }}</div>
+            </div>
+          </ng-template>
+        </p-dropdown>
+      </ng-template>
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th>Nombre</th>
+          <th>Objetivos</th>
+          <th>Público</th>
+          <th>Curso</th>
+          <th>Acciones</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-module let-columns="columns">
+        <tr>
+          <td>{{ module.name }}</td>
+          <td>{{ module.goals }}</td>
+          <td>{{ module.isPublic ? "Si" : "No" }}</td>
+          <td>{{ module.courses.name }}</td>
+          <td>
+            <button
+              pButton
+              pRipple
+              (click)="
+                openDialogEditmodule(module.name, module.description, module.id)
+              "
+              pTooltip="Editar curso"
+              tooltipPosition="top"
+              icon="pi pi-pencil"
+              class="p-button-rounded p-button-success margin-button"
+            ></button>
+            <button
+              pButton
+              pRipple
+              (click)="
+                activaOrDesactivatemodule(module.status, $event, module.id)
+              "
+              [pTooltip]="
+                module.status ? 'Desactivar módulo' : 'Activar módulo'
+              "
+              tooltipPosition="top"
+              [icon]="iconActions()"
+              class="p-button-rounded p-button-danger"
+            ></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>

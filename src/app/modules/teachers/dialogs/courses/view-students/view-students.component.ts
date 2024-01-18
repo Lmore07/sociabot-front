@@ -1,4 +1,4 @@
-import { TeacherService } from './../../services/teacher.service';
+import { TeacherService } from '../../../services/teacher.service';
 import { Component, Inject, LOCALE_ID } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
@@ -91,8 +91,8 @@ export class ViewStudentsComponent {
     return PrimeIcons.THUMBS_UP_FILL;
   }
 
-  ageCalculate(birth_date: Date) {
-    const fechaNacimientoDate = new Date(birth_date);
+  ageCalculate(birthDate: Date) {
+    const fechaNacimientoDate = new Date(birthDate);
     let edad = this.today.getFullYear() - fechaNacimientoDate.getFullYear();
     return edad + ' años';
   }

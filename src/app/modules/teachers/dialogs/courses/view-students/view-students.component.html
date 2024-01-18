@@ -47,7 +47,7 @@
         <ng-template pTemplate="body" let-student let-columns="columns">
           <tr>
             <td>
-              {{ student.student.first_name + " " + student.student.last_name }}
+              {{ student.student.firstName + " " + student.student.lastName }}
             </td>
             <td>
               {{ student.student.gender == "MALE" ? "Masculino" : "Femenino" }}
@@ -55,7 +55,7 @@
             <td>
               {{ student.student.email }}
             </td>
-            <td>{{ ageCalculate(student.student.birth_date) }}</td>
+            <td>{{ ageCalculate(student.student.birthDate) }}</td>
             <td>
               <button
                 pButton

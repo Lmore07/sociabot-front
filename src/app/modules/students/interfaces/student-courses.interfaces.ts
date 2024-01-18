@@ -18,7 +18,7 @@ interface Course{
 }
 
 interface Teacher{
-    first_name: string;
-    last_name: string;
+    firstName: string;
+    lastName: string;
     id: string;
 }

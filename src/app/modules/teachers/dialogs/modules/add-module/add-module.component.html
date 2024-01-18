@@ -1,0 +1,112 @@
+@if (spinnerStatus) {
+<loading></loading>
+}
+<p-toast key="informationToast"></p-toast>
+<div mat-dialog-content></div>
+<div class="container">
+  <div class="forms">
+    <div class="form login">
+      <div class="img-titulo">
+        <span class="title">Registro de Módulo</span>
+      </div>
+      <div>
+        <form [formGroup]="addModuleFormGroup">
+          <div class="field-container">
+            <form [formGroup]="formGroup">
+              <mat-form-field
+                hideRequiredMarker
+                appearance="fill"
+                class="mat-form-field"
+              >
+                <mat-label>Elija un curso</mat-label>
+                <input
+                  type="text"
+                  matInput
+                  formControlName="courseId"
+                  required
+                  [matAutocomplete]="auto"
+                />
+                <mat-autocomplete  #auto="matAutocomplete">
+                  @for (course of data.courses; track course) {
+                  <mat-option [value]="course.id">{{ course.name }}</mat-option>
+                  }
+                </mat-autocomplete>
+                <mat-icon
+                  matIconPrefix
+                  svgIcon="iconLetter"
+                  aria-hidden="false"
+                ></mat-icon>
+                <mat-hint>Selecciona el curso</mat-hint>
+                @if (formGroup.get('courseId')?.hasError('required') &&
+                formGroup.get('courseId')?.touched) {
+                <mat-error>¡Este campo es requerido!</mat-error>
+                }
+              </mat-form-field>
+            </form>
+          </div>
+          <div class="container-names">
+            <!-- NOMBRE DE MÓDULO -->
+            <div class="field-container">
+              <mat-form-field appearance="fill" class="mat-form-field">
+                <input
+                  formControlName="name"
+                  class="input"
+                  maxlength="50"
+                  type="text"
+                  matInput
+                  placeholder="Nombre de módulo"
+                />
+                <mat-icon
+                  matIconPrefix
+                  svgIcon="iconLetter"
+                  aria-hidden="false"
+                ></mat-icon>
+                <mat-hint>Ingrese el nombre del módulo</mat-hint>
+                @if (addModuleFormGroup.get('name')?.hasError('required') &&
+                addModuleFormGroup.get('name')?.touched) {
+                <mat-error>¡Este campo es requerido!</mat-error>
+                }
+              </mat-form-field>
+            </div>
+            <!-- OBJETIVOS -->
+            <div class="field-container">
+              <mat-form-field appearance="fill" class="mat-form-field">
+                <input
+                  formControlName="goals"
+                  class="input"
+                  type="text"
+                  maxlength="50"
+                  matInput
+                  placeholder="Objetivos del módulo"
+                />
+                <mat-icon
+                  matIconPrefix
+                  svgIcon="iconLetter"
+                  aria-hidden="false"
+                ></mat-icon>
+                <mat-hint>Ingrese los objetivos del módulo</mat-hint>
+                @if (addModuleFormGroup.get('goals')?.hasError('required') &&
+                addModuleFormGroup.get('goals')?.touched) {
+                <mat-error>¡Este campo es requerido!</mat-error>
+                }
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="field-container">
+            <mat-checkbox class="checkbox" formControlName="isPublic"
+              >¿Es de acceso público?</mat-checkbox
+            >
+          </div>
+          <div class="input-field button">
+            <input
+              (click)="callServiceAddModule()"
+              type="submit"
+              value="Guardar"
+            />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions></div>

@@ -16,7 +16,7 @@
               <div class="field-container">
                 <mat-form-field appearance="fill" class="mat-form-field">
                   <input
-                    formControlName="first_name"
+                    formControlName="firstName"
                     class="input"
                     maxlength="50"
                     [pKeyFilter]="allowLetters"
@@ -30,11 +30,11 @@
                     aria-hidden="false"
                   ></mat-icon>
                   <mat-hint>Ingrese su nombre</mat-hint>
-                  @if (signUpFormGroup.get('first_name')?.hasError('required') &&
-                  signUpFormGroup.get('first_name')?.touched) {
+                  @if (signUpFormGroup.get('firstName')?.hasError('required') &&
+                  signUpFormGroup.get('firstName')?.touched) {
                   <mat-error>¡Este campo es requerido!</mat-error>
-                  }@if (signUpFormGroup.get('first_name')?.hasError('pattern') &&
-                  signUpFormGroup.get('first_name')?.touched) {
+                  }@if (signUpFormGroup.get('firstName')?.hasError('pattern') &&
+                  signUpFormGroup.get('firstName')?.touched) {
                   <mat-error>¡Ingrese un nombre válido!</mat-error>
                   }
                 </mat-form-field>
@@ -43,7 +43,7 @@
               <div class="field-container">
                 <mat-form-field appearance="fill" class="mat-form-field">
                   <input
-                    formControlName="last_name"
+                    formControlName="lastName"
                     class="input"
                     [pKeyFilter]="allowLetters"
                     type="text"
@@ -57,11 +57,11 @@
                     aria-hidden="false"
                   ></mat-icon>
                   <mat-hint>Ingrese su apellido</mat-hint>
-                  @if (signUpFormGroup.get('last_name')?.hasError('required') &&
-                  signUpFormGroup.get('last_name')?.touched) {
+                  @if (signUpFormGroup.get('lastName')?.hasError('required') &&
+                  signUpFormGroup.get('lastName')?.touched) {
                   <mat-error>¡Este campo es requerido!</mat-error>
-                  } @if (signUpFormGroup.get('last_name')?.hasError('pattern') &&
-                  signUpFormGroup.get('last_name')?.touched) {
+                  } @if (signUpFormGroup.get('lastName')?.hasError('pattern') &&
+                  signUpFormGroup.get('lastName')?.touched) {
                   <mat-error>¡Ingrese un apellido válido!</mat-error>
                   }
                 </mat-form-field>
@@ -99,7 +99,7 @@
                     [matDatepicker]="picker"
                     [min]="minDate"
                     [max]="maxDate"
-                    formControlName="birth_date"
+                    formControlName="birthDate"
                     class="input"
                     matInput
                     placeholder="Fecha de Nacimiento"
@@ -115,13 +115,13 @@
                     aria-hidden="false"
                   ></mat-icon>
                   <mat-hint>Ingrese su fecha de nacimiento</mat-hint>
-                  @if (signUpFormGroup.get('birth_date')?.hasError('required') &&
-                  signUpFormGroup.get('birth_date')?.touched) {
+                  @if (signUpFormGroup.get('birthDate')?.hasError('required') &&
+                  signUpFormGroup.get('birthDate')?.touched) {
                   <mat-error>¡Este campo es requerido!</mat-error>
-                  }@if (signUpFormGroup.get('birth_date')?.hasError('dateRange')
-                  && signUpFormGroup.get('birth_date')?.touched) {
+                  }@if (signUpFormGroup.get('birthDate')?.hasError('dateRange')
+                  && signUpFormGroup.get('birthDate')?.touched) {
                   <mat-error>
-                    {{ signUpFormGroup.get('birth_date')?.errors?.['dateRange'].message }}
+                    {{ signUpFormGroup.get('birthDate')?.errors?.['dateRange'].message }}
                   </mat-error>
                   }
                 </mat-form-field>

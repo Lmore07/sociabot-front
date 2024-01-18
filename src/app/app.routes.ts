@@ -9,6 +9,7 @@ import { roleGuard } from './modules/shared-modules/guards/role.guard';
 import { CoursesComponent } from './modules/teachers/components/courses/courses.component';
 import { JoinCourseComponent } from './modules/students/components/join-course/join-course.component';
 import { StudentCoursesComponent } from './modules/students/components/student-courses/student-courses.component';
+import { ModulesComponent } from './modules/teachers/components/modules/modules.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -22,11 +23,12 @@ export const routes: Routes = [
       { path: 'home', component: HomeStudents },
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       {
-        path: 'courses', children: [
-          { path: '', component: StudentCoursesComponent},
-          { path: 'join', component: JoinCourseComponent }
-        ]
-      }
+        path: 'courses',
+        children: [
+          { path: '', component: StudentCoursesComponent },
+          { path: 'join', component: JoinCourseComponent },
+        ],
+      },
     ],
   },
   {
@@ -37,6 +39,7 @@ export const routes: Routes = [
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: 'home', component: HomeTeachers },
       { path: 'courses', component: CoursesComponent },
+      { path: 'modules', component: ModulesComponent },
     ],
   },
 ];

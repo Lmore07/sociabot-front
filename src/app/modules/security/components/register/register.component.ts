@@ -182,15 +182,15 @@ export class RegisterComponent {
       ],
       role: ['', [Validators.required, roleUserValidator()]],
       gender: ['', [Validators.required]],
-      first_name: [
+      firstName: [
         '',
         [Validators.required, Validators.pattern(/^[a-zA-ZÀ-ÿ\s]{1,50}$/)],
       ],
-      last_name: [
+      lastName: [
         '',
         [Validators.required, Validators.pattern(/^[a-zA-ZÀ-ÿ\s]{1,50}$/)],
       ],
-      birth_date: ['', [Validators.required, dateRangeValidator()]],
+      birthDate: ['', [Validators.required, dateRangeValidator()]],
     });
   }
 

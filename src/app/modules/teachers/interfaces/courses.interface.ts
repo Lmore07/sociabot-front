@@ -4,7 +4,7 @@ export interface CoursesResponse {
   code: string;
   id: string;
   status: boolean;
-  created_at: Date;
+  createdAt: Date;
 }
 
 export interface CoursesRequest {
