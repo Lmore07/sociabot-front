@@ -165,14 +165,14 @@ export class ModulesComponent {
           'informationToast',
           'success',
           'Proceso exitoso',
-          'Módulo creado correctamente'
+          'Módulo se movió correctamente'
         );
       } else {
         this.showToast(
           'informationToast',
           'error',
           'Ocurrió un error',
-          'Fallo al crear el módulo'
+          'Fallo al mover el módulo'
         );
       }
       if (this.selectedCourse) {
@@ -180,7 +180,6 @@ export class ModulesComponent {
       } else {
         this.getAllModules();
       }
-      console.log('The dialog was closed');
     });
   }
 
