@@ -10,12 +10,12 @@ import { TagModule } from 'primeng/tag';
 import { TooltipModule } from 'primeng/tooltip';
 import { PrimeIcons } from 'primeng/api';
 import { MatDialog } from '@angular/material/dialog';
-import { ViewStudentsComponent } from '../../dialogs/view-students/view-students.component';
-import { AddCourseComponent } from '../../dialogs/add-course/add-course.component';
+import { ViewStudentsComponent } from '../../dialogs/courses/view-students/view-students.component';
+import { AddCourseComponent } from '../../dialogs/courses/add-course/add-course.component';
 import { ToastModule } from 'primeng/toast';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { LoadingComponent } from '../../../shared-modules/shared-components/loading/loading.component';
-import { EditCourseComponent } from '../../dialogs/edit-course/edit-course.component';
+import { EditCourseComponent } from '../../dialogs/courses/edit-course/edit-course.component';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @Component({
@@ -69,7 +69,7 @@ export class CoursesComponent {
       .subscribe(
         (data) => {
           this.spinnerStatus = false;
-          this.courses = data.data;
+          this.courses = data.data!;
         },
         (error) => {
           this.spinnerStatus = false;

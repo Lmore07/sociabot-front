@@ -1,15 +1,8 @@
-export interface GeneralCourseStudentsResponse {
-  statusCode: number;
-  message: string;
-  data: CourseStudentsResponse[];
-  error?: string;
-}
-
 export interface CourseStudentsResponse {
   student: StudentResponse;
   id: string;
   createdAt: Date;
-  updatedAt: Date;
+  updateAt: Date;
 }
 
 export interface StudentResponse {

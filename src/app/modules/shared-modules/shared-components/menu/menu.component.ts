@@ -98,7 +98,7 @@ export class MenuComponent {
       {
         label: 'Progresos',
         icon: 'pi pi-fw pi-chart-line',
-        },
+      },
     ];
   }
 
@@ -110,9 +110,14 @@ export class MenuComponent {
         routerLink: '/teachers/home',
       },
       {
-        label: 'Cursos',
+        label: 'Mis Cursos',
         icon: PrimeIcons.BOOK,
         routerLink: '/teachers/courses',
+      },
+      {
+        label: 'Mis módulos',
+        icon: PrimeIcons.SLACK,
+        routerLink: '/teachers/modules',
       },
     ];
   }

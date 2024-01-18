@@ -114,14 +114,14 @@ export class LoginComponent {
     this.securityService.login(this.loginFormGroup.value).subscribe(
       (data) => {
         this.spinnerStatus = false;
-        sessionStorage.setItem('token', JSON.stringify(data.data.token));
+        sessionStorage.setItem('token', JSON.stringify(data.data?.token));
         this.showToast(
           'informationToast',
           'success',
           'Inicio de sesión exitoso',
           'Bienvenido '
         );
-        if (data.data.role == UserType.STUDENT) {
+        if (data.data?.role == UserType.STUDENT) {
           setTimeout(() => {
             this.router.navigateByUrl('/students');
           }, 1000);
