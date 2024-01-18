@@ -84,8 +84,8 @@ export class ModulesComponent {
           new Set(
             response.data!.map((module) =>
               JSON.stringify({
-                name: module.courses.name,
-                id: module.courses.id,
+                name: module.course.name,
+                id: module.course.id,
               })
             )
           )
@@ -157,7 +157,7 @@ export class ModulesComponent {
 
   openDialogAddmodule(): void {
     const dialogRef = this.dialogAddmodule.open(AddModuleComponent, {
-      data: { courses: this.coursesNames },
+      data: null,
     });
     dialogRef.afterClosed().subscribe((result) => {
       console.log(result);

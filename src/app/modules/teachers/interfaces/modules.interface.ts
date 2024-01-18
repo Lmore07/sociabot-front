@@ -9,7 +9,7 @@ export interface ModuleResponse {
   createdAt: Date;
   updateAt: Date;
   course_id: string;
-  courses: CoursesResponse;
+  course: CoursesResponse;
 }
 
 export interface ModuleRequest{

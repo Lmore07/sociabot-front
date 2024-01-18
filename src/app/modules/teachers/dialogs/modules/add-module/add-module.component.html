@@ -12,37 +12,38 @@
       <div>
         <form [formGroup]="addModuleFormGroup">
           <div class="field-container">
-            <form [formGroup]="formGroup">
-              <mat-form-field
-                hideRequiredMarker
-                appearance="fill"
-                class="mat-form-field"
+            <mat-form-field
+              appearance="fill"
+              class="mat-form-field"
+              hideRequiredMarker
+            >
+              <mat-label>Seleccione el curso</mat-label>
+              <input
+                type="text"
+                matInput
+                [formControl]="myControl"
+                [matAutocomplete]="auto"
+              />
+              <mat-icon
+                matIconPrefix
+                svgIcon="iconLetter"
+                aria-hidden="false"
+              ></mat-icon>
+              <mat-hint>Seleccione el curso</mat-hint>
+              <mat-autocomplete
+                #auto="matAutocomplete"
+                [displayWith]="displayFn"
               >
-                <mat-label>Elija un curso</mat-label>
-                <input
-                  type="text"
-                  matInput
-                  formControlName="courseId"
-                  required
-                  [matAutocomplete]="auto"
-                />
-                <mat-autocomplete  #auto="matAutocomplete">
-                  @for (course of data.courses; track course) {
-                  <mat-option [value]="course.id">{{ course.name }}</mat-option>
-                  }
-                </mat-autocomplete>
-                <mat-icon
-                  matIconPrefix
-                  svgIcon="iconLetter"
-                  aria-hidden="false"
-                ></mat-icon>
-                <mat-hint>Selecciona el curso</mat-hint>
-                @if (formGroup.get('courseId')?.hasError('required') &&
-                formGroup.get('courseId')?.touched) {
-                <mat-error>¡Este campo es requerido!</mat-error>
+                @for (option of filteredOptions | async; track option._id) {
+                <mat-option [value]="option">
+                  {{ option.name }}
+                </mat-option>
                 }
-              </mat-form-field>
-            </form>
+              </mat-autocomplete>
+              @if (myControl?.hasError('required') && myControl?.touched) {
+              <mat-error>¡Este campo es requerido!</mat-error>
+              }
+            </mat-form-field>
           </div>
           <div class="container-names">
             <!-- NOMBRE DE MÓDULO -->

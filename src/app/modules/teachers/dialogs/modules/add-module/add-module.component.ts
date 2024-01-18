@@ -20,7 +20,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { Observable, map, startWith } from 'rxjs';
-import {AsyncPipe} from '@angular/common';
+import { AsyncPipe } from '@angular/common';
+import { ModuleService } from '../../../services/module.service';
+import { TeacherService } from '../../../services/teacher.service';
 
 @Component({
   selector: 'app-add-module',
@@ -47,12 +49,14 @@ export class AddModuleComponent {
   spinnerStatus = false;
   formGroup!: FormGroup;
   filteredOptions!: Observable<any[]>;
-  myControl = new FormControl<string>('');
+  myControl = new FormControl<any>('', [Validators.required]);
 
   constructor(
     public dialogRef: MatDialogRef<AddModuleComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private formAddCourseBuilder: FormBuilder,
+    private moduleService: ModuleService,
+    private teacherService: TeacherService,
     public iconRegistry: MatIconRegistry,
     public sanitizer: DomSanitizer,
     private messageService: MessageService
@@ -62,24 +66,42 @@ export class AddModuleComponent {
   }
 
   ngOnInit() {
-    this.formGroup = new FormGroup({
-      courseId: new FormControl('', [Validators.required]),
+    this.getCourses();
+  }
+
+  getCourses() {
+    this.teacherService.getMyCoursesByTeacher(true).subscribe((response) => {
+      this.data = Array.from(
+        new Set(
+          response.data!.map((course) =>
+            JSON.stringify({
+              name: course.name,
+              id: course.id,
+            })
+          )
+        )
+      ).map((course) => JSON.parse(course));
+      this.filteredOptions = this.myControl!.valueChanges.pipe(
+        startWith(''),
+        map((value: any) => {
+          const name = typeof value === 'string' ? value : value?.name;
+          return name ? this._filter(name as string) : this.data.slice();
+        })
+      );
     });
-    this.filteredOptions = this.formGroup.get('courseId')?.value.valueChanges.pipe(
-      startWith(''),
-      map((value: any) => {
-        const name = typeof value === 'string' ? value : value?.name;
-        return name ? this._filter(name as string) : this.data.courses.slice();
-      })
-    );
+  }
+
+  displayFn(course: { name: string; id: number }): string {
+    return course && course.name ? course.name : '';
   }
 
   private _filter(name: string) {
     const filterValue = name.toLowerCase();
-    return this.data.courses.filter((option: { name: string; id: string }) =>
+    return this.data.filter((option: { name: string; id: string }) =>
       option.name.toLowerCase().includes(filterValue)
     );
   }
+
   registerIcons() {
     this.iconRegistry.addSvgIconLiteral(
       'iconLetter',
@@ -96,6 +118,40 @@ export class AddModuleComponent {
   }
 
   callServiceAddModule() {
-    console.log(this.addModuleFormGroup);
+    console.log(this.myControl.value.id);
+    console.log(this.addModuleFormGroup.value);
+    this.addModuleFormGroup.markAllAsTouched();
+    if (this.addModuleFormGroup.valid && this.myControl.valid) {
+      this.spinnerStatus = true;
+      this.moduleService
+        .createModule(this.addModuleFormGroup.value, this.myControl.value.id)
+        .subscribe(
+          (data) => {
+            this.spinnerStatus = false;
+            this.dialogRef.close(true);
+          },
+          (error) => {
+            this.spinnerStatus = false;
+            this.dialogRef.close(false);
+          }
+        );
+    } else {
+      this.showToast(
+        'informationToast',
+        'error',
+        'Ocurrió un error',
+        'Por favor, ingrese todos los campos'
+      );
+    }
+  }
+
+  showToast(keyToast: string, type: string, title: string, message: string) {
+    this.messageService.clear();
+    this.messageService.add({
+      key: keyToast,
+      severity: type,
+      summary: title,
+      detail: message,
+    });
   }
 }
