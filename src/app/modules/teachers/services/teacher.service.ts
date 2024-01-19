@@ -1,11 +1,12 @@
 import {
   CoursesRequest,
-  GeneralCoursesResponse,
+  CoursesResponse,
 } from './../interfaces/courses.interface';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment.development';
-import { GeneralCourseStudentsResponse } from '../interfaces/courses-students.interface';
+import { GeneralResponse } from '../../shared-modules/interfaces/global.interface';
+import { CourseStudentsResponse } from '../interfaces/courses-students.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -16,13 +17,13 @@ export class TeacherService {
   //FUNCTIONS
   getMyCoursesByTeacher(status: boolean) {
     console.log(status);
-    return this.http.get<GeneralCoursesResponse>(
+    return this.http.get<GeneralResponse<CoursesResponse[]>>(
       environment.apiUrl + '/courses/my-courses?status=' + status
     );
   }
 
   getStudentsByCourse(courseId: string, status: boolean) {
-    return this.http.get<GeneralCourseStudentsResponse>(
+    return this.http.get<GeneralResponse<CourseStudentsResponse[]>>(
       environment.apiUrl +
         '/course-students/' +
         courseId +
@@ -32,21 +33,21 @@ export class TeacherService {
   }
 
   addCourse(course: CoursesRequest) {
-    return this.http.post<GeneralCourseStudentsResponse>(
+    return this.http.post<GeneralResponse>(
       environment.apiUrl + '/courses',
       course
     );
   }
 
   changeStatusCourse(courseId: string) {
-    return this.http.patch<GeneralCourseStudentsResponse>(
+    return this.http.patch<GeneralResponse>(
       environment.apiUrl + '/courses/status/' + courseId,
       null
     );
   }
 
   editCourse(courseId: string, course: CoursesRequest) {
-    return this.http.put<GeneralCourseStudentsResponse>(
+    return this.http.put<GeneralResponse>(
       environment.apiUrl + '/courses/' + courseId,
       course
     );

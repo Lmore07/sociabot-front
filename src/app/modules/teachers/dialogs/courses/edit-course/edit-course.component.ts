@@ -4,9 +4,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { DomSanitizer } from '@angular/platform-browser';
-import { LETTER_ICON } from '../../../../../assets/svg/icons-svg';
+import { LETTER_ICON } from '../../../../../../assets/svg/icons-svg';
 import { CommonModule } from '@angular/common';
-import { LoadingComponent } from '../../../shared-modules/shared-components/loading/loading.component';
+import { LoadingComponent } from '../../../../shared-modules/shared-components/loading/loading.component';
 import { ToastModule } from 'primeng/toast';
 import {
   FormBuilder,
@@ -15,7 +15,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { TeacherService } from '../../services/teacher.service';
+import { TeacherService } from '../../../services/teacher.service';
 
 @Component({
   selector: 'app-edit-course',

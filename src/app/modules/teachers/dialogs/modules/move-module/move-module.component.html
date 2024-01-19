@@ -1,0 +1,61 @@
+@if (spinnerStatus) {
+<loading></loading>
+}
+<p-toast key="informationToast"></p-toast>
+<div mat-dialog-content></div>
+<div class="container">
+  <div class="forms">
+    <div class="form login">
+      <div class="img-titulo">
+        <span class="title">Mover Módulo de Curso</span>
+      </div>
+      <div>
+        <form>
+          <div class="field-container">
+            <mat-form-field
+              appearance="fill"
+              class="mat-form-field"
+              hideRequiredMarker
+            >
+              <mat-label>Seleccione el curso</mat-label>
+              <input
+                type="text"
+                matInput
+                [formControl]="myControl"
+                [matAutocomplete]="auto"
+              />
+              <mat-icon
+                matIconPrefix
+                svgIcon="iconLetter"
+                aria-hidden="false"
+              ></mat-icon>
+              <mat-hint>Seleccione el curso</mat-hint>
+              <mat-autocomplete
+                #auto="matAutocomplete"
+                [autoActiveFirstOption]="false"
+                [displayWith]="displayFn"
+              >
+                @for (option of filteredOptions | async; track option._id) {
+                <mat-option [value]="option">
+                  {{ option.name }}
+                </mat-option>
+                }
+              </mat-autocomplete>
+              @if (myControl?.hasError('required') && myControl?.touched) {
+              <mat-error>¡Este campo es requerido!</mat-error>
+              }
+            </mat-form-field>
+          </div>
+          <div class="input-field button">
+            <input
+              (click)="callServiceMoveModule()"
+              type="submit"
+              value="Guardar"
+            />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions></div>

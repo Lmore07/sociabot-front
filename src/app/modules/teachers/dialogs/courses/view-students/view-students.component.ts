@@ -1,4 +1,4 @@
-import { TeacherService } from './../../services/teacher.service';
+import { TeacherService } from '../../../services/teacher.service';
 import { Component, Inject, LOCALE_ID } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
@@ -64,7 +64,7 @@ export class ViewStudentsComponent {
       .getStudentsByCourse(this.data.courseId, this.formGroup.value['status'])
       .subscribe((data) => {
         console.log(data);
-        this.students = data.data;
+        this.students = data.data!;
       });
   }
   onNoClick(): void {
