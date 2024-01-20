@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
@@ -15,17 +15,43 @@ import { ActivatedRoute } from '@angular/router';
   styleUrl: './chat.component.css'
 })
 export class ChatComponent {
+  constructor(private service: ChatService, private route: ActivatedRoute) { }
+  
   chats: any[] = [];
+  newMessage: string = '';
+  id = '';
 
-  constructor(private service: ChatService, private route: ActivatedRoute){}
+  @ViewChild('chatBox')
+  private chatContainer!: ElementRef;
 
+  ngAfterViewChecked() {
+    this.scrollToBottom();
+  }
+
+  scrollToBottom(): void {
+    this.chatContainer.nativeElement.scrollTop = this.chatContainer.nativeElement.scrollHeight;
+  }
   async ngOnInit() {
-    const id = this.route.snapshot.paramMap.get('id') || '';
+    this.id = this.route.snapshot.paramMap.get('id') || '';
 
-     (await this.service.getMessages(id)).subscribe((data: any) => {
+    (await this.service.getMessages(this.id)).subscribe((data: any) => {
+      console.log(data);
       this.chats = data.data.interactions;
-      console.log(this.chats);
     });
+  }
+
+  async sendMessage() {
+    (await this.service.sendMessage(this.id, this.newMessage)).subscribe((data: any) => {
+      this.chats.push({ message: this.newMessage, user: 'user', date: new Date() });
+      this.chats.push(data.data);
+      this.newMessage = '';
+    });
+  }
+
+  handleKeyPress($event: KeyboardEvent) {
+    if ($event.key === 'Enter') {
+      this.sendMessage();
+    }
   }
 
 }

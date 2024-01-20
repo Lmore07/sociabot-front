@@ -14,4 +14,11 @@ export class ChatService {
       environment.apiUrl + '/chats/get-chat/' + id,
     );
   }
+
+  async sendMessage(id: string, message: string) {
+    return this.http.post(
+      environment.apiUrl + '/chats/new-message',
+      { message, chatId: id }
+    );
+  }
 }

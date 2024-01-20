@@ -2,7 +2,7 @@
 <div class="tw-container">
     <p-card>
         <div class="tw-flex tw-flex-col">
-            <div class="tw-flex-grow tw-overflow-y-auto">
+            <div class="tw-flex-grow tw-overflow-y-auto" #chatBox style="scroll-behavior: smooth; height: 400px;">
                 <div class="tw-flex tw-flex-col tw-space-y-4 tw-p-4">
                     <!-- Mensajes del chat -->
                     @for (message of chats; track message.id) {
@@ -28,8 +28,8 @@
             <div class="tw-p-4">
                 <!-- Formulario de envío de mensajes -->
                 <div class="tw-flex">
-                    <input type="text" class="tw-flex-grow tw-rounded-l-lg tw-border tw-border-gray-300 tw-p-2" placeholder="Escribe un mensaje...">
-                    <button class="tw-bg-blue-500 tw-text-white tw-rounded-r-lg tw-px-4 tw-py-2">Enviar</button>
+                    <input type="text" class="tw-flex-grow tw-rounded-l-lg tw-border tw-border-gray-300 tw-p-2" placeholder="Escribe un mensaje..." [(ngModel)]="newMessage" (keyup)="handleKeyPress($event)">
+                    <button class="tw-bg-blue-500 tw-text-white tw-rounded-r-lg tw-px-4 tw-py-2" (click)="sendMessage()">Enviar</button>
                 </div>
                 <!-- Fin del formulario de envío de mensajes -->
             </div>
