@@ -41,7 +41,7 @@
                 </mat-option>
                 }
               </mat-autocomplete>
-              @if (myControl?.hasError('required') && myControl?.touched) {
+              @if (myControl.hasError('required') && myControl.touched) {
               <mat-error>¡Este campo es requerido!</mat-error>
               }
             </mat-form-field>
