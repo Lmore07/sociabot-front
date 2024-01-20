@@ -16,6 +16,7 @@ import {
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { MatNativeDateModule } from '@angular/material/core';
 import { AuthInterceptor } from './modules/shared-modules/shared-interceptors/auth.interceptor';
+import { SpinnerInterceptor } from './spinner/spinner.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -30,5 +31,6 @@ export const appConfig: ApplicationConfig = {
     provideAnimations(),
     importProvidersFrom(MatNativeDateModule),
     { provide: LOCALE_ID, useValue: 'es' },
+    { provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi: true }
   ],
 };

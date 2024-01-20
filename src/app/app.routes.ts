@@ -10,6 +10,7 @@ import { CoursesComponent } from './modules/teachers/components/courses/courses.
 import { JoinCourseComponent } from './modules/students/components/join-course/join-course.component';
 import { StudentCoursesComponent } from './modules/students/components/student-courses/student-courses.component';
 import { ModulesComponent } from './modules/teachers/components/modules/modules.component';
+import { ChatComponent } from './modules/students/components/chat/chat.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -29,6 +30,10 @@ export const routes: Routes = [
           { path: 'join', component: JoinCourseComponent },
         ],
       },
+      {
+        path: 'chat/:id',
+        component: ChatComponent,
+      }
     ],
   },
   {
