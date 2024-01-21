@@ -18,7 +18,6 @@ export class SpinnerInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    console.log(req);
     if (req.url.includes('chats')) {
       this.spinnerService.hide();
     }else{
