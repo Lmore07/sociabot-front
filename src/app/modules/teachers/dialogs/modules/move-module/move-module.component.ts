@@ -78,7 +78,7 @@ export class MoveModuleComponent {
           )
         )
       ).map((course) => JSON.parse(course));
-      let defaultValue = this.courses!.find(
+      let defaultValue = this.courses.find(
         (course) => course.name === this.data.name
       );
       this.myControl.patchValue(defaultValue);
