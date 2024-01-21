@@ -1,1 +1,42 @@
 @import '../../../../../assets/styles/tailwind.css';
+
+
+.loading-indicator {
+    display: flex;
+    position: relative;
+    width: 80px;
+    padding-bottom: 15px;
+  }
+  
+  .loading-indicator span {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: #333;
+    animation: loading-indicator 1.2s linear infinite;
+  }
+  
+  .loading-indicator span:nth-child(1) {
+    left: 8px;
+    animation-delay: 0s;
+  }
+  
+  .loading-indicator span:nth-child(2) {
+    left: 32px;
+    animation-delay: 0.2s;
+  }
+  
+  .loading-indicator span:nth-child(3) {
+    left: 56px;
+    animation-delay: 0.4s;
+  }
+  
+  @keyframes loading-indicator {
+    0%, 80%, 100% {
+      opacity: 0;
+    }
+    40% {
+      opacity: 1;
+    }
+  }

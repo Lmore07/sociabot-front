@@ -1,39 +1,58 @@
 <!-- FILEPATH: /home/sociabot-front/src/app/modules/students/components/chat/chat.component.html -->
-<div class="tw-container">
-    <p-card>
-        <div class="tw-flex tw-flex-col">
-            <div class="tw-flex-grow tw-overflow-y-auto" #chatBox style="scroll-behavior: smooth; height: 400px;">
-                <div class="tw-flex tw-flex-col tw-space-y-4 tw-p-4">
-                    <!-- Mensajes del chat -->
-                    @for (message of chats; track message.id) {
-
-                        @if (message.user === 'assistant') {
-                            <div class="tw-flex">
-                                <div class="tw-bg-gray-200 tw-rounded-lg tw-p-2">
-                                    <p class="tw-text-gray-800">{{ message.message }}</p>
-                                </div>
-                            </div>
-                        } 
-                        @else {
-                            <div class="tw-flex tw-items-end tw-justify-end">
-                                <div class="tw-bg-blue-500 tw-rounded-lg tw-p-2">
-                                    <p class="tw-text-white">{{ message.message }}</p>
-                                </div>
-                            </div>
-                        }
-                    }
-                    <!-- Fin de los mensajes del chat -->
-                </div>
+<p-toast key="informationToast"></p-toast>
+<div class="">
+  <p-card>
+    <div class="tw-flex tw-flex-col">
+      <div
+        class="tw-flex-grow tw-overflow-y-auto"
+        #chatBox
+        style="scroll-behavior: smooth; height: 400px"
+      >
+        <div class="tw-flex tw-flex-col tw-space-y-4 tw-p-4">
+          <!-- Mensajes del chat -->
+          @for (message of chats; track message.id) { @if (message.user ===
+          'assistant') {
+          <div class="tw-flex">
+            <div class="tw-bg-gray-200 tw-rounded-lg tw-p-2">
+              @if (message.message === 'typing'){
+              <div class="loading-indicator">
+                <span>.</span><span>.</span><span>.</span>
+              </div>
+              }@else{
+              <p class="tw-text-gray-800">{{ message.message }}</p>
+              }
             </div>
-            <div class="tw-p-4">
-                <!-- Formulario de envío de mensajes -->
-                <div class="tw-flex">
-                    <input type="text" class="tw-flex-grow tw-rounded-l-lg tw-border tw-border-gray-300 tw-p-2" placeholder="Escribe un mensaje..." [(ngModel)]="newMessage" (keyup)="handleKeyPress($event)">
-                    <button class="tw-bg-blue-500 tw-text-white tw-rounded-r-lg tw-px-4 tw-py-2" (click)="sendMessage()">Enviar</button>
-                </div>
-                <!-- Fin del formulario de envío de mensajes -->
+          </div>
+          } @else {
+          <div class="tw-flex tw-items-end tw-justify-end">
+            <div class="tw-bg-blue-500 tw-rounded-lg tw-p-2">
+              <p class="tw-text-white">{{ message.message }}</p>
             </div>
+          </div>
+          } }
+          <!-- Fin de los mensajes del chat -->
         </div>
-    </p-card>
+      </div>
+      <div class="tw-p-4">
+        <!-- Formulario de envío de mensajes -->
+        <div class="tw-flex">
+          <input
+            type="text"
+            class="tw-flex-grow tw-rounded-l-lg tw-border tw-border-gray-300 tw-p-2"
+            placeholder="Escribe un mensaje..."
+            [(ngModel)]="newMessage"
+            (keyup)="handleKeyPress($event)"
+          />
+          <button
+            [disabled]="isLoading"
+            class="tw-bg-blue-500 tw-text-white tw-rounded-r-lg tw-px-4 tw-py-2"
+            (click)="sendMessage()"
+          >
+            Enviar
+          </button>
+        </div>
+        <!-- Fin del formulario de envío de mensajes -->
+      </div>
+    </div>
+  </p-card>
 </div>
-
