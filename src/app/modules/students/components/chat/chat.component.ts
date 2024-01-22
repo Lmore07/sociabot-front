@@ -28,6 +28,7 @@ export class ChatComponent {
   id = '';
   isLoading: boolean = false;
   visible: any;
+  status!: boolean;
 
   @ViewChild('chatBox')
   private chatContainer!: ElementRef;
@@ -45,7 +46,8 @@ export class ChatComponent {
     this.id = this.route.snapshot.paramMap.get('chatId') || '';
     (await this.service.getMessages(this.id)).subscribe((data: any) => {
       this.chats = data.data.interactions;
-
+      this.status = data.data.status;
+      
       if (this.chats.length == 0)
         this.showDialog();
     });

@@ -29,6 +29,7 @@
           <!-- Fin de los mensajes del chat -->
         </div>
       </div>
+      @if (status) {
       <div class="tw-p-4">
         <!-- Formulario de envío de mensajes -->
         <div class="tw-flex">
@@ -42,17 +43,18 @@
         </div>
         <!-- Fin del formulario de envío de mensajes -->
       </div>
+      }
     </div>
   </p-card>
 </div>
 <p-dialog [(visible)]="visible" [breakpoints]="{ '960px': '75vw' }" [style]="{ width: '50vw' }" [draggable]="false"
   [resizable]="false" header="Indicaciones para empezar a chatear" class="tw-shadow-2xl">
   <ol>
-    <li>Para empezar a chatear con el asistente, escribe un mensaje en el cuadro de texto y presiona el botón
+    <li>Para empezar a chatear con el asistente, escribe un mensaje en el cuadro de texto y presiona <strong>Enter</strong> o el botón
       <strong>Enviar</strong>.
     </li>
     <li>El asistente te responderá con un mensaje.</li>
     <li>Si deseas enviar otro mensaje, repite el paso 1.</li>
-    <li>Si deseas salir del chat, presiona el botón <strong>volver</strong> del navegador.</li>
+    <li>Si deseas salir del chat, presiona el botón <strong>Volver</strong> del navegador.</li>
   </ol>
 </p-dialog>
