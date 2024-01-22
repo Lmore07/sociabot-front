@@ -1,0 +1,38 @@
+<div class="card">
+  <p-toolbar styleClass="mb-4 gap-2">
+    <ng-template pTemplate="left"></ng-template>
+    <ng-template pTemplate="right">
+      <button pButton pRipple label="Nuevo chat" icon="pi pi-plus" class="p-button-success margin-button"
+      (click)="newChat()"></button>
+    </ng-template>
+  </p-toolbar>
+    <div class="table">
+      <p-table [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5, 10, 20]" [value]="modules"
+        [tableStyle]="{ 'min-width': '50rem' }">
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th>#</th>
+            <th>Último mensaje</th>
+            <th>Acciones</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product let-columns="columns">
+          <tr>
+            <td>{{ product.index }}</td>
+            <td>{{ product.updatedAt }}</td>
+            <td>
+              <button
+                  pButton
+                  pRipple
+                  pTooltip="Abrir chat"
+                  tooltipPosition="top"
+                  icon="pi pi-folder-open"
+                  class="p-button-rounded p-button-success margin-button tw-mr-1"
+                  [routerLink]="[product.id]"
+                ></button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>

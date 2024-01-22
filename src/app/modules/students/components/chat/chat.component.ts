@@ -39,7 +39,7 @@ export class ChatComponent {
       this.chatContainer.nativeElement.scrollHeight;
   }
   async ngOnInit() {
-    this.id = this.route.snapshot.paramMap.get('id') || '';
+    this.id = this.route.snapshot.paramMap.get('chatId') || '';
     (await this.service.getMessages(this.id)).subscribe((data: any) => {
       console.log(data);
       this.chats = data.data.interactions;
@@ -56,11 +56,11 @@ export class ChatComponent {
       });
       this.isLoading = true;
       this.chats.push({ message: 'typing', user: 'assistant' });
-      this.newMessage = '';
       (await this.service.sendMessage(this.id, messageToSend)).subscribe(
         (data: any) => {
           this.chats.pop();
           this.chats.push(data.data);
+          this.newMessage = '';
           this.isLoading = false;
         },
         (error) => {
@@ -71,6 +71,7 @@ export class ChatComponent {
           );
           this.chats.pop();
           this.chats.pop();
+          this.isLoading = false;
         }
       );
     } else {

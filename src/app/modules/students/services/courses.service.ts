@@ -22,4 +22,23 @@ export class CoursesService {
       { courseCode: code }
     );
   }
+
+  getModulesByCourse(courseId: string) {
+    return this.http.get(
+      environment.apiUrl + `/modules/${courseId}?status=true`
+    );
+  }
+
+  getChatsByModule(moduleId: string) {
+    return this.http.get(
+      environment.apiUrl + `/chats/get-chats/${moduleId}`
+    );
+  }
+
+  newChat(moduleId: string) {
+    return this.http.post(
+      environment.apiUrl + `/chats/create-chat`,
+      { moduleId }
+    );
+  }
 }

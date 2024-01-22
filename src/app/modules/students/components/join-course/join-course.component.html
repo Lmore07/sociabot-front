@@ -1,5 +1,5 @@
 <p-toast key="informationToast"></p-toast>
-<div class="tw-flex tw-justify-center tw-h-screen">
+<div class="tw-flex tw-justify-center ">
     <p-card header="Unirse a un curso" subheader="Ingresa el código proporcionado por tu profesor" [style]="{ width: '360px' }">
         <ng-template pTemplate="header">
             <img alt="Card" src="https://primefaces.org/cdn/primeng/images/usercard.png" />
@@ -9,8 +9,8 @@
         </div>
         <ng-template pTemplate="footer">
             <p-button label="Ingresar" icon="pi pi-check" (onClick)="joinCourse()"></p-button>
-            <p-button label="Cancelar" icon="pi pi-times" styleClass="p-button-secondary"
-                [style]="{ 'margin-left': '.5em' }"></p-button>
+            <!-- <p-button label="Cancelar" icon="pi pi-times" styleClass="p-button-secondary"
+                [style]="{ 'margin-left': '.5em' }"></p-button> -->
         </ng-template>
     </p-card>
 </div>
