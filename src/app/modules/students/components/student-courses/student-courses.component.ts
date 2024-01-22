@@ -8,10 +8,11 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { TooltipModule } from 'primeng/tooltip';
 import { MyCoursesResponse } from '../../interfaces/student-courses.interfaces';
 import { CoursesService } from '../../services/courses.service';
-import { PrimeIcons } from 'primeng/api';
+import { MessageService, PrimeIcons } from 'primeng/api';
 import { DialogModule } from 'primeng/dialog';
 import { JoinCourseComponent } from '../join-course/join-course.component';
 import { RouterModule } from '@angular/router';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-student-courses',
@@ -26,15 +27,17 @@ import { RouterModule } from '@angular/router';
     TooltipModule,
     DialogModule,
     JoinCourseComponent,
-    RouterModule
+    RouterModule,
+    ToastModule
   ],
   templateUrl: './student-courses.component.html',
-  styleUrl: './student-courses.component.css'
+  styleUrl: './student-courses.component.css',
+  providers: [MessageService],
 })
 export class StudentCoursesComponent {
 
   visible: any;
-  constructor(private service: CoursesService) { }
+  constructor(private service: CoursesService, private messageService: MessageService) { }
   courses!: MyCoursesResponse[];
   formGroup!: FormGroup;
 
@@ -55,6 +58,12 @@ export class StudentCoursesComponent {
       .subscribe((data) => {
         console.log(data);
         this.courses = data.data;
+      }, (err: any) => {
+        this.showToast(
+          'info',
+          'Ocurrió un error',
+          'Lo sentimos no se pudo obtener los cursos 🙁'
+        );
       });
   }
   iconActions() {
@@ -79,5 +88,15 @@ export class StudentCoursesComponent {
 
   showDialog() {
     this.visible = true;
+  }
+
+  showToast(type: string, title: string, message: string) {
+    this.messageService.clear();
+    this.messageService.add({
+      key: 'informationToast',
+      severity: type,
+      summary: title,
+      detail: message,
+    });
   }
 }

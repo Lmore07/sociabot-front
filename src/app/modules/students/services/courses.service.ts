@@ -41,4 +41,10 @@ export class CoursesService {
       { moduleId }
     );
   }
+
+  getObservations(chatId: string) {
+    return this.http.get(
+      environment.apiUrl + `/chats/get-observations/${chatId}`
+    );
+  }
 }

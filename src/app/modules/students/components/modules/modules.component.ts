@@ -7,8 +7,9 @@ import { TagModule } from 'primeng/tag';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TooltipModule } from 'primeng/tooltip';
 import { CoursesService } from '../../services/courses.service';
-import { PrimeIcons } from 'primeng/api';
+import { MessageService, PrimeIcons } from 'primeng/api';
 import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ToastModule } from 'primeng/toast';
 
 
 @Component({
@@ -22,17 +23,19 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
     ReactiveFormsModule,
     TagModule,
     TooltipModule,
-    RouterModule
+    RouterModule,
+    ToastModule
   ],
   templateUrl: './modules.component.html',
-  styleUrl: './modules.component.css'
+  styleUrl: './modules.component.css',
+  providers: [MessageService],
 })
 export class ModulesComponent {
   modules!: any[];
   id = '';
 
     
-    constructor(private service: CoursesService, private route: ActivatedRoute,) { }
+    constructor(private service: CoursesService, private route: ActivatedRoute, private messageService: MessageService) { }
 
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('courseId') || '';
@@ -44,6 +47,12 @@ export class ModulesComponent {
       .subscribe((res: any) => {
         this.modules = res.data;
         console.log(this.modules);
+      }, (err: any) => {
+        this.showToast(
+          'info',
+          'Ocurrió un error',
+          'Lo sentimos no se pudo obtener los módulos 🙁'
+        );
       });
   }
 
@@ -61,4 +70,13 @@ export class ModulesComponent {
     this.getModules();
   }
 
+  showToast(type: string, title: string, message: string) {
+    this.messageService.clear();
+    this.messageService.add({
+      key: 'informationToast',
+      severity: type,
+      summary: title,
+      detail: message,
+    });
+  }
 }

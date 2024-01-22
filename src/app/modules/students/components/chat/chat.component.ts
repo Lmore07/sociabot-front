@@ -6,11 +6,12 @@ import { ToastModule } from 'primeng/toast';
 import { ChatService } from '../../services/chat.service';
 import { ActivatedRoute } from '@angular/router';
 import { MessageService } from 'primeng/api';
+import { DialogModule } from 'primeng/dialog';
 
 @Component({
   selector: 'app-chat',
   standalone: true,
-  imports: [CardModule, ButtonModule, FormsModule, ToastModule],
+  imports: [CardModule, ButtonModule, FormsModule, ToastModule, DialogModule],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.css',
   providers: [MessageService],
@@ -26,6 +27,8 @@ export class ChatComponent {
   newMessage: string = '';
   id = '';
   isLoading: boolean = false;
+  visible: any;
+  status!: boolean;
 
   @ViewChild('chatBox')
   private chatContainer!: ElementRef;
@@ -38,16 +41,21 @@ export class ChatComponent {
     this.chatContainer.nativeElement.scrollTop =
       this.chatContainer.nativeElement.scrollHeight;
   }
+
   async ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('chatId') || '';
     (await this.service.getMessages(this.id)).subscribe((data: any) => {
-      console.log(data);
       this.chats = data.data.interactions;
+      this.status = data.data.status;
+      
+      if (this.chats.length == 0)
+        this.showDialog();
     });
   }
 
   async sendMessage() {
-    if (this.newMessage != '') {
+    if (this.newMessage != '' && !this.isLoading) {
+      this.visible = false;
       let messageToSend = this.newMessage;
       this.chats.push({
         message: this.newMessage,
@@ -97,5 +105,9 @@ export class ChatComponent {
       summary: title,
       detail: message,
     });
+  }
+
+  showDialog() {
+    this.visible = true;
   }
 }

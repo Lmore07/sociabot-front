@@ -8,11 +8,12 @@
   </p-toolbar>
     <div class="table">
       <p-table [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5, 10, 20]" [value]="modules"
-        [tableStyle]="{ 'min-width': '50rem' }">
+        [tableStyle]="{ 'min-width': '50rem' }" styleClass="p-datatable-striped">
         <ng-template pTemplate="header" let-columns>
           <tr>
             <th>#</th>
             <th>Último mensaje</th>
+            <th>Retroalimentación</th>
             <th>Acciones</th>
           </tr>
         </ng-template>
@@ -20,6 +21,7 @@
           <tr>
             <td>{{ product.index }}</td>
             <td>{{ product.updatedAt }}</td>
+            <td>{{ product.observations }}</td>
             <td>
               <button
                   pButton
@@ -30,9 +32,19 @@
                   class="p-button-rounded p-button-success margin-button tw-mr-1"
                   [routerLink]="[product.id]"
                 ></button>
+                <button
+                  pButton
+                  pRipple
+                  pTooltip="Obtener retroalimentación"
+                  tooltipPosition="top"
+                  icon="pi pi-comment"
+                  class="p-button-rounded p-button-info margin-button tw-ml-1"
+                  (click)="getObservations(product.id)"
+                  ></button>
             </td>
           </tr>
         </ng-template>
       </p-table>
     </div>
   </div>
+<p-toast key="informationToast"></p-toast>
