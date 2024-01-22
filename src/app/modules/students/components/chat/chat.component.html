@@ -6,8 +6,8 @@
       <div class="tw-flex-grow tw-overflow-y-auto" #chatBox style="scroll-behavior: smooth; height: 400px">
         <div class="tw-flex tw-flex-col tw-space-y-4 tw-p-4">
           <!-- Mensajes del chat -->
-          @for (message of chats; track message.id) { 
-            @if (message.user === 'assistant') {
+          @for (message of chats; track message.id) {
+          @if (message.user === 'assistant') {
           <div class="tw-flex">
             <div class="tw-bg-gray-200 tw-rounded-lg tw-p-2">
               @if (message.message === 'typing'){
@@ -32,8 +32,9 @@
       <div class="tw-p-4">
         <!-- Formulario de envío de mensajes -->
         <div class="tw-flex">
-          <input type="text" class="tw-flex-grow tw-rounded-l-lg tw-border tw-border-gray-300 tw-p-2"
-            placeholder="Escribe un mensaje..." [(ngModel)]="newMessage" (keyup)="handleKeyPress($event)" />
+          <input type="text" [disabled]="isLoading"
+            class="tw-flex-grow tw-rounded-l-lg tw-border tw-border-gray-300 tw-p-2" placeholder="Escribe un mensaje..."
+            [(ngModel)]="newMessage" (keyup)="handleKeyPress($event)" />
           <button [disabled]="isLoading" class="tw-bg-blue-500 tw-text-white tw-rounded-r-lg tw-px-4 tw-py-2"
             (click)="sendMessage()">
             Enviar
@@ -44,3 +45,14 @@
     </div>
   </p-card>
 </div>
+<p-dialog [(visible)]="visible" [breakpoints]="{ '960px': '75vw' }" [style]="{ width: '50vw' }" [draggable]="false"
+  [resizable]="false" header="Indicaciones para empezar a chatear" class="tw-shadow-2xl">
+  <ol>
+    <li>Para empezar a chatear con el asistente, escribe un mensaje en el cuadro de texto y presiona el botón
+      <strong>Enviar</strong>.
+    </li>
+    <li>El asistente te responderá con un mensaje.</li>
+    <li>Si deseas enviar otro mensaje, repite el paso 1.</li>
+    <li>Si deseas salir del chat, presiona el botón <strong>volver</strong> del navegador.</li>
+  </ol>
+</p-dialog>
