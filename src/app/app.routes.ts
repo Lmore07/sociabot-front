@@ -11,6 +11,8 @@ import { JoinCourseComponent } from './modules/students/components/join-course/j
 import { StudentCoursesComponent } from './modules/students/components/student-courses/student-courses.component';
 import { ModulesComponent } from './modules/teachers/components/modules/modules.component';
 import { ChatComponent } from './modules/students/components/chat/chat.component';
+import { ModulesComponent as StudentModules } from './modules/students/components/modules/modules.component';
+import { ListChatsComponent } from './modules/students/components/list-chats/list-chats.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -28,12 +30,25 @@ export const routes: Routes = [
         children: [
           { path: '', component: StudentCoursesComponent },
           { path: 'join', component: JoinCourseComponent },
+          {
+            path: ':courseId/modules', children: [
+              { path: '', component: StudentModules },
+              {
+                path: ':moduleId', children: [
+                  { path: 'chats', children: [
+                    { path: '', component: ListChatsComponent },
+                    {
+                      path: ':chatId',
+                      component: ChatComponent,
+                    }
+                  ] },
+                ]
+              },
+            ]
+          },
         ],
       },
-      {
-        path: 'chat/:id',
-        component: ChatComponent,
-      }
+
     ],
   },
   {

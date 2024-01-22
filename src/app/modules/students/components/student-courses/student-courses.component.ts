@@ -9,6 +9,9 @@ import { TooltipModule } from 'primeng/tooltip';
 import { MyCoursesResponse } from '../../interfaces/student-courses.interfaces';
 import { CoursesService } from '../../services/courses.service';
 import { PrimeIcons } from 'primeng/api';
+import { DialogModule } from 'primeng/dialog';
+import { JoinCourseComponent } from '../join-course/join-course.component';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-student-courses',
@@ -21,15 +24,20 @@ import { PrimeIcons } from 'primeng/api';
     ReactiveFormsModule,
     TagModule,
     TooltipModule,
+    DialogModule,
+    JoinCourseComponent,
+    RouterModule
   ],
   templateUrl: './student-courses.component.html',
   styleUrl: './student-courses.component.css'
 })
 export class StudentCoursesComponent {
-  constructor(private service: CoursesService) {}
+
+  visible: any;
+  constructor(private service: CoursesService) { }
   courses!: MyCoursesResponse[];
   formGroup!: FormGroup;
-  
+
   stateOptions: any[] = [
     { label: 'Activos', value: true },
     { label: 'Inactivos', value: false },
@@ -67,5 +75,9 @@ export class StudentCoursesComponent {
 
   handleChange(e: any) {
     this.getCourses();
+  }
+
+  showDialog() {
+    this.visible = true;
   }
 }
