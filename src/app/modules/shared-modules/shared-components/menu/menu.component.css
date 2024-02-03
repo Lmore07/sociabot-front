@@ -1,48 +1,46 @@
 @import '../../../../../assets/styles/variables.css';
+@import "../../../../../../node_modules/ng-zorro-antd/ng-zorro-antd.min.css";  /* Import one component's styles */
 
-*{
-  overflow: hidden;
+.logo {
+  height: 32px;
+  margin: 16px;
+  background: rgba(255, 255, 255, 0.3);
 }
-  .example-container {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-  }
 
-  header {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 60px;
-    background: var(--background-gradient);
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    display: flex;
-    align-items: center;
-    padding: 0 16px;
-  }
+nz-header {
+  background: #fff;
+  padding: 0;
+}
 
-  mat-sidenav{
-    padding-top: 60px;
-    width: 250px;
-    background: var(--background-gradient);
-  }
+nz-content {
+  margin: 10px 10px;
+}
 
-  i{
-    cursor: pointer;
-  }
+.avatar{
+  cursor: pointer;
+  background-color: #87d068;
+}
 
-  aside {
-    height: 100%;
-    background: var(--background-gradient);
-    box-shadow: 0 0 10px rgba(0,0,0,0.2);
-  }
+nz-sider{
+  height: 100dvh;
+}
 
-  mat-sidenav-content {
-    padding-top: 80px;
-    padding-left: 16px;
-    padding-right: 16px;
-  }
+.inner-content {
+  padding: 24px;
+  background: #fff;
+  min-height: 50dvh;
+  border-radius: 15px;
+}
+
+.trigger {
+  font-size: 18px;
+  line-height: 64px;
+  color: #fff;
+  padding-left: 5px;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.trigger:hover {
+  color: #f0c0c0;
+}

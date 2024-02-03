@@ -1,9 +1,10 @@
+import { NzLayoutModule, NzSiderComponent } from 'ng-zorro-antd/layout';
 import { Component, ViewChild } from '@angular/core';
 import { MENU_ICON } from '../../../../../assets/svg/icons-svg';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
-import { MenuItem, PrimeIcons } from 'primeng/api';
-import { ActivatedRoute, RouterOutlet, UrlSegment } from '@angular/router';
+import { MenuItem } from 'primeng/api';
+import { ActivatedRoute, RouterOutlet } from '@angular/router';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { SidebarModule } from 'primeng/sidebar';
 import { ButtonModule } from 'primeng/button';
@@ -11,20 +12,34 @@ import { AvatarModule } from 'primeng/avatar';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { UserType } from '../../../security/enums/user-type.enum';
+import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzFlexModule } from 'ng-zorro-antd/flex';
+import { NzAvatarModule } from 'ng-zorro-antd/avatar';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 
 @Component({
   selector: 'app-menu',
   standalone: true,
   imports: [
     RouterOutlet,
+    NzFlexModule,
+    NzAvatarModule,
+    NzButtonModule,
+    NzDropDownModule,
     AvatarModule,
     ButtonModule,
     PanelMenuModule,
+    NzIconModule,
     MatToolbarModule,
+    NzMenuModule,
     MatIconModule,
+    NzLayoutModule,
     SidebarModule,
     MatSidenavModule,
   ],
+  providers: [],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.css',
 })
@@ -33,6 +48,7 @@ export class MenuComponent {
   items!: MenuItem[];
   @ViewChild('sidenav') sidenav!: MatSidenav;
   menuType!: UserType;
+  isCollapsed: boolean = false;
 
   constructor(
     public iconRegistry: MatIconRegistry,
@@ -68,36 +84,41 @@ export class MenuComponent {
     );
   }
 
+  closeSession() {
+    sessionStorage.clear();
+    location.reload();
+  }
+
   menuStudent() {
     return [
       {
         label: 'Cursos',
-        icon: 'pi pi-fw pi-file',
+        icon: 'file',
         routerLink: '/students/courses',
         items: [
           {
             label: 'Ver',
-            icon: 'pi pi-fw pi-eye',
+            icon: 'eye',
             routerLink: '/students/courses',
           },
           {
             label: 'Nuevo',
-            icon: 'pi pi-fw pi-plus',
+            icon: 'plus',
             routerLink: '/students/courses/join',
           },
           {
             label: 'Lecciones',
-            icon: 'pi pi-fw pi-book',
+            icon: 'book',
           },
         ],
       },
       {
         label: 'Perfil',
-        icon: 'pi pi-fw pi-user',
+        icon: 'user',
       },
       {
         label: 'Progresos',
-        icon: 'pi pi-fw pi-chart-line',
+        icon: 'bar-chart',
       },
     ];
   }
@@ -106,17 +127,17 @@ export class MenuComponent {
     return [
       {
         label: 'Inicio',
-        icon: PrimeIcons.HOME,
+        icon: 'home',
         routerLink: '/teachers/home',
       },
       {
         label: 'Mis Cursos',
-        icon: PrimeIcons.BOOK,
+        icon: 'book',
         routerLink: '/teachers/courses',
       },
       {
         label: 'Mis módulos',
-        icon: PrimeIcons.SLACK,
+        icon: 'slack',
         routerLink: '/teachers/modules',
       },
     ];

@@ -12,11 +12,25 @@ import {
   provideHttpClient,
   withFetch,
   withInterceptorsFromDi,
+  HttpClientModule,
 } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { MatNativeDateModule } from '@angular/material/core';
 import { AuthInterceptor } from './modules/shared-modules/shared-interceptors/auth.interceptor';
 import { SpinnerInterceptor } from './spinner/spinner.interceptor';
+import { provideNzIcons } from './icons-provider';
+import { FormsModule } from '@angular/forms';
+import { IconDefinition } from '@ant-design/icons-angular';
+import * as AllIcons from '@ant-design/icons-angular/icons';
+import { NZ_ICONS } from 'ng-zorro-antd/icon';
+
+
+const antDesignIcons = AllIcons as {
+  [key: string]: IconDefinition;
+};
+const icons: IconDefinition[] = Object.keys(antDesignIcons).map(
+  (key) => antDesignIcons[key]
+);
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -25,12 +39,15 @@ export const appConfig: ApplicationConfig = {
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
-      multi: true
+      multi: true,
     },
     provideHttpClient(withFetch(), withInterceptorsFromDi()),
-    provideAnimations(),
     importProvidersFrom(MatNativeDateModule),
-    { provide: LOCALE_ID, useValue: 'es' },
-    { provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi: true }
-  ],
+    { provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi: true },
+    provideNzIcons(),
+    { provide: NZ_ICONS, useValue: icons },
+    importProvidersFrom(FormsModule),
+    importProvidersFrom(HttpClientModule),
+    provideAnimations(),
+  ]
 };
