@@ -7,7 +7,12 @@
   >
     <div class="logo"></div>
     <ul nz-menu nzTheme="dark" nzMode="inline">
-      @for (item of items; track item.label) { @if (item.items) {
+      @for (item of items; track item.label) { @if (!item.items) {
+      <li nz-menu-item [routerLink]="item.routerLink">
+        <span nz-icon [nzType]="item.icon!"></span>
+        <span> {{ item.label }} </span>
+      </li>
+      }@else {
       <li nz-submenu [nzTitle]="item.label!" [nzIcon]="item.icon!">
         <ul>
           @for (subItem of item.items; track subItem.label) {
@@ -17,11 +22,6 @@
           </li>
           }
         </ul>
-      </li>
-      }@else {
-      <li nz-menu-item [routerLink]="item.routerLink">
-        <span nz-icon [nzType]="item.icon!"></span>
-        <span> {{ item.label }} </span>
       </li>
       } }
     </ul>
