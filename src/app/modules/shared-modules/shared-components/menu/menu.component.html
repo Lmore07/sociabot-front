@@ -2,6 +2,7 @@
   <nz-sider
     nzBreakpoint="lg"
     nzCollapsible
+    nzWidth="256px"
     [(nzCollapsed)]="isCollapsed"
     [nzTrigger]="null"
   >
@@ -9,7 +10,7 @@
     <ul nz-menu nzTheme="dark" nzMode="inline">
       @for (item of items; track item.label) { @if (!item.items) {
       <li nz-menu-item [routerLink]="item.routerLink">
-        <span nz-icon [nzType]="item.icon!"></span>
+        <span class="icon" nz-icon [nzType]="item.icon!"></span>
         <span> {{ item.label }} </span>
       </li>
       }@else {
@@ -17,7 +18,7 @@
         <ul>
           @for (subItem of item.items; track subItem.label) {
           <li [routerLink]="subItem.routerLink" nz-menu-item>
-            <span nz-icon [nzType]="subItem.icon!"></span>
+            <span class="icon" nz-icon [nzType]="subItem.icon!"></span>
             <span> {{ subItem.label }} </span>
           </li>
           }

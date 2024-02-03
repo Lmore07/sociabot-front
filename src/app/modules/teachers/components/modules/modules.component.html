@@ -25,6 +25,7 @@
         pButton
         pRipple
         label="Nuevo Módulo"
+        style="color: white"
         icon="pi pi-plus"
         (click)="openDialogAddmodule()"
         class="p-button-success margin-button"
@@ -32,6 +33,7 @@
       <button
         pButton
         pRipple
+        style="color: white"
         (click)="exportToExcel()"
         label="Exportar"
         icon="pi pi-upload"
@@ -89,6 +91,7 @@
           <td>
             @if (module.status){
             <button
+              style="color: white"
               pButton
               pRipple
               (click)="openDialogMoveModule(module.id, module.course.name)"
@@ -101,6 +104,7 @@
             <button
               pButton
               pRipple
+              style="color: white"
               (click)="
                 openDialogEditmodule(
                   module.name,
@@ -117,6 +121,7 @@
             <button
               pButton
               pRipple
+              style="color: white"
               (click)="
                 activaOrDesactivatemodule(module.status, $event, module.id)
               "

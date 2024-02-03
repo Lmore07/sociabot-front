@@ -27,6 +27,7 @@
         label="Nuevo Curso"
         icon="pi pi-plus"
         (click)="openDialogAddCourse()"
+        style="color: white;"
         class="p-button-success margin-button"
       ></button>
       <button
@@ -34,6 +35,7 @@
         pRipple
         (click)="exportToExcel()"
         label="Exportar"
+        style="color: white;"
         icon="pi pi-upload"
         class="p-button-help"
       ></button>
@@ -74,6 +76,7 @@
               pRipple
               (click)="openDialogStudent(course.id, course.name)"
               pTooltip="Ver Alumnos"
+              style="color: white;"
               tooltipPosition="top"
               icon="pi pi-users"
               class="p-button-rounded p-button-info margin-button"
@@ -82,6 +85,7 @@
             <button
               pButton
               pRipple
+              style="color: white;"
               (click)="
                 openDialogEditCourse(course.name, course.description, course.id)
               "
@@ -92,6 +96,7 @@
             ></button>
             <button
               pButton
+              style="color: white;"
               pRipple
               (click)="
                 activaOrDesactivateCourse(course.status, $event, course.id)

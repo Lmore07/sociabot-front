@@ -1,7 +1,7 @@
 @import '../../../../../assets/styles/variables.css';
 /*@import '../../../../../assets/styles/theme.less';*/
 
-@import "../../../../../../node_modules/ng-zorro-antd/ng-zorro-antd.min.css";  /* Import one component's styles */
+@import "../../../../../../node_modules/ng-zorro-antd/ng-zorro-antd.less";  /* Import one component's styles */
 
 .logo {
   height: 32px;
@@ -12,6 +12,7 @@
 nz-header {
   background: #fff;
   padding: 0;
+
 }
 
 nz-content {
@@ -45,4 +46,13 @@ nz-sider{
 
 .trigger:hover {
   color: #f0c0c0;
+}
+
+
+ul[nz-menu] {
+  font-size: 1.5em; /* Ajusta este valor según tus necesidades */
+}
+
+nz-menu-item nz-icon {
+  font-size: 1.5em; /* Ajusta este valor según tus necesidades */
 }

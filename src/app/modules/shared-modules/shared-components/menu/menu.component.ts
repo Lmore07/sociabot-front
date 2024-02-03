@@ -1,5 +1,5 @@
 import { NzLayoutModule, NzSiderComponent } from 'ng-zorro-antd/layout';
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MENU_ICON } from '../../../../../assets/svg/icons-svg';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
@@ -42,6 +42,8 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
   providers: [],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.css',
+  encapsulation: ViewEncapsulation.None, /* Agrega esta línea */
+
 })
 export class MenuComponent {
   //VARIABLES
