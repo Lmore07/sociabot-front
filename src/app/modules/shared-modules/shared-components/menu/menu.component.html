@@ -1,20 +1,31 @@
-<nz-layout>
+<nz-layout class="app-layout">
   <nz-sider
-    nzBreakpoint="lg"
+    class="menu-sidebar"
+    nzBreakpoint="md"
     nzCollapsible
     nzWidth="256px"
     [(nzCollapsed)]="isCollapsed"
     [nzTrigger]="null"
   >
-    <div class="logo"></div>
+    <div class="sidebar-logo">
+      <a href="">
+        <img src="../../../../../assets/svg/logo-sociabot.svg" alt="logo" />
+        <h1>SociaBot</h1>
+      </a>
+    </div>
     <ul nz-menu nzTheme="dark" nzMode="inline">
       @for (item of items; track item.label) { @if (!item.items) {
       <li nz-menu-item [routerLink]="item.routerLink">
         <span class="icon" nz-icon [nzType]="item.icon!"></span>
-        <span> {{ item.label }} </span>
+        <span class="title-item"> {{ item.label }} </span>
       </li>
       }@else {
-      <li nz-submenu [nzTitle]="item.label!" [nzIcon]="item.icon!">
+      <li
+        class="title-item"
+        nz-submenu
+        [nzTitle]="item.label!"
+        [nzIcon]="item.icon!"
+      >
         <ul>
           @for (subItem of item.items; track subItem.label) {
           <li [routerLink]="subItem.routerLink" nz-menu-item>
@@ -29,39 +40,42 @@
   </nz-sider>
   <nz-layout>
     <nz-header>
-      <div
-        class="btn-wrappers"
-        nz-flex
-        nzJustify="space-between"
-        nzAlign="center"
-      >
-        <span
-          class="trigger"
-          nz-icon
-          [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
-          (click)="isCollapsed = !isCollapsed"
-        ></span>
-        <div>
-          <nz-avatar
-            class="avatar"
-            [nzClickHide]="false"
-            nz-dropdown
-            [nzDropdownMenu]="menu2"
-            nzSize="large"
-            nzIcon="user"
-          ></nz-avatar>
-          <nz-dropdown-menu #menu2="nzDropdownMenu">
-            <ul nz-menu>
-              <li nz-menu-item>
-                <span nz-icon nzType="user"></span>
-                <span> Ver Perfil </span>
-              </li>
-              <li (click)="closeSession()" nz-menu-item>
-                <span nz-icon nzType="close-circle"></span>
-                <span> Cerrar Sesión </span>
-              </li>
-            </ul>
-          </nz-dropdown-menu>
+      <div class="app-header">
+        <div
+          class="btn-wrappers"
+          nz-flex
+          nzJustify="space-between"
+          nzAlign="center"
+        >
+          <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
+            <span
+              class="trigger"
+              nz-icon
+              [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+            ></span>
+          </span>
+          <div>
+            <nz-avatar
+              class="avatar"
+              [nzClickHide]="false"
+              nz-dropdown
+              [nzDropdownMenu]="menu2"
+              nzSize="large"
+              nzIcon="user"
+            ></nz-avatar>
+            <nz-dropdown-menu #menu2="nzDropdownMenu">
+              <ul nz-menu>
+                <li class="option-hover" nz-menu-item>
+                  <span nz-icon nzType="user"></span>
+                  <span> Ver Perfil </span>
+                </li>
+                <li class="option-hover" (click)="closeSession()" nz-menu-item>
+                  <span  nz-icon nzType="close-circle"></span>
+                  <span> Cerrar Sesión </span>
+                </li>
+              </ul>
+            </nz-dropdown-menu>
+          </div>
         </div>
       </div>
     </nz-header>
