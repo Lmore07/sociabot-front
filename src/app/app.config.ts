@@ -4,24 +4,24 @@ import {
 } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
-import { routes } from './app.routes';
-import { provideClientHydration } from '@angular/platform-browser';
 import {
   HTTP_INTERCEPTORS,
+  HttpClientModule,
   provideHttpClient,
   withFetch,
   withInterceptorsFromDi,
-  HttpClientModule,
 } from '@angular/common/http';
-import { provideAnimations } from '@angular/platform-browser/animations';
-import { MatNativeDateModule } from '@angular/material/core';
-import { AuthInterceptor } from './modules/shared-modules/shared-interceptors/auth.interceptor';
-import { SpinnerInterceptor } from './spinner/spinner.interceptor';
-import { provideNzIcons } from './icons-provider';
 import { FormsModule } from '@angular/forms';
+import { MatNativeDateModule } from '@angular/material/core';
+import { provideClientHydration } from '@angular/platform-browser';
+import { provideAnimations } from '@angular/platform-browser/animations';
 import { IconDefinition } from '@ant-design/icons-angular';
 import * as AllIcons from '@ant-design/icons-angular/icons';
 import { NZ_ICONS } from 'ng-zorro-antd/icon';
+import { routes } from './app.routes';
+import { provideNzIcons } from './icons-provider';
+import { SpinnerInterceptor } from './shared-modules/components/spinner/spinner.interceptor';
+import { AuthInterceptor } from './shared-modules/interceptors/auth.interceptor';
 
 
 const antDesignIcons = AllIcons as {

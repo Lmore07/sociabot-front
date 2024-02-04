@@ -7,7 +7,7 @@ import {
   SignUpResponse,
 } from '../interfaces/register.interface';
 import { environment } from '../../../../environments/environment.development';
-import { GeneralResponse } from '../../shared-modules/interfaces/global.interface';
+import { GeneralResponse } from '../../../shared-modules/interfaces/global.interface';
 
 @Injectable({
   providedIn: 'root',

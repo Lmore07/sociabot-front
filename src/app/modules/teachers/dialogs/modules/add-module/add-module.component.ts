@@ -1,3 +1,4 @@
+import { AsyncPipe } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 import {
   FormBuilder,
@@ -7,23 +8,22 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MessageService } from 'primeng/api';
-import { LETTER_ICON } from '../../../../../../assets/svg/icons-svg';
-import { LoadingComponent } from '../../../../shared-modules/shared-components/loading/loading.component';
 import { ToastModule } from 'primeng/toast';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { Observable, map, skip, startWith } from 'rxjs';
-import { AsyncPipe } from '@angular/common';
+import { LETTER_ICON } from '../../../../../../assets/svg/icons-svg';
+import { CoursesResponse } from '../../../interfaces/courses.interface';
 import { ModuleService } from '../../../services/module.service';
 import { TeacherService } from '../../../services/teacher.service';
-import { CoursesResponse } from '../../../interfaces/courses.interface';
+import { LoadingComponent } from '../../../../../shared-modules/components/loading/loading.component';
 
 @Component({
   selector: 'app-add-module',

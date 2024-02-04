@@ -1,23 +1,22 @@
-import { NzLayoutModule, NzSiderComponent } from 'ng-zorro-antd/layout';
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
-import { MENU_ICON } from '../../../../../assets/svg/icons-svg';
-import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
-import { MenuItem } from 'primeng/api';
-import { ActivatedRoute, RouterOutlet } from '@angular/router';
-import { PanelMenuModule } from 'primeng/panelmenu';
-import { SidebarModule } from 'primeng/sidebar';
-import { ButtonModule } from 'primeng/button';
-import { AvatarModule } from 'primeng/avatar';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { UserType } from '../../../security/enums/user-type.enum';
-import { NzMenuModule } from 'ng-zorro-antd/menu';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzFlexModule } from 'ng-zorro-antd/flex';
+import { DomSanitizer } from '@angular/platform-browser';
+import { ActivatedRoute, RouterOutlet } from '@angular/router';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
-import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { NzFlexModule } from 'ng-zorro-antd/flex';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzLayoutModule } from 'ng-zorro-antd/layout';
+import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { MenuItem } from 'primeng/api';
+import { AvatarModule } from 'primeng/avatar';
+import { ButtonModule } from 'primeng/button';
+import { PanelMenuModule } from 'primeng/panelmenu';
+import { SidebarModule } from 'primeng/sidebar';
+import { MENU_ICON } from '../../../../assets/svg/icons-svg';
 
 @Component({
   selector: 'app-menu',
@@ -42,14 +41,13 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
   providers: [],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.css',
-  encapsulation: ViewEncapsulation.None, /* Agrega esta línea */
+  encapsulation: ViewEncapsulation.None,
 
 })
 export class MenuComponent {
   //VARIABLES
   items!: MenuItem[];
   @ViewChild('sidenav') sidenav!: MatSidenav;
-  menuType!: UserType;
   isCollapsed: boolean = false;
 
   constructor(
@@ -64,19 +62,12 @@ export class MenuComponent {
   assignMenuByType() {
     this.route.url.subscribe((url) => {
       const routeAux = url.map((seg) => seg.path).join('/');
-      console.log(routeAux);
       if (routeAux.includes('student')) {
-        this.menuType = UserType.STUDENT;
         this.items = this.menuStudent();
       } else {
-        this.menuType = UserType.TEACHER;
         this.items = this.menuTeacher();
       }
     });
-  }
-
-  toggleSidebar() {
-    this.sidenav.toggle();
   }
 
   registerIcons() {
@@ -138,7 +129,7 @@ export class MenuComponent {
         routerLink: '/teachers/courses',
       },
       {
-        label: 'Mis módulos',
+        label: 'Mis Módulos',
         icon: 'slack',
         routerLink: '/teachers/modules',
       },

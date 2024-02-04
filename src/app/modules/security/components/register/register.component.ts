@@ -6,26 +6,30 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { MatSelectModule } from '@angular/material/select';
-import * as _moment from 'moment';
-import { default as _rollupMoment } from 'moment';
+import {
+  MAT_MOMENT_DATE_ADAPTER_OPTIONS,
+  MomentDateAdapter,
+} from '@angular/material-moment-adapter';
+import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
-import { MatDatepickerModule } from '@angular/material/datepicker';
 import {
   DateAdapter,
   MAT_DATE_FORMATS,
   MAT_DATE_LOCALE,
   MatNativeDateModule,
 } from '@angular/material/core';
-import { MatButtonModule } from '@angular/material/button';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ToastModule } from 'primeng/toast';
-import { KeyFilterModule } from 'primeng/keyfilter';
+import { Router, RouterLink } from '@angular/router';
+import * as _moment from 'moment';
+import { default as _rollupMoment } from 'moment';
 import { MessageService } from 'primeng/api';
-import { roleUserValidator } from '../../validators/role.validator';
+import { KeyFilterModule } from 'primeng/keyfilter';
+import { ToastModule } from 'primeng/toast';
 import {
   CAKE_ICON,
   CALENDAR_ICON,
@@ -36,14 +40,10 @@ import {
   MAIL_ICON,
   ROLE_ICON,
 } from '../../../../../assets/svg/icons-svg';
-import { Router, RouterLink } from '@angular/router';
-import {
-  MAT_MOMENT_DATE_ADAPTER_OPTIONS,
-  MomentDateAdapter,
-} from '@angular/material-moment-adapter';
-import { dateRangeValidator } from '../../validators/dateBirthday.validator';
+import { LoadingComponent } from '../../../../shared-modules/components/loading/loading.component';
 import { SecurityService } from '../../services/security.service';
-import { LoadingComponent } from '../../../shared-modules/shared-components/loading/loading.component';
+import { dateRangeValidator } from '../../validators/dateBirthday.validator';
+import { roleUserValidator } from '../../validators/role.validator';
 
 const moment = _rollupMoment || _moment;
 export const MY_FORMATS = {

@@ -1,18 +1,18 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './modules/security/components/login/login.component';
 import { RegisterComponent } from './modules/security/components/register/register.component';
-import { HomeComponent as HomeStudents } from './modules/students/components/home/home.component';
-import { HomeComponent as HomeTeachers } from './modules/teachers/components/home/home.component';
-import { authGuard } from './modules/shared-modules/guards/auth.guard';
-import { MenuComponent } from './modules/shared-modules/shared-components/menu/menu.component';
-import { roleGuard } from './modules/shared-modules/guards/role.guard';
-import { CoursesComponent } from './modules/teachers/components/courses/courses.component';
-import { JoinCourseComponent } from './modules/students/components/join-course/join-course.component';
-import { StudentCoursesComponent } from './modules/students/components/student-courses/student-courses.component';
-import { ModulesComponent } from './modules/teachers/components/modules/modules.component';
 import { ChatComponent } from './modules/students/components/chat/chat.component';
-import { ModulesComponent as StudentModules } from './modules/students/components/modules/modules.component';
+import { HomeComponent as HomeStudents } from './modules/students/components/home/home.component';
+import { JoinCourseComponent } from './modules/students/components/join-course/join-course.component';
 import { ListChatsComponent } from './modules/students/components/list-chats/list-chats.component';
+import { ModulesComponent as StudentModules } from './modules/students/components/modules/modules.component';
+import { StudentCoursesComponent } from './modules/students/components/student-courses/student-courses.component';
+import { CoursesComponent } from './modules/teachers/components/courses/courses.component';
+import { HomeComponent as HomeTeachers } from './modules/teachers/components/home/home.component';
+import { ModulesComponent } from './modules/teachers/components/modules/modules.component';
+import { MenuComponent } from './shared-modules/components/menu/menu.component';
+import { authGuard } from './shared-modules/guards/auth.guard';
+import { roleGuard } from './shared-modules/guards/role.guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
