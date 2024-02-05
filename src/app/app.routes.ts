@@ -13,6 +13,7 @@ import { ModulesComponent } from './modules/teachers/components/modules/modules.
 import { MenuComponent } from './shared-modules/components/menu/menu.component';
 import { authGuard } from './shared-modules/guards/auth.guard';
 import { roleGuard } from './shared-modules/guards/role.guard';
+import { FormsComponent } from './modules/teachers/components/forms/forms.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -31,24 +32,28 @@ export const routes: Routes = [
           { path: '', component: StudentCoursesComponent },
           { path: 'join', component: JoinCourseComponent },
           {
-            path: ':courseId/modules', children: [
+            path: ':courseId/modules',
+            children: [
               { path: '', component: StudentModules },
               {
-                path: ':moduleId', children: [
-                  { path: 'chats', children: [
-                    { path: '', component: ListChatsComponent },
-                    {
-                      path: ':chatId',
-                      component: ChatComponent,
-                    }
-                  ] },
-                ]
+                path: ':moduleId',
+                children: [
+                  {
+                    path: 'chats',
+                    children: [
+                      { path: '', component: ListChatsComponent },
+                      {
+                        path: ':chatId',
+                        component: ChatComponent,
+                      },
+                    ],
+                  },
+                ],
               },
-            ]
+            ],
           },
         ],
       },
-
     ],
   },
   {
@@ -60,6 +65,7 @@ export const routes: Routes = [
       { path: 'home', component: HomeTeachers },
       { path: 'courses', component: CoursesComponent },
       { path: 'modules', component: ModulesComponent },
+      { path: 'forms', component: FormsComponent },
     ],
   },
 ];

@@ -17,6 +17,7 @@ import { ButtonModule } from 'primeng/button';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { SidebarModule } from 'primeng/sidebar';
 import { MENU_ICON } from '../../../../assets/svg/icons-svg';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-menu',
@@ -31,6 +32,7 @@ import { MENU_ICON } from '../../../../assets/svg/icons-svg';
     ButtonModule,
     PanelMenuModule,
     NzIconModule,
+    CommonModule,
     MatToolbarModule,
     NzMenuModule,
     MatIconModule,
@@ -42,7 +44,6 @@ import { MENU_ICON } from '../../../../assets/svg/icons-svg';
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.css',
   encapsulation: ViewEncapsulation.None,
-
 })
 export class MenuComponent {
   //VARIABLES
@@ -132,6 +133,11 @@ export class MenuComponent {
         label: 'Mis Módulos',
         icon: 'slack',
         routerLink: '/teachers/modules',
+      },
+      {
+        label: 'Mis Formularios',
+        icon: 'profile',
+        routerLink: '/teachers/forms',
       },
     ];
   }

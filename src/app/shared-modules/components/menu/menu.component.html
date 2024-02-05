@@ -38,7 +38,7 @@
       } }
     </ul>
   </nz-sider>
-  <nz-layout>
+  <nz-layout [ngClass]="isCollapsed ? 'collapsed' : 'expanded'">
     <nz-header>
       <div class="app-header">
         <div
