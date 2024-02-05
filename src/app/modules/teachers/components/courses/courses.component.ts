@@ -1,22 +1,21 @@
-import { TeacherService } from './../../services/teacher.service';
 import { Component } from '@angular/core';
-import { TableModule } from 'primeng/table';
-import { ToolbarModule } from 'primeng/toolbar';
-import { ButtonModule } from 'primeng/button';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { SelectButtonModule } from 'primeng/selectbutton';
-import { CoursesResponse } from '../../interfaces/courses.interface';
-import { TagModule } from 'primeng/tag';
-import { TooltipModule } from 'primeng/tooltip';
-import { PrimeIcons } from 'primeng/api';
 import { MatDialog } from '@angular/material/dialog';
-import { ViewStudentsComponent } from '../../dialogs/courses/view-students/view-students.component';
-import { AddCourseComponent } from '../../dialogs/courses/add-course/add-course.component';
-import { ToastModule } from 'primeng/toast';
-import { MessageService, ConfirmationService } from 'primeng/api';
-import { LoadingComponent } from '../../../shared-modules/shared-components/loading/loading.component';
-import { EditCourseComponent } from '../../dialogs/courses/edit-course/edit-course.component';
+import { ConfirmationService, MessageService, PrimeIcons } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { TableModule } from 'primeng/table';
+import { TagModule } from 'primeng/tag';
+import { ToastModule } from 'primeng/toast';
+import { ToolbarModule } from 'primeng/toolbar';
+import { TooltipModule } from 'primeng/tooltip';
+import { LoadingComponent } from '../../../../shared-modules/components/loading/loading.component';
+import { AddCourseComponent } from '../../dialogs/courses/add-course/add-course.component';
+import { EditCourseComponent } from '../../dialogs/courses/edit-course/edit-course.component';
+import { ViewStudentsComponent } from '../../dialogs/courses/view-students/view-students.component';
+import { CoursesResponse } from '../../interfaces/courses.interface';
+import { TeacherService } from './../../services/teacher.service';
 
 @Component({
   selector: 'app-courses',

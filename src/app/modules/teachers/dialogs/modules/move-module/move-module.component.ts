@@ -1,28 +1,27 @@
+import { AsyncPipe } from '@angular/common';
 import { Component, Inject } from '@angular/core';
-import { LoadingComponent } from '../../../../shared-modules/shared-components/loading/loading.component';
-import { ToastModule } from 'primeng/toast';
 import {
-  FormBuilder,
   FormControl,
   FormsModule,
   ReactiveFormsModule,
-  Validators,
+  Validators
 } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { AsyncPipe } from '@angular/common';
-import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ModuleService } from '../../../services/module.service';
-import { TeacherService } from '../../../services/teacher.service';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MessageService } from 'primeng/api';
-import { CoursesResponse } from '../../../interfaces/courses.interface';
+import { ToastModule } from 'primeng/toast';
 import { Observable, map, skip, startWith } from 'rxjs';
 import { LETTER_ICON } from '../../../../../../assets/svg/icons-svg';
+import { CoursesResponse } from '../../../interfaces/courses.interface';
+import { ModuleService } from '../../../services/module.service';
+import { TeacherService } from '../../../services/teacher.service';
+import { LoadingComponent } from '../../../../../shared-modules/components/loading/loading.component';
 
 @Component({
   selector: 'app-move-module',

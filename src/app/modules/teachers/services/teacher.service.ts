@@ -1,12 +1,12 @@
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { environment } from '../../../../environments/environment.development';
+import { GeneralResponse } from '../../../shared-modules/interfaces/global.interface';
+import { CourseStudentsResponse } from '../interfaces/courses-students.interface';
 import {
   CoursesRequest,
   CoursesResponse,
 } from './../interfaces/courses.interface';
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { environment } from '../../../../environments/environment.development';
-import { GeneralResponse } from '../../shared-modules/interfaces/global.interface';
-import { CourseStudentsResponse } from '../interfaces/courses-students.interface';
 
 @Injectable({
   providedIn: 'root',
