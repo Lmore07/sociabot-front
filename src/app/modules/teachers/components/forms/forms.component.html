@@ -1,7 +1,4 @@
 <p-toast key="informationToast"></p-toast>
-@if (spinnerStatus) {
-<loading></loading>
-}
 <p-confirmDialog></p-confirmDialog>
 <div class="card">
   <p-toolbar styleClass="mb-4 gap-2">
@@ -24,18 +21,18 @@
       <button
         pButton
         pRipple
-        label="Nuevo Módulo"
-        style="color: white"
+        label="Nuevo Formulario"
         icon="pi pi-plus"
-        (click)="openDialogAddmodule()"
+        (click)="openDialogAddForm()"
+        style="color: white"
         class="p-button-success margin-button"
       ></button>
       <button
         pButton
         pRipple
-        style="color: white"
         (click)="exportToExcel()"
         label="Exportar"
+        style="color: white"
         icon="pi pi-upload"
         class="p-button-help"
       ></button>
@@ -45,88 +42,94 @@
     <p-table
       [paginator]="true"
       [rows]="5"
-      #dt1
       [rowsPerPageOptions]="[5, 10, 20]"
-      [value]="modules"
+      [value]="forms"
       [tableStyle]="{ 'min-width': '50rem' }"
     >
       <ng-template pTemplate="caption">
         <p-dropdown
-          [options]="coursesNames"
-          [(ngModel)]="selectedCourse"
-          (onChange)="filterByCourse()"
+          [options]="modulesNames"
+          [(ngModel)]="selectedModule"
+          (onChange)="filterByModule()"
           optionLabel="name"
           [filter]="true"
           filterBy="name"
           [showClear]="true"
-          placeholder="Selecciona un curso"
+          placeholder="Selecciona un módulo"
         >
           <ng-template pTemplate="selectedItem">
-            <div class="flex align-items-center gap-2" *ngIf="selectedCourse">
-              <div>{{ selectedCourse.name }}</div>
+            <div class="flex align-items-center gap-2" *ngIf="selectedModule">
+              <div>{{ selectedModule.name }}</div>
             </div>
           </ng-template>
-          <ng-template let-course pTemplate="item">
+          <ng-template let-module pTemplate="item">
             <div class="flex align-items-center gap-2">
-              <div>{{ course.name }}</div>
+              <div>{{ module.name }}</div>
             </div>
           </ng-template>
         </p-dropdown>
       </ng-template>
       <ng-template pTemplate="header" let-columns>
         <tr>
-          <th>Nombre</th>
-          <th>Objetivos</th>
-          <th>Público</th>
-          <th>Curso</th>
+          <th>Nombre de Formulario</th>
+          <th>Módulo</th>
+          <th>Fecha de Inicio</th>
+          <th>Fecha de Finalización</th>
           <th>Acciones</th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-module let-columns="columns">
+      <ng-template pTemplate="body" let-form let-columns="columns">
         <tr>
-          <td>{{ module.name }}</td>
-          <td>{{ module.goals }}</td>
-          <td>{{ module.isPublic ? "Si" : "No" }}</td>
-          <td>{{ module.course.name }}</td>
+          <td>{{ form.name }}</td>
+          <td>{{ form.module.name }}</td>
+          <td>{{ form.startDate | date : "dd/MM/yyyy" }}</td>
           <td>
-            @if (module.status){
-            <button
-              style="color: white"
-              pButton
-              pRipple
-              (click)="openDialogMoveModule(module.id, module.course.name)"
-              pTooltip="Mover módulo"
-              tooltipPosition="top"
-              icon="pi pi-arrows-alt"
-              class="p-button-rounded p-button-warning margin-button"
-            ></button>
-            }
+            {{ form.endDate | date : "dd/MM/yyyy" }}
+          </td>
+          <td>
             <button
               pButton
               pRipple
               style="color: white"
               (click)="
-                openDialogEditmodule(
-                  module.name,
-                  module.goals,
-                  module.isPublic,
-                  module.id
+                openDialogViewForm(
+                  form.name,
+                  form.startDate,
+                  form.endDate,
+                  form.questionsAndAnswers,
+                  form.module.name
                 )
               "
-              pTooltip="Editar módulo"
+              pTooltip="Ver formulario"
+              tooltipPosition="top"
+              icon="pi pi-eye"
+              class="p-button-rounded p-button-info margin-button"
+            ></button>
+            <button
+              pButton
+              pRipple
+              style="color: white"
+              (click)="
+                openDialogEditForm(
+                  form.name,
+                  form.startDate,
+                  form.endDate,
+                  form.questionsAndAnswers,
+                  form.id
+                )
+              "
+              pTooltip="Editar formulario"
               tooltipPosition="top"
               icon="pi pi-pencil"
               class="p-button-rounded p-button-success margin-button"
             ></button>
             <button
               pButton
-              pRipple
               style="color: white"
-              (click)="
-                activaOrDesactivatemodule(module.status, $event, module.id)
-              "
+              pRipple
+              (click)="activaOrDesactivateForm(form.status, $event, form.id)"
               [pTooltip]="
-                module.status ? 'Desactivar módulo' : 'Activar módulo'
+                form.status ? 'Desactivar formulario' : 'Activar formulario'
               "
               tooltipPosition="top"
               [icon]="iconActions()"

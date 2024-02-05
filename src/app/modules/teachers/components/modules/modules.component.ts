@@ -13,7 +13,6 @@ import { TooltipModule } from 'primeng/tooltip';
 import { TagModule } from 'primeng/tag';
 import { Table, TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
-import { LoadingComponent } from '../../../shared-modules/shared-components/loading/loading.component';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToolbarModule } from 'primeng/toolbar';
 import { SelectButtonModule } from 'primeng/selectbutton';
@@ -22,6 +21,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { DropdownModule } from 'primeng/dropdown';
 import { AddModuleComponent } from '../../dialogs/modules/add-module/add-module.component';
 import { MoveModuleComponent } from '../../dialogs/modules/move-module/move-module.component';
+import { LoadingComponent } from '../../../../shared-modules/components/loading/loading.component';
 
 @Component({
   selector: 'app-modules',

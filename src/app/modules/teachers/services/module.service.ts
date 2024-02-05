@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { GeneralResponse } from '../../shared-modules/interfaces/global.interface';
-import { ModuleRequest, ModuleResponse } from '../interfaces/modules.interface';
 import { environment } from '../../../../environments/environment.development';
+import { GeneralResponse } from '../../../shared-modules/interfaces/global.interface';
+import { ModuleRequest, ModuleResponse } from '../interfaces/modules.interface';
 
 @Injectable({
   providedIn: 'root',

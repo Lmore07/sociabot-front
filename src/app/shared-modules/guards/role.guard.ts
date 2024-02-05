@@ -1,8 +1,8 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
-import { TokenDecode } from '../../security/interfaces/login.interface';
-import { UserType } from '../../security/enums/user-type.enum';
+import { UserType } from '../../modules/security/enums/user-type.enum';
+import { TokenDecode } from '../../modules/security/interfaces/login.interface';
 
 export const roleGuard: CanActivateFn = (route, state) => {
   let router = inject(Router);

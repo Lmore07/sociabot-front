@@ -1,22 +1,22 @@
+import { CommonModule } from '@angular/common';
 import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { TeacherService } from '../../../services/teacher.service';
 import {
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { DomSanitizer } from '@angular/platform-browser';
-import { LETTER_ICON } from '../../../../../../assets/svg/icons-svg';
-import { CommonModule } from '@angular/common';
-import { LoadingComponent } from '../../../../shared-modules/shared-components/loading/loading.component';
-import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+import { LETTER_ICON } from '../../../../../../assets/svg/icons-svg';
+import { TeacherService } from '../../../services/teacher.service';
+import { LoadingComponent } from '../../../../../shared-modules/components/loading/loading.component';
 
 @Component({
   selector: 'app-add-course',
