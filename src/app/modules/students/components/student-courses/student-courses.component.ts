@@ -56,7 +56,6 @@ export class StudentCoursesComponent {
     this.service
       .getMyCoursesByStudent(this.formGroup.value['status'])
       .subscribe((data) => {
-        console.log(data);
         this.courses = data.data;
       }, (err: any) => {
         this.showToast(

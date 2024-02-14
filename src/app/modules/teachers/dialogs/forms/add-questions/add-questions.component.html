@@ -1,0 +1,90 @@
+<p-toast key="informationToast"></p-toast>
+<div style="padding: 10px">
+  <span class="title">
+    {{
+      data?.action == "edit"
+        ? "Editar "
+        : data?.action == "view"
+        ? "Ver "
+        : "Agregar "
+    }}
+    {{ data?.type == "questions" ? " Preguntas" : " Respuestas" }}</span
+  >
+</div>
+<mat-dialog-content style="overflow-x: hidden">
+  <div class="container">
+    <div class="forms">
+      <div class="form login">
+        <div class="img-titulo"></div>
+        <div>
+          <form [formGroup]="addQAFormGroup">
+            @for (control of listOfControl; track control; let i = $index) {
+            <div class="container-questions-answers">
+              <div>
+                <mat-form-field appearance="fill" class="mat-form-field">
+                  <input
+                    class="input"
+                    maxlength="50"
+                    matInput
+                    readonly="{{ data?.action == 'view' }}"
+                    type="text"
+                    [formControlName]="control.controlInstance"
+                    [placeholder]="placeholderText"
+                  />
+                  <mat-icon
+                    matIconPrefix
+                    svgIcon="iconLetter"
+                    aria-hidden="false"
+                  ></mat-icon>
+                  @if (data?.type == 'view') {
+                  <mat-hint>Nombre del formulario</mat-hint>
+                  }@else {
+                  <mat-hint
+                    >Ingrese el contenido de la
+                    {{ data?.type == "questions" ? " pregunta" : "respuesta" }}
+                  </mat-hint>
+                  }
+                  @if(addQAFormGroup.controls[control.controlInstance]?.hasError('required')
+                  && addQAFormGroup.controls[control.controlInstance]?.touched)
+                  {
+                  <mat-error>¡Este campo es requerido!</mat-error>
+                  }
+                </mat-form-field>
+              </div>
+              <div>
+                <span
+                  hidden="{{ data?.action == 'view' }}"
+                  nz-icon
+                  nzType="minus-circle"
+                  class="dynamic-delete-button"
+                  (click)="removeField(control, $event)"
+                ></span>
+              </div>
+            </div>
+            }
+            <button
+              hidden="{{ data?.type == 'view' }}"
+              nz-button
+              nzType="dashed"
+              class="add-button"
+              (click)="addField($event)"
+            >
+              <span nz-icon nzType="plus"></span>
+              Agregar nueva
+              {{ data?.type == "questions" ? " pregunta" : "respuesta" }}
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions style="overflow: hidden" class="form">
+  <div class="input-field button">
+    <input
+      (click)="saveQuestionsOrAnswers()"
+      type="submit"
+      value="{{ data?.action != 'view' ? 'Guardar' : 'Aceptar' }}"
+    />
+  </div>
+</mat-dialog-actions>

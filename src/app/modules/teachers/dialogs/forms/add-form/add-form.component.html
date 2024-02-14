@@ -1,0 +1,287 @@
+@if (spinnerStatus) {
+<loading></loading>
+}
+<p-toast key="informationToast"></p-toast>
+<div mat-dialog-content></div>
+<div class="container">
+  <div class="forms">
+    <div class="form login">
+      <div class="img-titulo">
+        <span class="title"
+          >{{
+            data?.type == "edit"
+              ? "Editar"
+              : data?.type == "view"
+              ? "Ver"
+              : "Registrar"
+          }}
+          Formulario</span
+        >
+      </div>
+      <div>
+        <form [formGroup]="addFormGroup">
+          @if (data?.type==null){
+          <div class="field-container">
+            <mat-form-field
+              appearance="fill"
+              class="mat-form-field"
+              hideRequiredMarker
+            >
+              <mat-label>Seleccione el módulo</mat-label>
+              <input
+                type="text"
+                matInput
+                [formControl]="myControl"
+                [matAutocomplete]="auto"
+                [autofocus]="false"
+              />
+              <mat-icon
+                matIconPrefix
+                svgIcon="iconLetter"
+                aria-hidden="false"
+              ></mat-icon>
+              <mat-hint>Seleccione el módulo</mat-hint>
+              <mat-autocomplete
+                #auto="matAutocomplete"
+                [autoActiveFirstOption]="false"
+                [autoSelectActiveOption]="false"
+                [autofocus]="false"
+                [hideSingleSelectionIndicator]="false"
+                [displayWith]="displayFn"
+              >
+                @for (option of filteredOptions | async; track option._id) {
+                <mat-option [value]="option">
+                  {{ option.name }}
+                </mat-option>
+                }
+              </mat-autocomplete>
+              @if (myControl.hasError('required') && myControl.touched) {
+              <mat-error>¡Este campo es requerido!</mat-error>
+              }
+            </mat-form-field>
+          </div>
+          } @if (data?.type == 'view') {
+          <div class="field-container">
+            <mat-form-field appearance="fill" class="mat-form-field">
+              <input
+                value="{{ data?.moduleName }}"
+                class="input"
+                maxlength="50"
+                type="text"
+                placeholder="Módulo que contiene el formulario"
+                matInput
+                [readonly]="true"
+              />
+              <mat-icon
+                matIconPrefix
+                svgIcon="iconLetter"
+                aria-hidden="false"
+              ></mat-icon>
+              <mat-hint>Módulo que contiene el formulario</mat-hint>
+            </mat-form-field>
+          </div>
+          }
+
+          <!-- NOMBRE DE FORMULARIO -->
+          <div class="field-container">
+            <mat-form-field appearance="fill" class="mat-form-field">
+              <input
+                formControlName="name"
+                class="input"
+                [autofocus]="true"
+                maxlength="50"
+                type="text"
+                placeholder="Nombre de formulario"
+                matInput
+                [readonly]="data?.type == 'view'"
+              />
+              <mat-icon
+                matIconPrefix
+                svgIcon="iconLetter"
+                aria-hidden="false"
+              ></mat-icon>
+              @if (data?.type == 'view') {
+              <mat-hint>Nombre del formulario</mat-hint>
+              }@else {
+              <mat-hint>Ingrese el nombre del formulario</mat-hint>
+              } @if (addFormGroup.get('name')?.hasError('required') &&
+              addFormGroup.get('name')?.touched) {
+              <mat-error>¡Este campo es requerido!</mat-error>
+              }
+            </mat-form-field>
+          </div>
+          <!-- Pregunta -->
+          <div class="container-questions-answers">
+            <div class="field-container">
+              <mat-form-field appearance="fill" class="mat-form-field">
+                <input
+                  formControlName="questions"
+                  class="input"
+                  type="text"
+                  readonly="true"
+                  maxlength="50"
+                  matInput
+                  placeholder="Preguntas"
+                />
+                <mat-icon
+                  matIconPrefix
+                  svgIcon="iconLetter"
+                  aria-hidden="false"
+                ></mat-icon>
+                @if (data?.type == 'view') {
+                <mat-hint>Pregunta</mat-hint>
+                }@else {
+                <mat-hint>Ingrese la pregunta</mat-hint>
+                } @if (addFormGroup.get('questions')?.hasError('required') &&
+                addFormGroup.get('questions')?.touched) {
+                <mat-error>¡Este campo es requerido!</mat-error>
+                }
+              </mat-form-field>
+            </div>
+            <div>
+              <button
+                style=""
+                (click)="addQuestions()"
+                nz-button
+                nzType="primary"
+                nzSize="large"
+                nzShape="round"
+              >
+                <span nz-icon nzType="download"></span>
+                {{textButtonQuestions}}
+              </button>
+            </div>
+          </div>
+
+          <!-- Respuesta -->
+          <div class="container-questions-answers">
+            <div class="field-container">
+              <mat-form-field appearance="fill" class="mat-form-field">
+                <input
+                  formControlName="answers"
+                  class="input"
+                  type="text"
+                  maxlength="50"
+                  [readonly]="data?.type == 'view'"
+                  matInput
+                  placeholder="Respuesta"
+                />
+                <mat-icon
+                  matIconPrefix
+                  svgIcon="iconLetter"
+                  aria-hidden="false"
+                ></mat-icon>
+                @if (data?.type == 'view') {
+                <mat-hint>Respuesta</mat-hint>
+                }@else {
+                <mat-hint>Ingrese la respuesta</mat-hint>
+                } @if (addFormGroup.get('answers')?.hasError('required') &&
+                addFormGroup.get('answers')?.touched) {
+                <mat-error>¡Este campo es requerido!</mat-error>
+                }
+              </mat-form-field>
+            </div>
+            <div>
+              <button
+                (click)="addAnswers()"
+                nz-button
+                nzType="primary"
+                nzSize="large"
+                nzShape="round"
+              >
+                <span nz-icon nzType="download"></span>
+                {{textButtonAnswers}}
+              </button>
+            </div>
+          </div>
+          <!-- FECHAS -->
+          <div class="container-names">
+            <!-- FECHA DE INICIO -->
+
+            <div class="field-container">
+              <mat-form-field appearance="fill" class="mat-form-field">
+                <input
+                  [matDatepicker]="picker"
+                  formControlName="startDate"
+                  class="input"
+                  [readonly]="data?.type == 'view'"
+                  matInput
+                  placeholder="Fecha de Inicio"
+                />
+                <mat-datepicker-toggle
+                  matIconSuffix
+                  [for]="picker"
+                ></mat-datepicker-toggle>
+                <mat-datepicker
+                  [disabled]="data?.type == 'view'"
+                  touchUi
+                  #picker
+                ></mat-datepicker>
+                <mat-icon
+                  matIconPrefix
+                  svgIcon="iconDate"
+                  aria-hidden="false"
+                ></mat-icon>
+                @if (data?.type == 'view') {
+                <mat-hint>Fecha de inicio de formulario</mat-hint>
+                }@else {
+                <mat-hint
+                  >Ingrese la fecha de inicio para el formulario</mat-hint
+                >
+                } @if (addFormGroup.get('startDate')?.hasError('required') &&
+                addFormGroup.get('startDate')?.touched) {
+                <mat-error>¡Este campo es requerido!</mat-error>
+                }
+              </mat-form-field>
+            </div>
+            <!-- FECHA DE FIN -->
+            <div class="field-container">
+              <mat-form-field appearance="fill" class="mat-form-field">
+                <input
+                  [matDatepicker]="pickerEnd"
+                  formControlName="endDate"
+                  class="input"
+                  [readonly]="data?.type == 'view'"
+                  matInput
+                  placeholder="Fecha de Finalizacion"
+                />
+                <mat-datepicker-toggle
+                  matIconSuffix
+                  [for]="pickerEnd"
+                ></mat-datepicker-toggle>
+                <mat-datepicker
+                  [disabled]="data?.type == 'view'"
+                  touchUi
+                  #pickerEnd
+                ></mat-datepicker>
+                <mat-icon
+                  matIconPrefix
+                  svgIcon="iconDate"
+                  aria-hidden="false"
+                ></mat-icon>
+                @if (data?.type == 'view') {
+                <mat-hint>Fecha de finalización del formulario</mat-hint>
+                }@else {
+                <mat-hint
+                  >Ingrese la fecha de finalización del formulario</mat-hint
+                >
+                } @if (addFormGroup.get('endDate')?.hasError('required') &&
+                addFormGroup.get('endDate')?.touched) {
+                <mat-error>¡Este campo es requerido!</mat-error>
+                }
+              </mat-form-field>
+            </div>
+          </div>
+          <div [hidden]="data?.type == 'view'" class="input-field button">
+            <input
+              (click)="callServiceAddForm()"
+              type="submit"
+              value="Guardar"
+            />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions></div>

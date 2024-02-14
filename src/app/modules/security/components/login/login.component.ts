@@ -6,29 +6,27 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router, RouterLink } from '@angular/router';
-import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
 import {
   EYE_OFF_ICON,
   EYE_ON_ICON,
   LOCK_ICON,
   MAIL_ICON,
 } from '../../../../../assets/svg/icons-svg';
-import { SecurityService } from '../../services/security.service';
 import { UserType } from '../../enums/user-type.enum';
-import { LoadingComponent } from '../../../shared-modules/shared-components/loading/loading.component';
+import { SecurityService } from '../../services/security.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [
-    LoadingComponent,
     CommonModule,
     RouterLink,
     ReactiveFormsModule,

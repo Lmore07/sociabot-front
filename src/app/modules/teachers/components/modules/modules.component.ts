@@ -13,7 +13,6 @@ import { TooltipModule } from 'primeng/tooltip';
 import { TagModule } from 'primeng/tag';
 import { Table, TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
-import { LoadingComponent } from '../../../shared-modules/shared-components/loading/loading.component';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToolbarModule } from 'primeng/toolbar';
 import { SelectButtonModule } from 'primeng/selectbutton';
@@ -22,6 +21,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { DropdownModule } from 'primeng/dropdown';
 import { AddModuleComponent } from '../../dialogs/modules/add-module/add-module.component';
 import { MoveModuleComponent } from '../../dialogs/modules/move-module/move-module.component';
+import { LoadingComponent } from '../../../../shared-modules/components/loading/loading.component';
 
 @Component({
   selector: 'app-modules',
@@ -105,7 +105,6 @@ export class ModulesComponent {
   }
 
   filterByCourse() {
-    console.log(this.selectedCourse);
     if (this.selectedCourse == null) {
       this.getAllModules();
       return;
@@ -159,7 +158,6 @@ export class ModulesComponent {
       data: { id, name },
     });
     dialogRef.afterClosed().subscribe((result) => {
-      console.log(result);
       if (result) {
         this.showToast(
           'informationToast',
@@ -188,7 +186,6 @@ export class ModulesComponent {
       data: null,
     });
     dialogRef.afterClosed().subscribe((result) => {
-      console.log(result);
       if (result) {
         this.showToast(
           'informationToast',
@@ -209,7 +206,6 @@ export class ModulesComponent {
       } else {
         this.getAllModules();
       }
-      console.log('The dialog was closed');
     });
   }
 
@@ -226,7 +222,6 @@ export class ModulesComponent {
       },
     });
     dialogRef.afterClosed().subscribe((result) => {
-      console.log(result);
       if (result) {
         this.showToast(
           'informationToast',
@@ -247,7 +242,6 @@ export class ModulesComponent {
       } else {
         this.getAllModules();
       }
-      console.log('The dialog was closed');
     });
   }
 
