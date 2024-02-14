@@ -1,32 +1,47 @@
 
 @import '../../../../../../assets/styles/variables.css';
 
-.body{
-    height: 100dvh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10%;
-    background: var(--background-gradient);
-}
-
-.checkbox{
-    display: flex;
-    align-items: center;
-    margin-top: 15px;
-    margin-bottom: 10px;
-    justify-items: center;
-}
-
 .container{
     margin-top: 10px;
     margin-bottom: 10px;
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 5px 10px rgba(0,0,0,0.1);
-    overflow: hidden;
     width: 60dvw;
+    overflow: hidden;
 }
+
+.dynamic-delete-button {
+    cursor: pointer;
+    position: relative;
+    top: 4px;
+    font-size: 24px;
+    color: #999;
+    transition: all 0.3s;
+  }
+
+  .dynamic-delete-button:hover {
+    color: #777;
+  }
+
+  .passenger-input {
+    width: 60%;
+    margin-right: 8px;
+  }
+
+  [nz-form] {
+    max-width: 600px;
+  }
+
+  .add-button {
+    margin-top: 10px;
+    width: 60%;
+  }
+
+  .container-form{
+    display: flex; 
+    align-items: baseline;
+  }
 
 .container .forms{
     display: flex;     
@@ -42,17 +57,6 @@
     transition: margin-left 0.18s ease;
 }
 
-.container.active .login{
-    opacity: 0;     
-    width: 40dvw;
-    transition: margin-left 0.18s ease, opacity 0.15s ease;
-}
-
-.container .signup{
-    opacity: 0;
-    transition: opacity 0.09s ease;
-}
-
 .container.active .signup{
     opacity: 1;
     transition: opacity 0.2s ease;
@@ -66,13 +70,13 @@ mat-icon{
     height: 600px;
 }
 
-.container .form .title{
+.title{
     position: relative;
     font-size: 27px;
     font-weight: 600;
 }
 
-.form .title::before{
+.title::before{
     content: '';
     position: absolute;
     left: 0;
@@ -90,9 +94,7 @@ mat-icon{
 }
 
 .mat-form-field{
-    margin-top: 15px;
     width: 100%;
-
 }
 
 .mat-form-field input{
@@ -116,10 +118,6 @@ mat-icon{
     cursor: pointer;
 }
 
-small{
-    color: red;
-}
-
 .form a:hover{
     text-decoration: underline;
     transform: scale(1.05); 
@@ -139,7 +137,6 @@ small{
     color: #fff;
     font-size: 17px;
     font-weight: 500;
-    margin-top: 10px;
     letter-spacing: 1px;
     border-radius: 6px;
     background: var(--button-gradient);
@@ -164,23 +161,17 @@ small{
 }
 
 
-.form .login-signup{
-    margin-top: 20px;
-    text-align: center;
-}
 
-.signup-link{
-    cursor: pointer;
-}
-
-.container-names {
-    display: grid;
-    grid-column-gap: 20px; 
-    grid-template-columns: 1fr 1fr;
+  .container-questions-answers {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
   }
 
-
-
+  .container-questions-answers div:first-child {
+    flex: 4;
+    margin-right: 20px;
+  }
 
   @media only screen and (max-width: 1200px) {
     .container-names {
@@ -219,12 +210,7 @@ small{
         background-color: #fff;
         transition: margin-left 0.18s ease;
     }
-    
-    .container.active .login{
-        opacity: 0;     
-        width: 60dvw;
-        transition: margin-left 0.18s ease, opacity 0.15s ease;
-    }
+
   }
 @media only screen and (max-width: 900px) {
 
@@ -262,11 +248,6 @@ small{
         transition: margin-left 0.18s ease;
     }
     
-    .container.active .login{
-        opacity: 0;     
-        width: 60dvw;
-        transition: margin-left 0.18s ease, opacity 0.15s ease;
-    }
 }
 
 
@@ -304,10 +285,6 @@ small{
         background-color: #fff;
         transition: margin-left 0.18s ease;
     }
-    
-    .container.active .login{
-        opacity: 0;     
-        width: 90dvw;
-        transition: margin-left 0.18s ease, opacity 0.15s ease;
-    }
+
+
 }

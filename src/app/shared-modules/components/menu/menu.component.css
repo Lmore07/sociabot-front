@@ -6,7 +6,6 @@
   display: flex;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 .app-layout {
@@ -39,7 +38,7 @@
 
 .avatar{
   cursor: pointer;
-  background-color: aquamarine;
+  background-color: rgb(139, 255, 133);
 }
 
 .avatar:hover{
@@ -87,7 +86,10 @@
 
 nz-header {
   padding: 0;
-  width: 100%;
+  position: fixed;
+  width: calc(100vw - var(--my-variable));
+  transition: margin-left 0.3s ease;
+  min-height: 10dvh;
   z-index: 2;
 }
 
@@ -103,6 +105,7 @@ nz-content {
 
 .inner-content {
   padding: 24px;
+  padding-top: 10dvh;
   background: #fff;
   border-radius: 15px;
 }

@@ -8,19 +8,19 @@ import {
   SignalFill,
   BookOutline,
   EyeOutline,
-  HomeOutline,
   SlackOutline,
   BarChartOutline,
   CloseCircleFill,
-  ProfileOutline,
   ProfileFill,
   HomeFill,
+  MinusCircleOutline,
+  MinusCircleFill,
+  PlusCircleOutline,
+  PlusOutline,
 } from '@ant-design/icons-angular/icons';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 
 const icons = [
-  MenuFoldOutline,
-  MenuUnfoldOutline,
   DashboardOutline,
   SignalFill,
   FormOutline,
@@ -32,6 +32,10 @@ const icons = [
   BarChartOutline,
   EyeOutline,
   ProfileFill,
+  MinusCircleOutline,
+  MinusCircleFill,
+  PlusCircleOutline,
+  PlusOutline
 ];
 
 export function provideNzIcons() {

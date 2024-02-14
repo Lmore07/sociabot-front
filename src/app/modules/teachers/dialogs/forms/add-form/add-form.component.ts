@@ -8,7 +8,11 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -23,6 +27,8 @@ import { ModuleResponse } from '../../../interfaces/modules.interface';
 import { Observable, map, skip, startWith } from 'rxjs';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { AddQuestionsComponent } from '../add-questions/add-questions.component';
 
 @Component({
   selector: 'app-add-form',
@@ -36,6 +42,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatButtonModule,
     MatInputModule,
     LoadingComponent,
+    NzButtonModule,
     MatDatepickerModule,
     ToastModule,
   ],
@@ -49,9 +56,14 @@ export class AddFormComponent {
   modules!: ModuleResponse[];
   myControl = new FormControl<any>('', [Validators.required]);
   filteredOptions!: Observable<any[]>;
+  temporalQuestions!: [];
+  temporalAnswers!: [];
+  textButtonQuestions = 'Agregar Preguntas';
+  textButtonAnswers = 'Agregar Respuestas';
 
   constructor(
     public dialogRef: MatDialogRef<AddFormComponent>,
+    public dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private formService: FormsService,
     private moduleService: ModuleService,
@@ -67,6 +79,13 @@ export class AddFormComponent {
   ngOnInit() {
     console.log(this.data);
     console.log('probando');
+    if (this.data?.type == 'view') {
+      this.textButtonQuestions = 'Ver preguntas';
+      this.textButtonAnswers = 'Ver respuestas';
+    } else if (this.data?.type == 'edit') {
+      this.textButtonQuestions = 'Editar preguntas';
+      this.textButtonAnswers = 'Editar respuestas';
+    }
     this.getModules();
   }
 
@@ -131,9 +150,17 @@ export class AddFormComponent {
     });
     if (this.data?.type == 'view') {
       this.addFormGroup.patchValue(this.data.form);
+      this.addFormGroup.get('questions')?.setValue('Preguntas');
+      this.addFormGroup.get('answers')?.setValue('Respuestas');
+      this.temporalQuestions = this.data.form.questions;
+      this.temporalAnswers = this.data.form.answers;
       this.myControl.setValue(this.data.moduleName);
     } else if (this.data?.type == 'edit') {
       this.addFormGroup.patchValue(this.data.form);
+      this.addFormGroup.get('questions')?.setValue('Preguntas');
+      this.addFormGroup.get('answers')?.setValue('Respuestas');
+      this.temporalQuestions = this.data.form.questions;
+      this.temporalAnswers = this.data.form.answers;
     }
   }
 
@@ -164,6 +191,86 @@ export class AddFormComponent {
         );
       }
     }
+  }
+
+  addQuestions() {
+    let dialogRef;
+    if (this.textButtonQuestions == 'Editar preguntas') {
+      dialogRef = this.dialog.open(AddQuestionsComponent, {
+        data: {
+          type: 'questions',
+          action: 'edit',
+          data: this.temporalQuestions,
+        },
+      });
+    } else if (this.textButtonQuestions == 'Agregar preguntas') {
+      dialogRef = this.dialog.open(AddQuestionsComponent, {
+        data: {
+          type: 'questions',
+          action: 'add',
+        },
+      });
+    } else {
+      dialogRef = this.dialog.open(AddQuestionsComponent, {
+        data: {
+          type: 'questions',
+          action: 'view',
+          data: this.temporalQuestions,
+        },
+      });
+    }
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(result);
+      console.log('The dialog was closed');
+      if (result != undefined) {
+        this.addFormGroup.get('questions')?.setValue('Preguntas agregadas');
+        this.temporalQuestions = result;
+        this.textButtonQuestions = 'Editar preguntas';
+      } else {
+        this.addFormGroup.get('questions')?.markAsTouched();
+      }
+    });
+  }
+
+  addAnswers() {
+    let dialogRef;
+    if (this.textButtonAnswers == 'Editar respuestas') {
+      dialogRef = this.dialog.open(AddQuestionsComponent, {
+        data: {
+          type: 'answers',
+          action: 'edit',
+          data: this.temporalAnswers,
+        },
+      });
+    } else if (this.textButtonAnswers == 'Agregar respuestas') {
+      dialogRef = this.dialog.open(AddQuestionsComponent, {
+        data: {
+          type: 'answers',
+          action: 'add',
+        },
+      });
+    } else {
+      dialogRef = this.dialog.open(AddQuestionsComponent, {
+        data: {
+          type: 'answers',
+          action: 'view',
+          data: this.temporalAnswers,
+        },
+      });
+    }
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result != undefined) {
+        this.addFormGroup.get('answers')?.setValue('Respuestas agregadas');
+        this.temporalAnswers = result;
+        this.textButtonAnswers = 'Editar respuestas';
+      } else {
+        this.addFormGroup.get('answers')?.markAsTouched();
+      }
+      console.log('The dialog was closed');
+      console.log(result);
+    });
   }
 
   addModuleService() {
@@ -204,8 +311,8 @@ export class AddFormComponent {
       endDate: this.addFormGroup.get('endDate')?.value,
       questionsAndAnswers: [
         {
-          questions: this.addFormGroup.get('questions')?.value,
-          answers: this.addFormGroup.get('answers')?.value,
+          questions: this.temporalQuestions,
+          answers: this.temporalAnswers,
         },
       ],
     };
