@@ -46,7 +46,6 @@ export class ModulesComponent {
       .getModulesByCourse(this.id)
       .subscribe((res: any) => {
         this.modules = res.data;
-        console.log(this.modules);
       }, (err: any) => {
         this.showToast(
           'info',

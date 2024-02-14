@@ -1,4 +1,4 @@
-import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, HostBinding, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -58,6 +58,11 @@ export class MenuComponent {
   ) {
     this.registerIcons();
     this.assignMenuByType();
+  }
+
+  @HostBinding('style.--my-variable')
+  get myVariable() {
+    return this.isCollapsed ? '80px' : '256px';
   }
 
   assignMenuByType() {

@@ -63,7 +63,6 @@ export class ViewStudentsComponent {
     this.teacherService
       .getStudentsByCourse(this.data.courseId, this.formGroup.value['status'])
       .subscribe((data) => {
-        console.log(data);
         this.students = data.data!;
       });
   }

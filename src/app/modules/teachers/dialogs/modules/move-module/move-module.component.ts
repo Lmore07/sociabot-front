@@ -93,8 +93,6 @@ export class MoveModuleComponent {
   }
 
   callServiceMoveModule() {
-    console.log(this.myControl.value);
-    console.log(this.data);
     this.spinnerStatus = true;
     this.moduleService
       .moveModuleToAnotherCourse(this.data.id, this.myControl.value.id)

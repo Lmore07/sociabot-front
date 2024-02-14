@@ -174,8 +174,6 @@ export class AddModuleComponent {
   }
 
   editModuleService() {
-    console.log(this.myControl.value);
-    console.log(this.addModuleFormGroup.value);
     this.moduleService
       .updateModule(this.addModuleFormGroup.value, this.data.id)
       .subscribe(

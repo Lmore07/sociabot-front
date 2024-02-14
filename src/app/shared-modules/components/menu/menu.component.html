@@ -39,7 +39,7 @@
     </ul>
   </nz-sider>
   <nz-layout [ngClass]="isCollapsed ? 'collapsed' : 'expanded'">
-    <nz-header>
+    <nz-header [ngClass]="isCollapsed ? 'header-collapsed' : 'header-expanded'">
       <div class="app-header">
         <div
           class="btn-wrappers"
@@ -70,7 +70,7 @@
                   <span> Ver Perfil </span>
                 </li>
                 <li class="option-hover" (click)="closeSession()" nz-menu-item>
-                  <span  nz-icon nzType="close-circle"></span>
+                  <span nz-icon nzType="close-circle"></span>
                   <span> Cerrar Sesión </span>
                 </li>
               </ul>

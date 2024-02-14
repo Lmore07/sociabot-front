@@ -179,6 +179,20 @@ small{
     grid-template-columns: 1fr 1fr;
   }
 
+  .container-questions-answers {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+  }
+
+  .container-questions-answers div:first-child {
+    flex: 3;
+    margin-right: 20px;
+  }
+
+  .container-questions-answers div:last-child {
+    flex: 1;
+  }
 
 
   @media only screen and (max-width: 1200px) {

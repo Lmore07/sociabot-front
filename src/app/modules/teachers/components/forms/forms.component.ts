@@ -107,7 +107,6 @@ export class FormsComponent {
   }
 
   filterByModule() {
-    console.log(this.selectedModule);
     if (this.selectedModule == null) {
       this.getForms();
       return;
@@ -141,7 +140,6 @@ export class FormsComponent {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log(result);
       if (result) {
         this.showToast(
           'informationToast',
@@ -158,7 +156,6 @@ export class FormsComponent {
           'Fallo al crear el formulario'
         );
       }
-      console.log('The dialog was closed');
     });
   }
 
@@ -171,7 +168,6 @@ export class FormsComponent {
     questionsAndAnswers: QuestionsAndAnswers[],
     formId: string
   ) {
-    console.log(questionsAndAnswers);
     const dialogRef = this.dialog.open(AddFormComponent, {
       data: {
         type: 'edit',
@@ -213,8 +209,6 @@ export class FormsComponent {
     questionsAndAnswers: QuestionsAndAnswers[],
     moduleName: string
   ) {
-    console.log('imprimiendo preguntas y respuestas');
-    console.log(questionsAndAnswers);
     const dialogRef = this.dialog.open(AddFormComponent, {
       data: {
         type: 'view',
@@ -262,7 +256,6 @@ export class FormsComponent {
           'El formulario no se logro ' + stringStatus + ' correctamente';
         break;
     }
-    console.log(message);
     return message;
   }
 
