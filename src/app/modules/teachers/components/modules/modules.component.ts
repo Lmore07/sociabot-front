@@ -105,7 +105,6 @@ export class ModulesComponent {
   }
 
   filterByCourse() {
-    console.log(this.selectedCourse);
     if (this.selectedCourse == null) {
       this.getAllModules();
       return;
@@ -159,7 +158,6 @@ export class ModulesComponent {
       data: { id, name },
     });
     dialogRef.afterClosed().subscribe((result) => {
-      console.log(result);
       if (result) {
         this.showToast(
           'informationToast',
@@ -188,7 +186,6 @@ export class ModulesComponent {
       data: null,
     });
     dialogRef.afterClosed().subscribe((result) => {
-      console.log(result);
       if (result) {
         this.showToast(
           'informationToast',
@@ -209,7 +206,6 @@ export class ModulesComponent {
       } else {
         this.getAllModules();
       }
-      console.log('The dialog was closed');
     });
   }
 
@@ -226,7 +222,6 @@ export class ModulesComponent {
       },
     });
     dialogRef.afterClosed().subscribe((result) => {
-      console.log(result);
       if (result) {
         this.showToast(
           'informationToast',
@@ -247,7 +242,6 @@ export class ModulesComponent {
       } else {
         this.getAllModules();
       }
-      console.log('The dialog was closed');
     });
   }
 

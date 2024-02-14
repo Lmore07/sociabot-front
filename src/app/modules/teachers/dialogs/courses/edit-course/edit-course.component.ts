@@ -51,7 +51,6 @@ export class EditCourseComponent {
   }
 
   ngOnInit() {
-    console.log(this.data);
   }
 
   registerIcons() {

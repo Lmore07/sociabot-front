@@ -52,7 +52,6 @@ export class ListChatsComponent {
             index: ++indexAux
           }
         });
-        console.log(this.modules);
       }, (err: any) => {
         this.showToast(
           'info',
@@ -78,8 +77,6 @@ export class ListChatsComponent {
 
   getObservations(chatId: string) {
     this.service.getObservations(chatId).subscribe((res: any) => {
-      console.log(res);
-
       this.router.navigate(['/'], { relativeTo: this.route })
     }, (err: any) => {
       this.showToast(

@@ -113,7 +113,6 @@ export class CoursesComponent {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log(result);
       if (result) {
         this.showToast(
           'informationToast',
@@ -130,7 +129,6 @@ export class CoursesComponent {
           'Fallo al crear el curso'
         );
       }
-      console.log('The dialog was closed');
     });
   }
 
@@ -144,7 +142,6 @@ export class CoursesComponent {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log(result);
       if (result) {
         this.showToast(
           'informationToast',
@@ -213,7 +210,6 @@ export class CoursesComponent {
         message = 'El curso no se logro ' + stringStatus + ' correctamente';
         break;
     }
-    console.log(message);
     return message;
   }
 
@@ -222,7 +218,6 @@ export class CoursesComponent {
     this.teacherService.changeStatusCourse(courseId).subscribe(
       (data) => {
         this.spinnerStatus = false;
-        console.log(data);
         this.showToast(
           'informationToast',
           'success',

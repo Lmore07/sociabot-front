@@ -77,8 +77,6 @@ export class AddFormComponent {
   }
 
   ngOnInit() {
-    console.log(this.data);
-    console.log('probando');
     if (this.data?.type == 'view') {
       this.textButtonQuestions = 'Ver preguntas';
       this.textButtonAnswers = 'Ver respuestas';
@@ -221,8 +219,6 @@ export class AddFormComponent {
     }
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log(result);
-      console.log('The dialog was closed');
       if (result != undefined) {
         this.addFormGroup.get('questions')?.setValue('Preguntas agregadas');
         this.temporalQuestions = result;
@@ -268,8 +264,6 @@ export class AddFormComponent {
       } else {
         this.addFormGroup.get('answers')?.markAsTouched();
       }
-      console.log('The dialog was closed');
-      console.log(result);
     });
   }
 
@@ -289,7 +283,6 @@ export class AddFormComponent {
   }
 
   editModuleService() {
-    console.log('Id de formulario a modificar: ' + this.data.id);
     this.formService
       .updateForm(this.formatDataToCreateForm(), this.data?.id)
       .subscribe(

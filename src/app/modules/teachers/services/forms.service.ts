@@ -18,14 +18,12 @@ export class FormsService {
   }
 
   getMyFormsByModule(moduleId: string, status: boolean) {
-    console.log(status);
     return this.http.get<GeneralResponse<FormsResponse[]>>(
       `${environment.apiUrl}/forms/${moduleId}?status=${status}`
     );
   }
 
   getMyForms(status: boolean) {
-    console.log(status);
     return this.http.get<GeneralResponse<FormsResponse[]>>(
       `${environment.apiUrl}/forms?status=${status}`
     );

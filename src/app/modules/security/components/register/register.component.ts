@@ -196,7 +196,6 @@ export class RegisterComponent {
 
   callSignUpService() {
     this.signUpFormGroup.markAllAsTouched();
-    console.log(this.signUpFormGroup);
     if (this.signUpFormGroup.invalid) {
       this.showToast(
         'informationToast',
