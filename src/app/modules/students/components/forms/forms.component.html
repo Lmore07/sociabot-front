@@ -1,0 +1,25 @@
+<div class="tw-container tw-mx-auto">
+    <h1 class="tw-text-3xl tw-font-bold tw-text-center tw-mb-4">Evaluación: {{name}}</h1>
+    <form class="tw-max-w-2xl tw-mx-auto tw-bg-white tw-shadow-md tw-rounded tw-px-8 tw-pt-6 tw-pb-8 tw-mb-4">
+        @for (question of questionAndAnswer; track $index;  ) {
+        <div class="tw-mb-4">
+            <label class="tw-block tw-text-gray-700 tw-text-sm tw-font-bold tw-mb-2">{{question.question}}</label>
+            <select
+                class="tw-appearance-none tw-border tw-rounded tw-w-full tw-py-2 tw-px-3 tw-text-gray-700 tw-leading-tight tw-focus:outline-none tw-focus:shadow-outline"
+                id="question1">
+                <option value="" selected disabled>Selecciona una opción</option>
+                @for (answer of question.answers; track answer; let idx = $index;) {
+                <option [value]="idx">{{answer}}</option>
+                }
+            </select>
+        </div>
+        }
+        <div class="tw-flex tw-items-center tw-justify-between">
+            <button
+                class="tw-bg-blue-500 tw-hover:bg-blue-700 tw-text-white tw-font-bold tw-py-2 tw-px-4 tw-rounded tw-focus:outline-none tw-focus:shadow-outline"
+                type="button">
+                Evaluar
+            </button>
+        </div>
+    </form>
+</div>
