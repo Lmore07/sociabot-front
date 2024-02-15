@@ -1,13 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 import {
+  FormArray,
   FormControl,
+  FormGroup,
   FormRecord,
   NonNullableFormBuilder,
   ReactiveFormsModule,
-  Validators
+  Validators,
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import {
   MAT_DIALOG_DATA,
   MatDialogModule,
@@ -20,6 +23,9 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
+import {MatDividerModule} from '@angular/material/divider';
+import { DividerModule } from 'primeng/divider';
+import {MatRadioModule} from '@angular/material/radio';
 
 @Component({
   selector: 'app-add-questions',
@@ -27,7 +33,11 @@ import { ToastModule } from 'primeng/toast';
   imports: [
     ReactiveFormsModule,
     CommonModule,
+    DividerModule,
     NzIconModule,
+    MatDividerModule,
+    MatRadioModule,
+    MatCheckboxModule,
     MatIconModule,
     MatFormFieldModule,
     MatButtonModule,
@@ -41,102 +51,98 @@ import { ToastModule } from 'primeng/toast';
   providers: [MessageService],
 })
 export class AddQuestionsComponent {
-  addQAFormGroup: FormRecord<FormControl<string>> = this.fb.record({});
-  placeholderText!: string;
-  listOfControl: Array<{ id: number; controlInstance: string }> = [];
+  form: FormGroup;
 
   constructor(
     public dialogRef: MatDialogRef<AddQuestionsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private fb: NonNullableFormBuilder
+    private fb: NonNullableFormBuilder,
+    private fbQuestion: NonNullableFormBuilder
   ) {}
 
-  ngOnInit() {
-    if (this.data?.type === 'questions') {
-      this.placeholderText = 'El contenido de la pregunta';
-    } else {
-      this.placeholderText = 'El contenido de la respuesta';
+  hiddenRemove(index: number) {
+    if (this.data?.action == 'view') {
+      return true;
     }
-    if (this.data?.action == 'add') {
-      this.addField();
+    if (index == 0) {
+      return true;
     } else {
-      this.addFieldForEdit();
+      return false;
+    }
+  }
+
+  addAnswer(index: number) {
+    const answers = (this.form.get('questions') as FormArray)
+      .at(index)
+      .get('answers') as FormArray;
+    answers.push(this.fb.control(''));
+  }
+
+  removeAnswer(questionIndex: number, answerIndex: number) {
+    const answers = (this.form.get('questions') as FormArray)
+      .at(questionIndex)
+      .get('answers') as FormArray;
+    answers.removeAt(answerIndex);
+  }
+
+  ngOnInit() {
+    console.log(this.data);
+
+    if (this.data?.action == 'edit' || this.data?.action == 'view') {
+      this.form = this.fb.group({
+        questions: this.fb.array([]),
+      });
+      for (let index = 0; index < this.data.data.length; index++) {
+        const questions = this.form.get('questions') as FormArray;
+        questions.push(
+          this.fb.group({
+            question: this.fb.control(this.data.data[index].question),
+            correctAnswer: this.fb.control(this.data.data[index].correctAnswer),
+            answers: this.fb.array([]),
+          })
+        );
+        for (let j = 0; j < this.data.data[index].answers.length; j++) {
+          const answers = (this.form.get('questions') as FormArray)
+            .at(index)
+            .get('answers') as FormArray;
+          answers.push(this.fb.control(this.data.data[index].answers[j]));
+        }
+      }
+    } else {
+      this.form = this.fb.group({
+        questions: this.fb.array([
+          this.fb.group({
+            question: [''],
+            correctAnswer: this.fb.control(''),
+            answers: this.fb.array([this.fb.control('')]),
+          }),
+        ]),
+      });
     }
   }
 
   saveQuestionsOrAnswers() {
     if (this.data?.action != 'view') {
-      let arrayJson: { [key: string]: string }[] = [];
-      if (this.addQAFormGroup.valid) {
-        Object.values(this.addQAFormGroup.controls).forEach(
-          (control, index) => {
-            arrayJson.push({
-              [(this.data?.type == 'questions' ? 'question_' : 'answer_') +
-              index]: control.value,
-            });
-          }
-        );
-        this.dialogRef.close(arrayJson);
-      } else {
-        Object.values(this.addQAFormGroup.controls).forEach((control) => {
-          if (control.invalid) {
-            control.markAsTouched();
-            control.markAsDirty();
-            control.updateValueAndValidity({ onlySelf: true });
-          }
-        });
-      }
-    }else{
+      console.log(this.form.value.questions);
+      this.dialogRef.close(this.form.value.questions);
+    } else {
       this.dialogRef.close();
     }
   }
 
-  addField(e?: MouseEvent): void {
-    e?.preventDefault();
-    const id =
-      this.listOfControl.length > 0
-        ? this.listOfControl[this.listOfControl.length - 1].id + 1
-        : 0;
-    const control = {
-      id,
-      controlInstance: `${
-        this.data?.type == 'questions' ? 'questions' : 'answers'
-      }${id}`,
-    };
-    const index = this.listOfControl.push(control);
-    this.addQAFormGroup.addControl(
-      this.listOfControl[index - 1].controlInstance,
-      this.fb.control('', Validators.required)
+  addQuestion() {
+    const questions = this.form.get('questions') as FormArray;
+    questions.push(
+      this.fb.group({
+        question: this.fb.control(''),
+        correctAnswer: this.fb.control(''),
+        answers: this.fb.array([this.fb.control('')]),
+      })
     );
   }
 
-  addFieldForEdit() {
-    for (let index = 0; index < this.data?.data.length; index++) {
-      const control = {
-        id: index,
-        controlInstance: `${
-          this.data?.type == 'questions' ? 'questions' : 'answers'
-        }${index}`,
-      };
-      this.listOfControl.push(control);
-      this.addQAFormGroup.addControl(
-        this.listOfControl[index].controlInstance,
-        this.fb.control(
-          this.data?.data[index][
-            (this.data?.type == 'questions' ? 'question_' : 'answer_') + index
-          ],
-          Validators.required
-        )
-      );
-    }
-  }
-
-  removeField(i: { id: number; controlInstance: string }, e: MouseEvent): void {
-    e.preventDefault();
-    if (this.listOfControl.length > 1) {
-      const index = this.listOfControl.indexOf(i);
-      this.listOfControl.splice(index, 1);
-      this.addQAFormGroup.removeControl(i.controlInstance);
-    }
+  removeQuestion(index: number) {
+    const questions = this.form.get('questions') as FormArray;
+    questions.removeAt(index);
   }
 }

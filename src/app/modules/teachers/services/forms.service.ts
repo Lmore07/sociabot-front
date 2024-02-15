@@ -19,7 +19,7 @@ export class FormsService {
 
   getMyFormsByModule(moduleId: string, status: boolean) {
     return this.http.get<GeneralResponse<FormsResponse[]>>(
-      `${environment.apiUrl}/forms/${moduleId}?status=${status}`
+      `${environment.apiUrl}/forms/?status=${status}?moduleId=${moduleId}`
     );
   }
 
