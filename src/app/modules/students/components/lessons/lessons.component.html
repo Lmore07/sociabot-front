@@ -1,1 +1,41 @@
-<p>lessons works!</p>
+<div class="card">
+    <!-- <p-toolbar styleClass="mb-4 gap-2">
+      <ng-template pTemplate="left"></ng-template>
+      <ng-template pTemplate="right">
+        <button pButton pRipple label="Nuevo chat" icon="pi pi-plus" class="p-button-success margin-button"
+        (click)="newChat()"></button>
+      </ng-template>
+    </p-toolbar> -->
+      <div class="table">
+        <p-table [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5, 10, 20]" [value]="forms" 
+          [tableStyle]="{ 'min-width': '50rem' }" styleClass="p-datatable-striped">
+          <ng-template pTemplate="header" let-columns>
+            <tr>
+              <th>Título</th>
+              <th>Fecha de inicio</th>
+              <th>Fecha de fin</th>
+              <th>Opción</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-form let-columns="columns">
+            <tr>
+              <td>{{ form.name }}</td>
+              <td>{{ form.startDate }}</td>
+              <td>{{ form.endDate }}</td>
+              <td>
+                <button
+                    pButton
+                    pRipple
+                    pTooltip="Abrir chat"
+                    tooltipPosition="top"
+                    icon="pi pi-folder-open"
+                    class="p-button-rounded p-button-success margin-button tw-mr-1"
+                    [routerLink]="[form.id]"
+                  ></button>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+  <p-toast key="informationToast"></p-toast>

@@ -15,4 +15,10 @@ export class FormsService {
     );
   }
 
+  getForms() {
+    return this.http.get(
+      environment.apiUrl + '/forms'
+    );
+  }
+
 }
