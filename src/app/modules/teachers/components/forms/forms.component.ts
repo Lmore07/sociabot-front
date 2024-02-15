@@ -175,8 +175,7 @@ export class FormsComponent {
           name: formName,
           startDate: startDate,
           endDate: endDate,
-          questions: questionsAndAnswers[0].questions,
-          answers: questionsAndAnswers[0].answers,
+          questions: questionsAndAnswers
         },
         id: formId,
       },
@@ -216,8 +215,7 @@ export class FormsComponent {
           name: formName,
           startDate: startDate,
           endDate: endDate,
-          questions: questionsAndAnswers[0].questions,
-          answers: questionsAndAnswers[0].answers,
+          questions: questionsAndAnswers
         },
         moduleName: moduleName,
       },

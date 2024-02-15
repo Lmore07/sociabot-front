@@ -23,7 +23,7 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { Observable, map, skip, startWith } from 'rxjs';
-import { DATE_ICON, LETTER_ICON } from '../../../../../../assets/svg/icons-svg';
+import { DATE_ICON, LETTER_ICON, QUESTION_ICON } from '../../../../../../assets/svg/icons-svg';
 import { LoadingComponent } from '../../../../../shared-modules/components/loading/loading.component';
 import { ModuleResponse } from '../../../interfaces/modules.interface';
 import { FormsService } from '../../../services/forms.service';
@@ -57,9 +57,7 @@ export class AddFormComponent {
   myControl = new FormControl<any>('', [Validators.required]);
   filteredOptions!: Observable<any[]>;
   temporalQuestions!: [];
-  temporalAnswers!: [];
   textButtonQuestions = 'Agregar preguntas';
-  textButtonAnswers = 'Agregar respuestas';
 
   constructor(
     public dialogRef: MatDialogRef<AddFormComponent>,
@@ -79,10 +77,8 @@ export class AddFormComponent {
   ngOnInit() {
     if (this.data?.type == 'view') {
       this.textButtonQuestions = 'Ver preguntas';
-      this.textButtonAnswers = 'Ver respuestas';
     } else if (this.data?.type == 'edit') {
       this.textButtonQuestions = 'Editar preguntas';
-      this.textButtonAnswers = 'Editar respuestas';
     }
     this.getModules();
   }
@@ -91,6 +87,10 @@ export class AddFormComponent {
     this.iconRegistry.addSvgIconLiteral(
       'iconLetter',
       this.sanitizer.bypassSecurityTrustHtml(LETTER_ICON)
+    );
+    this.iconRegistry.addSvgIconLiteral(
+      'iconQuestion',
+      this.sanitizer.bypassSecurityTrustHtml(QUESTION_ICON)
     );
     this.iconRegistry.addSvgIconLiteral(
       'iconDate',
@@ -144,21 +144,18 @@ export class AddFormComponent {
       startDate: ['', [Validators.required]],
       endDate: ['', [Validators.required]],
       questions: ['', Validators.required],
-      answers: ['', Validators.required],
     });
     if (this.data?.type == 'view') {
       this.addFormGroup.patchValue(this.data.form);
       this.addFormGroup.get('questions')?.setValue('Preguntas');
       this.addFormGroup.get('answers')?.setValue('Respuestas');
       this.temporalQuestions = this.data.form.questions;
-      this.temporalAnswers = this.data.form.answers;
       this.myControl.setValue(this.data.moduleName);
     } else if (this.data?.type == 'edit') {
       this.addFormGroup.patchValue(this.data.form);
       this.addFormGroup.get('questions')?.setValue('Preguntas');
       this.addFormGroup.get('answers')?.setValue('Respuestas');
       this.temporalQuestions = this.data.form.questions;
-      this.temporalAnswers = this.data.form.answers;
     }
   }
 
@@ -219,50 +216,13 @@ export class AddFormComponent {
     }
 
     dialogRef.afterClosed().subscribe((result) => {
+      console.log(result);
       if (result != undefined) {
         this.addFormGroup.get('questions')?.setValue('Preguntas agregadas');
         this.temporalQuestions = result;
         this.textButtonQuestions = 'Editar preguntas';
       } else {
         this.addFormGroup.get('questions')?.markAsTouched();
-      }
-    });
-  }
-
-  addAnswers() {
-    let dialogRef;
-    if (this.textButtonAnswers == 'Editar respuestas') {
-      dialogRef = this.dialog.open(AddQuestionsComponent, {
-        data: {
-          type: 'answers',
-          action: 'edit',
-          data: this.temporalAnswers,
-        },
-      });
-    } else if (this.textButtonAnswers == 'Agregar respuestas') {
-      dialogRef = this.dialog.open(AddQuestionsComponent, {
-        data: {
-          type: 'answers',
-          action: 'add',
-        },
-      });
-    } else {
-      dialogRef = this.dialog.open(AddQuestionsComponent, {
-        data: {
-          type: 'answers',
-          action: 'view',
-          data: this.temporalAnswers,
-        },
-      });
-    }
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result != undefined) {
-        this.addFormGroup.get('answers')?.setValue('Respuestas agregadas');
-        this.temporalAnswers = result;
-        this.textButtonAnswers = 'Editar respuestas';
-      } else {
-        this.addFormGroup.get('answers')?.markAsTouched();
       }
     });
   }
@@ -302,12 +262,7 @@ export class AddFormComponent {
       name: this.addFormGroup.get('name')?.value,
       startDate: this.addFormGroup.get('startDate')?.value,
       endDate: this.addFormGroup.get('endDate')?.value,
-      questionsAndAnswers: [
-        {
-          questions: this.temporalQuestions,
-          answers: this.temporalAnswers,
-        },
-      ],
+      questionsAndAnswers:this.temporalQuestions
     };
   }
 
