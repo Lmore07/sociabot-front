@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from '../../../../environments/environment.development';
+import { environment } from '../../../../environments/environment';
 import { GeneralResponse } from '../../../shared-modules/interfaces/global.interface';
 import { ModuleRequest, ModuleResponse } from '../interfaces/modules.interface';
 

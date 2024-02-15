@@ -58,8 +58,8 @@ export class AddFormComponent {
   filteredOptions!: Observable<any[]>;
   temporalQuestions!: [];
   temporalAnswers!: [];
-  textButtonQuestions = 'Agregar Preguntas';
-  textButtonAnswers = 'Agregar Respuestas';
+  textButtonQuestions = 'Agregar preguntas';
+  textButtonAnswers = 'Agregar respuestas';
 
   constructor(
     public dialogRef: MatDialogRef<AddFormComponent>,

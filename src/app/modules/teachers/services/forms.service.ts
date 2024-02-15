@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FormsRequest, FormsResponse } from '../interfaces/forms.interface';
 import { GeneralResponse } from '../../../shared-modules/interfaces/global.interface';
-import { environment } from '../../../../environments/environment.development';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
