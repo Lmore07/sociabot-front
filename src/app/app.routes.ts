@@ -14,6 +14,7 @@ import { MenuComponent } from './shared-modules/components/menu/menu.component';
 import { authGuard } from './shared-modules/guards/auth.guard';
 import { roleGuard } from './shared-modules/guards/role.guard';
 import { FormsComponent } from './modules/teachers/components/forms/forms.component';
+import { StudentsComponent } from './modules/teachers/components/students/students.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -66,6 +67,10 @@ export const routes: Routes = [
       { path: 'courses', component: CoursesComponent },
       { path: 'modules', component: ModulesComponent },
       { path: 'forms', component: FormsComponent },
+      {
+        path: 'students',
+        component: StudentsComponent,
+      },
     ],
   },
 ];

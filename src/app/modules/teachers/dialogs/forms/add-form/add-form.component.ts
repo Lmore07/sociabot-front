@@ -7,7 +7,9 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import {
   MAT_DIALOG_DATA,
   MatDialog,
@@ -17,17 +19,15 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { DomSanitizer } from '@angular/platform-browser';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
+import { Observable, map, skip, startWith } from 'rxjs';
 import { DATE_ICON, LETTER_ICON } from '../../../../../../assets/svg/icons-svg';
 import { LoadingComponent } from '../../../../../shared-modules/components/loading/loading.component';
+import { ModuleResponse } from '../../../interfaces/modules.interface';
 import { FormsService } from '../../../services/forms.service';
 import { ModuleService } from '../../../services/module.service';
-import { ModuleResponse } from '../../../interfaces/modules.interface';
-import { Observable, map, skip, startWith } from 'rxjs';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { NzButtonModule } from 'ng-zorro-antd/button';
 import { AddQuestionsComponent } from '../add-questions/add-questions.component';
 
 @Component({

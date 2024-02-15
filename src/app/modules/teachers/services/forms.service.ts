@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { FormsRequest, FormsResponse } from '../interfaces/forms.interface';
-import { GeneralResponse } from '../../../shared-modules/interfaces/global.interface';
 import { environment } from '../../../../environments/environment';
+import { GeneralResponse } from '../../../shared-modules/interfaces/global.interface';
+import { FormsRequest, FormsResponse } from '../interfaces/forms.interface';
 
 @Injectable({
   providedIn: 'root',

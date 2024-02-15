@@ -1,4 +1,9 @@
-import { Component, HostBinding, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  HostBinding,
+  ViewChild,
+  ViewEncapsulation,
+} from '@angular/core';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -143,6 +148,11 @@ export class MenuComponent {
         label: 'Mis Formularios',
         icon: 'profile',
         routerLink: '/teachers/forms',
+      },
+      {
+        label: 'Mis Alumnos',
+        icon: 'user',
+        routerLink: 'students',
       },
     ];
   }
