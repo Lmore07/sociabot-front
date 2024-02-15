@@ -44,8 +44,8 @@
                     {{ data?.type == "questions" ? " pregunta" : "respuesta" }}
                   </mat-hint>
                   }
-                  @if(addQAFormGroup.controls[control.controlInstance]?.hasError('required')
-                  && addQAFormGroup.controls[control.controlInstance]?.touched)
+                  @if(addQAFormGroup.controls[control.controlInstance].hasError('required')
+                  && addQAFormGroup.controls[control.controlInstance].touched)
                   {
                   <mat-error>¡Este campo es requerido!</mat-error>
                   }
