@@ -6,7 +6,7 @@ import {
   SignUpRequest,
   SignUpResponse,
 } from '../interfaces/register.interface';
-import { environment } from '../../../../environments/environment.development';
+import { environment } from '../../../../environments/environment';
 import { GeneralResponse } from '../../../shared-modules/interfaces/global.interface';
 
 @Injectable({

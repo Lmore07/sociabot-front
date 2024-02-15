@@ -17,6 +17,8 @@ import { FormsComponent } from './modules/teachers/components/forms/forms.compon
 import { ProfileComponent } from './shared-modules/components/profile/profile.component';
 import { FormsComponent as FormStudent } from './modules/students/components/forms/forms.component';
 import { LessonsComponent } from './modules/students/components/lessons/lessons.component';
+import { StudentsComponent } from './modules/teachers/components/students/students.component';
+
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -85,7 +87,11 @@ export const routes: Routes = [
       { path: 'forms', component: FormsComponent },
       {
         path: 'profile',
-        component: ProfileComponent,
+        component: ProfileComponent
+      },
+      {
+        path: 'students',
+        component: StudentsComponent
       },
     ],
   },

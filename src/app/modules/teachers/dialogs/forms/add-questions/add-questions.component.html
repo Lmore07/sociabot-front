@@ -36,24 +36,25 @@
                     svgIcon="iconLetter"
                     aria-hidden="false"
                   ></mat-icon>
-                  @if (data?.type == 'view') {
-                  <mat-hint>Nombre del formulario</mat-hint>
+                  @if (data?.action == 'view') {
+                  <mat-hint>
+                    {{ data?.type == "questions" ? ("Pregunta N° "+ (i+1)) : ("Respuesta N° "+(i+1)) }}
+                  </mat-hint>
                   }@else {
                   <mat-hint
-                    >Ingrese el contenido de la
-                    {{ data?.type == "questions" ? " pregunta" : "respuesta" }}
+                    >Ingrese el contenido de la 
+                    {{ data?.type == "questions" ? ("pregunta N° "+ (i+1)) : ("respuesta N° "+(i+1)) }}
                   </mat-hint>
                   }
-                  @if(addQAFormGroup.controls[control.controlInstance]?.hasError('required')
-                  && addQAFormGroup.controls[control.controlInstance]?.touched)
-                  {
+                  @if(addQAFormGroup.controls[control.controlInstance].hasError('required')
+                  && addQAFormGroup.controls[control.controlInstance].touched) {
                   <mat-error>¡Este campo es requerido!</mat-error>
                   }
                 </mat-form-field>
               </div>
               <div>
                 <span
-                  hidden="{{ data?.action == 'view' }}"
+                  [hidden]="data?.action == 'view' ? true : false"
                   nz-icon
                   nzType="minus-circle"
                   class="dynamic-delete-button"
@@ -63,7 +64,7 @@
             </div>
             }
             <button
-              hidden="{{ data?.type == 'view' }}"
+              [hidden]="data?.action == 'view' ? true : false"
               nz-button
               nzType="dashed"
               class="add-button"
