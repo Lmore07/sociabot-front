@@ -40,6 +40,7 @@ export const appConfig: ApplicationConfig = {
       useClass: AuthInterceptor,
       multi: true,
     },
+    
     provideHttpClient(withFetch(), withInterceptorsFromDi()),
     importProvidersFrom(MatNativeDateModule),
     { provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi: true },

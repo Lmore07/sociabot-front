@@ -152,48 +152,6 @@
               </button>
             </div>
           </div>
-
-          <!-- Respuesta -->
-          <div class="container-questions-answers">
-            <div class="field-container">
-              <mat-form-field appearance="fill" class="mat-form-field">
-                <input
-                  formControlName="answers"
-                  class="input"
-                  type="text"
-                  maxlength="50"
-                  [readonly]="data?.type == 'view'"
-                  matInput
-                  placeholder="Respuesta"
-                />
-                <mat-icon
-                  matIconPrefix
-                  svgIcon="iconLetter"
-                  aria-hidden="false"
-                ></mat-icon>
-                @if (data?.type == 'view') {
-                <mat-hint>Respuesta</mat-hint>
-                }@else {
-                <mat-hint>Ingrese la respuesta</mat-hint>
-                } @if (addFormGroup.get('answers')?.hasError('required') &&
-                addFormGroup.get('answers')?.touched) {
-                <mat-error>¡Este campo es requerido!</mat-error>
-                }
-              </mat-form-field>
-            </div>
-            <div>
-              <button
-                (click)="addAnswers()"
-                nz-button
-                nzType="primary"
-                nzSize="large"
-                nzShape="round"
-              >
-                <span nz-icon nzType="download"></span>
-                {{textButtonAnswers}}
-              </button>
-            </div>
-          </div>
           <!-- FECHAS -->
           <div class="container-names">
             <!-- FECHA DE INICIO -->

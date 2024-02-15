@@ -1,0 +1,28 @@
+.card {
+    background: rgb(241, 241, 241);
+    padding: 2rem;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+
+.table {
+    padding-top: 1rem;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+
+.margin-button{
+    margin-right: 10px;
+}
+
+.confirm-dialog{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.text{
+    font-size: 6rem;
+    font-weight: 500;
+}

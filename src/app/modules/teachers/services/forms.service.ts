@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { FormsRequest, FormsResponse } from '../interfaces/forms.interface';
+import { environment } from '../../../../environments/environment';
 import { GeneralResponse } from '../../../shared-modules/interfaces/global.interface';
-import { environment } from '../../../../environments/environment.development';
+import { FormsRequest, FormsResponse } from '../interfaces/forms.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +19,7 @@ export class FormsService {
 
   getMyFormsByModule(moduleId: string, status: boolean) {
     return this.http.get<GeneralResponse<FormsResponse[]>>(
-      `${environment.apiUrl}/forms/${moduleId}?status=${status}`
+      `${environment.apiUrl}/forms/?status=${status}?moduleId=${moduleId}`
     );
   }
 

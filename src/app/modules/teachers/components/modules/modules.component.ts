@@ -1,27 +1,27 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { ModuleResponse } from '../../interfaces/modules.interface';
 import {
   FormControl,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { ModuleService } from '../../services/module.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationService, MessageService, PrimeIcons } from 'primeng/api';
-import { TooltipModule } from 'primeng/tooltip';
-import { TagModule } from 'primeng/tag';
-import { Table, TableModule } from 'primeng/table';
-import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { ToolbarModule } from 'primeng/toolbar';
-import { SelectButtonModule } from 'primeng/selectbutton';
-import { CommonModule } from '@angular/common';
-import { MultiSelectModule } from 'primeng/multiselect';
 import { DropdownModule } from 'primeng/dropdown';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { Table, TableModule } from 'primeng/table';
+import { TagModule } from 'primeng/tag';
+import { ToastModule } from 'primeng/toast';
+import { ToolbarModule } from 'primeng/toolbar';
+import { TooltipModule } from 'primeng/tooltip';
+import { LoadingComponent } from '../../../../shared-modules/components/loading/loading.component';
 import { AddModuleComponent } from '../../dialogs/modules/add-module/add-module.component';
 import { MoveModuleComponent } from '../../dialogs/modules/move-module/move-module.component';
-import { LoadingComponent } from '../../../../shared-modules/components/loading/loading.component';
+import { ModuleResponse } from '../../interfaces/modules.interface';
+import { ModuleService } from '../../services/module.service';
 
 @Component({
   selector: 'app-modules',
@@ -69,10 +69,6 @@ export class ModulesComponent {
       status: new FormControl(true),
     });
     this.getAllModules();
-  }
-
-  clear(table: Table) {
-    table.clear();
   }
 
   getAllModules() {
