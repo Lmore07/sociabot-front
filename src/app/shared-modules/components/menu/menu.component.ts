@@ -8,7 +8,7 @@ import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ActivatedRoute, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, RouterModule, RouterOutlet } from '@angular/router';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
@@ -44,6 +44,7 @@ import { CommonModule } from '@angular/common';
     NzLayoutModule,
     SidebarModule,
     MatSidenavModule,
+    RouterModule,
   ],
   providers: [],
   templateUrl: './menu.component.html',
@@ -95,35 +96,51 @@ export class MenuComponent {
 
   menuStudent() {
     return [
+      // {
+      //   label: 'Cursos',
+      //   icon: 'file',
+      //   routerLink: '/students/courses',
+      //   items: [
+      //     {
+      //       label: 'Ver',
+      //       icon: 'eye',
+      //       routerLink: '/students/courses',
+      //     },
+      //     {
+      //       label: 'Nuevo',
+      //       icon: 'plus',
+      //       routerLink: '/students/courses/join',
+      //     },
+      //     {
+      //       label: 'Lecciones',
+      //       icon: 'book',
+      //     },
+      //   ],
+      // },
       {
-        label: 'Cursos',
-        icon: 'file',
+        label: 'Ver cursos',
+        icon: 'eye',
         routerLink: '/students/courses',
-        items: [
-          {
-            label: 'Ver',
-            icon: 'eye',
-            routerLink: '/students/courses',
-          },
-          {
-            label: 'Nuevo',
-            icon: 'plus',
-            routerLink: '/students/courses/join',
-          },
-          {
-            label: 'Lecciones',
-            icon: 'book',
-          },
-        ],
+      },
+      {
+        label: 'Registrarse',
+        icon: 'plus',
+        routerLink: '/students/courses/join',
+      },
+      {
+        label: 'Lecciones',
+        icon: 'book',
+        routerLink: '/students/lessons',
       },
       {
         label: 'Perfil',
         icon: 'user',
+        routerLink: '/students/profile',
       },
-      {
-        label: 'Progresos',
-        icon: 'bar-chart',
-      },
+      // {
+      //   label: 'Progresos',
+      //   icon: 'bar-chart',
+      // },
     ];
   }
 
