@@ -37,11 +37,13 @@
                     aria-hidden="false"
                   ></mat-icon>
                   @if (data?.action == 'view') {
-                  <mat-hint>Nombre del formulario</mat-hint>
+                  <mat-hint>
+                    {{ data?.type == "questions" ? ("Pregunta N° "+ (i+1)) : ("Respuesta N° "+(i+1)) }}
+                  </mat-hint>
                   }@else {
                   <mat-hint
-                    >Ingrese el contenido de la
-                    {{ data?.type == "questions" ? " pregunta" : "respuesta" }}
+                    >Ingrese el contenido de la 
+                    {{ data?.type == "questions" ? ("pregunta N° "+ (i+1)) : ("respuesta N° "+(i+1)) }}
                   </mat-hint>
                   }
                   @if(addQAFormGroup.controls[control.controlInstance].hasError('required')
