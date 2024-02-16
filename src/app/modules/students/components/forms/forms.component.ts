@@ -1,10 +1,7 @@
 import { Component } from '@angular/core';
 import {
-  FormBuilder,
-  FormGroup,
   FormsModule,
   ReactiveFormsModule,
-  Validators,
 } from '@angular/forms';
 import { FormsService } from '../../services/forms.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -12,13 +9,16 @@ import { CommonModule } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-forms',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, CommonModule, FormsModule, MatFormFieldModule, MatSelectModule, MatInputModule],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, FormsModule, MatFormFieldModule, MatSelectModule, MatInputModule, ToastModule],
   templateUrl: './forms.component.html',
-  styleUrl: './forms.component.css'
+  styleUrl: './forms.component.css',
+  providers: [MessageService],
 })
 export class FormsComponent {
   questionAndAnswer: any[] = [{
@@ -44,7 +44,7 @@ export class FormsComponent {
   selectedAnswers = [];
 
   constructor(
-    private service: FormsService, private route: ActivatedRoute, private router: Router
+    private service: FormsService, private route: ActivatedRoute, private router: Router, private messageService: MessageService
   ) {
   }
 
@@ -87,8 +87,22 @@ export class FormsComponent {
     }
 
     this.service.sendAnswers(data).subscribe((response: any) => {
-      alert(`Tu nota es: ${response.data.score}`);
-      this.router.navigate(['/students/lessons']);
+      this.showToast(
+        'info',
+        'Tus respuestas han sido enviadas',
+        `Tu nota es ${response.data.score} 🎉`
+      );
+      // this.router.navigate(['/students/lessons']);
+    });
+  }
+
+  showToast(type: string, title: string, message: string) {
+    this.messageService.clear();
+    this.messageService.add({
+      key: 'informationToast',
+      severity: type,
+      summary: title,
+      detail: message,
     });
   }
 }
