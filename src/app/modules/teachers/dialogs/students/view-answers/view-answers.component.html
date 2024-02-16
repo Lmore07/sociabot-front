@@ -9,8 +9,8 @@
 </h1>
 <div mat-dialog-content>
   <div class="card">
-    <p-toolbar styleClass="mb-4 gap-2">
-      <ng-template pTemplate="left">
+    <p-toolbar hidden styleClass="mb-4 gap-2">
+      <ng-template pTemplate="left" >
         <div class="flex justify-content-center">
           <form [formGroup]="formGroup">
             <p-selectButton
@@ -74,6 +74,7 @@
             <td>
               <button
                 pButton
+                hidden
                 pRipple
                 style="color: white; margin-right: 10px"
                 [pTooltip]="'Ver resultado'"
