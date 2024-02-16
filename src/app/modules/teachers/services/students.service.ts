@@ -21,4 +21,10 @@ export class StudentsService {
       `${environment.apiUrl}/course-students/students?status=${status}?courseId=${courseId}`
     );
   }
+
+  getAnswersByFormId(formId: string) {
+    return this.http.get<GeneralResponse<any[]>>(
+      `${environment.apiUrl}/forms/answers/${formId}`
+    );
+  }
 }
