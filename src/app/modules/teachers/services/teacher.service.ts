@@ -39,6 +39,13 @@ export class TeacherService {
     );
   }
 
+  addObservations(lessonId: string, data: { observations: string }) {
+    return this.http.put<GeneralResponse>(
+      environment.apiUrl + '/lessons/add-observation/' + lessonId,
+      data
+    );
+  }
+
   changeStatusCourse(courseId: string) {
     return this.http.patch<GeneralResponse>(
       environment.apiUrl + '/courses/status/' + courseId,

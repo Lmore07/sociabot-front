@@ -1,0 +1,48 @@
+<p-toast key="informationToast"></p-toast>
+<div mat-dialog-content></div>
+<div class="container">
+  <div class="forms">
+    <div class="form login">
+      <div class="img-titulo">
+        <span class="title">Agregar observación</span>
+      </div>
+      <div>
+        <form [formGroup]="addFormGroup">
+          <!-- NOMBRE DE FORMULARIO -->
+          <div class="field-container">
+            <mat-form-field appearance="fill" class="mat-form-field">
+              <input
+                formControlName="observations"
+                class="input"
+                [autofocus]="true"
+                maxlength="50"
+                type="text"
+                placeholder="Observaciones"
+                matInput
+              />
+              <mat-icon
+                matIconPrefix
+                svgIcon="iconLetter"
+                aria-hidden="false"
+              ></mat-icon>
+
+              <mat-hint>Ingrese las observaciones</mat-hint>
+              @if (addFormGroup.get('observations')?.hasError('required') &&
+              addFormGroup.get('observations')?.touched) {
+              <mat-error>¡Este campo es requerido!</mat-error>
+              }
+            </mat-form-field>
+          </div>
+          <div class="input-field button">
+            <input
+              (click)="callServiceAddForm()"
+              type="submit"
+              value="Guardar"
+            />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions></div>

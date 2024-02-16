@@ -1,0 +1,100 @@
+<p-toast key="informationToast"></p-toast>
+<h1 mat-dialog-title>
+  Lecciones realizadas por:
+  {{
+    lessons[0].courseStudent.student.firstName +
+      " " +
+      lessons[0].courseStudent.student.lastName
+  }}
+</h1>
+<div mat-dialog-content>
+  <div class="card">
+    <p-toolbar styleClass="mb-4 gap-2">
+      <ng-template pTemplate="left">
+        <div class="flex justify-content-center">
+          <form [formGroup]="formGroup">
+            <p-selectButton
+              (onChange)="handleChange($event)"
+              [unselectable]="true"
+              [options]="stateOptions"
+              formControlName="status"
+              optionLabel="label"
+              optionValue="value"
+            ></p-selectButton>
+          </form>
+        </div>
+      </ng-template>
+
+      <ng-template pTemplate="right">
+        <button
+          pButton
+          pRipple
+          style="color: white"
+          label="Exportar"
+          icon="pi pi-upload"
+          class="p-button-help"
+        ></button>
+      </ng-template>
+    </p-toolbar>
+
+    <div class="table">
+      <p-table
+        [paginator]="true"
+        [rows]="5"
+        [value]="lessons"
+        [tableStyle]="{ 'min-width': '50rem' }"
+      >
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th>Curso</th>
+            <th>Lección</th>
+            <th>Observaciones</th>
+            <th>Puntaje</th>
+            <th>Acciones</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-lesson let-columns="columns">
+          <tr>
+            <td>
+              {{ lesson.courseStudent.course.name }}
+            </td>
+            <td>
+              {{ lesson.form.name }}
+            </td>
+            <td>
+              {{ lesson.observations ?? "S/O" }}
+            </td>
+            <td>
+              <p-tag
+                [value]="lesson.score"
+                [severity]="getSeverity(lesson.score)"
+              ></p-tag>
+            </td>
+            <td>
+              <button
+                pButton
+                pRipple
+                style="color: white; margin-right: 10px"
+                [pTooltip]="'Ver resultado'"
+                tooltipPosition="top"
+                icon="pi pi-eye"
+                class="p-button-rounded p-button-info"
+              ></button>
+              <button
+                pButton
+                pRipple
+                (click)="addObservation(lesson.id, lesson.observations)"
+                style="color: white"
+                [pTooltip]="'Agregar observaciones'"
+                tooltipPosition="top"
+                icon="pi pi-file-edit"
+                class="p-button-rounded p-button-success"
+              ></button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions></div>

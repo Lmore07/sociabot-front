@@ -20,6 +20,7 @@ import { LoadingComponent } from '../../../../shared-modules/components/loading/
 import { MatDialog } from '@angular/material/dialog';
 import { StudentsService } from '../../services/students.service';
 import { StudentsByTeacherResponse } from '../../interfaces/courses-students.interface';
+import { ViewAnswersComponent } from '../../dialogs/students/view-answers/view-answers.component';
 
 @Component({
   selector: 'app-students',
@@ -142,6 +143,14 @@ export class StudentsComponent {
       severity: type,
       summary: title,
       detail: message,
+    });
+  }
+
+  viewAnswers(courseStudentId: string) {
+    const dialogRef = this.dialog.open(ViewAnswersComponent, {
+      data: {
+        id: courseStudentId,
+      },
     });
   }
 }
