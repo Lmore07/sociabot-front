@@ -68,7 +68,7 @@ export const routes: Routes = [
         children: [
           { path: '', component: LessonsComponent },
           {
-            path: 'form',
+            path: 'form/:formId',
             component: FormStudent,
           },
         ]
