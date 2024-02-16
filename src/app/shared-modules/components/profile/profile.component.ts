@@ -11,9 +11,9 @@ export class ProfileComponent {
 
   myData = {
     id: 1,
-    email: 'imanzabag@gmail.com',
-    firstName: 'Ivan',
-    lastName: 'Manzaba',
+    email: 'email@gmail.com',
+    firstName: 'Andres',
+    lastName: 'Gomez',
     age : '23',
     createdAt: '02/02/2021',
     updatedAt: '14/02/2024',

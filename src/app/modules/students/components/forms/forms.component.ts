@@ -2,21 +2,26 @@ import { Component } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
+  FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
 import { FormsService } from '../../services/forms.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
   selector: 'app-forms',
   standalone: true,
-  imports: [],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, FormsModule, MatFormFieldModule, MatSelectModule, MatInputModule],
   templateUrl: './forms.component.html',
   styleUrl: './forms.component.css'
 })
 export class FormsComponent {
-  formsFormGroup!: FormGroup;
-  questionAndAnswer: any = [{
+  questionAndAnswer: any[] = [{
     question: 'What is your name?',
     answers: [
       'John',
@@ -35,20 +40,55 @@ export class FormsComponent {
     ]
   }];
   name: string = '';
+  id = '';
+  selectedAnswers = [];
 
   constructor(
-    private formBuilder: FormBuilder, private service: FormsService
+    private service: FormsService, private route: ActivatedRoute, private router: Router
   ) {
   }
 
   ngOnInit() {
-    this.service.getFormById('clsnmrasr000114m8kbwkmy4u').subscribe((form: any) => {
+    this.id = this.route.snapshot.paramMap.get('formId') || '';
+    this.service.getFormById(this.id).subscribe((form: any) => {
       console.log(form);
       this.questionAndAnswer = form.data.questionsAndAnswers;
       this.name = form.data.name;
     });
   }
 
-  
+  selectAnswer(event: any, question: any) {
+    if (event.target.value !== '-1') {
+      if (!this.selectedAnswers.some((selectedAnswer: any) => selectedAnswer.question === question)) {
+        this.selectedAnswers.push({
+          question: question,
+          positionAnswer: Number(event.target.value),
+          answer: ""
+        });
+      } else {
+        this.selectedAnswers = this.selectedAnswers.map((selectedAnswer: any) => {
+          if (selectedAnswer.question === question) {
+            return {
+              question: question,
+              positionAnswer: Number(event.target.value),
+              answer: ""
+            };
+          }
+          return selectedAnswer;
+        });
+      }
+    }
+  }
 
+  submitForm() {
+    const data = {
+      formContent: this.selectedAnswers,
+      formId: this.id
+    }
+
+    this.service.sendAnswers(data).subscribe((response: any) => {
+      alert(`Tu nota es: ${response.data.score}`);
+      this.router.navigate(['/students/lessons']);
+    });
+  }
 }

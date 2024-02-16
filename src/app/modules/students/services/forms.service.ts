@@ -21,4 +21,11 @@ export class FormsService {
     );
   }
 
+  sendAnswers(data: any) {
+    return this.http.post(
+      environment.apiUrl + `/forms/compare-answer`,
+      data
+    );
+  }
+
 }
