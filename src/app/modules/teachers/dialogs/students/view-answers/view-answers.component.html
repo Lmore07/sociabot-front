@@ -1,16 +1,23 @@
 <p-toast key="informationToast"></p-toast>
+@if (lessons?.length === 0) {
+<div style="padding: 20px">
+  <p style="font-size: larger; font-weight: bold">
+    El estudiante no ha realizado ninguna lección
+  </p>
+</div>
+}@else {
 <h1 mat-dialog-title>
   Lecciones realizadas por:
   {{
-    lessons[0].courseStudent.student.firstName +
+    lessons[0]?.courseStudent.student.firstName +
       " " +
-      lessons[0].courseStudent.student.lastName
+      lessons[0]?.courseStudent.student.lastName
   }}
 </h1>
 <div mat-dialog-content>
   <div class="card">
     <p-toolbar hidden styleClass="mb-4 gap-2">
-      <ng-template pTemplate="left" >
+      <ng-template pTemplate="left">
         <div class="flex justify-content-center">
           <form [formGroup]="formGroup">
             <p-selectButton
@@ -100,3 +107,4 @@
   </div>
 </div>
 <div mat-dialog-actions></div>
+}
