@@ -21,7 +21,10 @@
           <tr>
             <td>{{ product.index }}</td>
             <td>{{ product.updatedAt }}</td>
-            <td>{{ product.observations }}</td>
+            <td style="text-overflow: ellipsis; max-width: 30rem; white-space: nowrap; overflow: hidden; cursor: pointer;"
+              [pTooltip]="'Ver toda la observación'" tooltipPosition="top" (click)="showObservationDialog(product.observations)">
+              {{ product.observations }}
+            </td>
             <td>
               <button
                   pButton
@@ -48,3 +51,9 @@
     </div>
   </div>
 <p-toast key="informationToast"></p-toast>
+<p-dialog [(visible)]="visibleObservation" [breakpoints]="{ '960px': '75vw' }" [style]="{ width: '50vw' }" [draggable]="false"
+  [resizable]="false" header="Retroalimentación generada por la IA" class="tw-shadow-2xl">
+  <p>
+    {{observations}}
+  </p>
+</p-dialog>

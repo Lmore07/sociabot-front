@@ -10,6 +10,7 @@ import { CoursesService } from '../../services/courses.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { DialogModule } from 'primeng/dialog';
 
 @Component({
   selector: 'app-list-chats',
@@ -23,7 +24,8 @@ import { MessageService } from 'primeng/api';
     TagModule,
     TooltipModule,
     RouterModule,
-    ToastModule
+    ToastModule,
+    DialogModule
   ],
   templateUrl: './list-chats.component.html',
   styleUrl: './list-chats.component.css',
@@ -32,7 +34,8 @@ import { MessageService } from 'primeng/api';
 export class ListChatsComponent {
   modules!: any[];
   id = '';
-
+  visibleObservation: boolean = false;
+  observations: string = '';
 
   constructor(private service: CoursesService, private route: ActivatedRoute, private router: Router, private messageService: MessageService) { }
 
@@ -95,5 +98,11 @@ export class ListChatsComponent {
       summary: title,
       detail: message,
     });
+  }
+
+  showObservationDialog(observation: string) {
+    this.visibleObservation = true;
+    this.observations = observation;
+    console.log(observation);
   }
 }

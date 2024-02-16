@@ -18,7 +18,7 @@
 }
 
 .expanded {
-  margin-left: 256px;
+  margin-left: 250px;
   transition: margin-left 0.3s ease;
 }
 
@@ -87,7 +87,7 @@
 nz-header {
   padding: 0;
   position: fixed;
-  width: calc(100vw - var(--my-variable));
+  width: calc(102vw - var(--my-variable));
   transition: margin-left 0.3s ease;
   min-height: 10dvh;
   z-index: 2;
