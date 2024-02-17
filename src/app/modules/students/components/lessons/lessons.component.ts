@@ -39,7 +39,6 @@ export class LessonsComponent {
 
   getLessons() {
     this.service.getForms().subscribe((res: any) => {
-      console.log(res);
       this.forms = res.data;
     }, (err: any) => {
       this.showToast(

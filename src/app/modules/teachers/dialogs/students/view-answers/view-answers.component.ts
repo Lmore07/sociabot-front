@@ -58,7 +58,6 @@ export class ViewAnswersComponent {
   ) {}
 
   ngOnInit() {
-    console.log(this.data);
     this.formGroup = new FormGroup({
       status: new FormControl(true),
     });
@@ -68,7 +67,6 @@ export class ViewAnswersComponent {
   getAnswers() {
     this.service.getAnswersByFormId(this.data.id).subscribe((data: any) => {
       this.lessons = data.data;
-      console.log(this.lessons);
     });
   }
 

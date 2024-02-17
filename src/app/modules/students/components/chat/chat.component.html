@@ -7,7 +7,7 @@
         <div class="tw-flex tw-flex-col tw-space-y-4 tw-p-4">
           <!-- Mensajes del chat -->
           @for (message of chats; track message.id) {
-          @if (message.user === 'assistant') {
+          @if (message.user === 'model') {
           <div class="tw-flex">
             <div class="tw-bg-gray-200 tw-rounded-lg tw-p-2">
               @if (message.message === 'typing'){

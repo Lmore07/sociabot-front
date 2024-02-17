@@ -81,14 +81,12 @@ export class AddObservationsComponent {
   }
 
   callServiceAddForm() {
-    console.log(this.data);
     this.addFormGroup.markAllAsTouched();
     if (this.addFormGroup.valid) {
       this.teacherService
         .addObservations(this.data.id, this.addFormGroup.value)
         .subscribe(
           (data: any) => {
-            console.log(data);
             this.dialogRef.close(true);
           },
           (error) => {

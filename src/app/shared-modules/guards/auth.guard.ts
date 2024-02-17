@@ -10,7 +10,6 @@ import { Observable } from 'rxjs';
 export const authGuard: CanActivateFn = (route, state) => {
   let document= inject(DOCUMENT);
   const sessionStorage = document.defaultView?.sessionStorage;
-  console.log(sessionStorage);
   let router = inject(Router);
   const token = sessionStorage?.getItem('token');
   let decoded: TokenDecode = {

@@ -86,8 +86,6 @@ export class AddQuestionsComponent {
   }
 
   ngOnInit() {
-    console.log(this.data);
-
     if (this.data?.action == 'edit' || this.data?.action == 'view') {
       this.form = this.fb.group({
         questions: this.fb.array([]),
@@ -123,7 +121,6 @@ export class AddQuestionsComponent {
 
   saveQuestionsOrAnswers() {
     if (this.data?.action != 'view') {
-      console.log(this.form.value.questions);
       this.dialogRef.close(this.form.value.questions);
     } else {
       this.dialogRef.close();

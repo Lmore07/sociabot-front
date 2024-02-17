@@ -25,7 +25,7 @@ import { DialogModule } from 'primeng/dialog';
     TooltipModule,
     RouterModule,
     ToastModule,
-    DialogModule
+    DialogModule,
   ],
   templateUrl: './list-chats.component.html',
   styleUrl: './list-chats.component.css',
@@ -37,7 +37,12 @@ export class ListChatsComponent {
   visibleObservation: boolean = false;
   observations: string = '';
 
-  constructor(private service: CoursesService, private route: ActivatedRoute, private router: Router, private messageService: MessageService) { }
+  constructor(
+    private service: CoursesService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private messageService: MessageService
+  ) {}
 
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('moduleId') || '';
@@ -45,49 +50,61 @@ export class ListChatsComponent {
   }
 
   getChats() {
-    this.service
-      .getChatsByModule(this.id)
-      .subscribe((res: any) => {
+    this.service.getChatsByModule(this.id).subscribe(
+      (res: any) => {
         let indexAux = 0;
         this.modules = res.data.map((chat: any) => {
           return {
             ...chat,
-            index: ++indexAux
-          }
+            index: ++indexAux,
+          };
         });
-      }, (err: any) => {
+      },
+      (err: any) => {
         this.showToast(
           'info',
           'Ocurrió un error',
           'Lo sentimos no se pudo obtener los chats 🙁'
         );
-      });
+      }
+    );
   }
 
   newChat() {
-    this.service
-      .newChat(this.id)
-      .subscribe((res: any) => {
+    this.service.newChat(this.id).subscribe(
+      (res: any) => {
         this.router.navigate([res.data.chatId], { relativeTo: this.route }); // Redirigir a la ruta deseada con el ID
-      }, (err: any) => {
+      },
+      (err: any) => {
         this.showToast(
           'info',
           'Ocurrió un error',
           'Lo sentimos no se pudo crear el chat 🙁'
         );
-      });
+      }
+    );
   }
 
   getObservations(chatId: string) {
-    this.service.getObservations(chatId).subscribe((res: any) => {
-      this.router.navigate(['/'], { relativeTo: this.route })
-    }, (err: any) => {
-      this.showToast(
-        'info',
-        'Ocurrió un error',
-        'Lo sentimos no se pudo obtener la retroalimentación 🙁'
-      );
-    });
+    this.service.getObservations(chatId).subscribe(
+      (res: any) => {
+        this.showToast(
+          'success',
+          'Proceso exitoso',
+          'Se han generado las observaciones del chat'
+        );
+        setTimeout(() => {
+          location.reload();
+        }, 1000);
+      },
+      (err: any) => {
+        this.showToast(
+          'info',
+          'Ocurrió un error',
+          'Lo sentimos no se pudo obtener la retroalimentación 🙁'
+        );
+      }
+    );
   }
 
   showToast(type: string, title: string, message: string) {
@@ -103,6 +120,5 @@ export class ListChatsComponent {
   showObservationDialog(observation: string) {
     this.visibleObservation = true;
     this.observations = observation;
-    console.log(observation);
   }
 }

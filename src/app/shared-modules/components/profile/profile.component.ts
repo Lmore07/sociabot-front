@@ -25,7 +25,6 @@ export class ProfileComponent {
 
   ngOnInit() {
     this.service.getData().subscribe((data:any) => {
-      console.log(data);
       data.data.age = data.data.birthDate ? new Date().getFullYear() - new Date(data.data.birthDate).getFullYear() : '';
       data.data.gender = data.data.gender === 'MALE' ? 'Hombre' : 'Mujer';
       this.myData = data.data;

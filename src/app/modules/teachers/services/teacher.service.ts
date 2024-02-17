@@ -16,7 +16,6 @@ export class TeacherService {
 
   //FUNCTIONS
   getMyCoursesByTeacher(status: boolean) {
-    console.log(status);
     return this.http.get<GeneralResponse<CoursesResponse[]>>(
       environment.apiUrl + '/courses/my-courses?status=' + status
     );

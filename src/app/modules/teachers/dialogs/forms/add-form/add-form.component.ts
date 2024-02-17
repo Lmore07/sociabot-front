@@ -216,7 +216,6 @@ export class AddFormComponent {
     }
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log(result);
       if (result != undefined) {
         this.addFormGroup.get('questions')?.setValue('Preguntas agregadas');
         this.temporalQuestions = result;

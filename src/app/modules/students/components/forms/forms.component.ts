@@ -51,7 +51,6 @@ export class FormsComponent {
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('formId') || '';
     this.service.getFormById(this.id).subscribe((form: any) => {
-      console.log(form);
       this.questionAndAnswer = form.data.questionsAndAnswers;
       this.name = form.data.name;
     });
