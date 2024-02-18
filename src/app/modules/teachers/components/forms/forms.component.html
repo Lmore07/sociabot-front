@@ -1,0 +1,144 @@
+<p-toast key="informationToast"></p-toast>
+<p-confirmDialog></p-confirmDialog>
+<div class="card">
+  <p-toolbar styleClass="mb-4 gap-2">
+    <ng-template pTemplate="left">
+      <div class="flex justify-content-center">
+        <form [formGroup]="formGroup">
+          <p-selectButton
+            (onChange)="handleChange($event)"
+            [unselectable]="true"
+            [options]="stateOptions"
+            formControlName="status"
+            optionLabel="label"
+            optionValue="value"
+          ></p-selectButton>
+        </form>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="right">
+      <button
+        pButton
+        pRipple
+        label="Nuevo Formulario"
+        icon="pi pi-plus"
+        (click)="openDialogAddForm()"
+        style="color: white"
+        class="p-button-success margin-button"
+      ></button>
+      <button
+        pButton
+        pRipple
+        hidden
+        (click)="exportToExcel()"
+        label="Exportar"
+        style="color: white"
+        icon="pi pi-upload"
+        class="p-button-help"
+      ></button>
+    </ng-template>
+  </p-toolbar>
+  <div class="table">
+    <p-table
+      [paginator]="true"
+      [rows]="5"
+      [rowsPerPageOptions]="[5, 10, 20]"
+      [value]="forms"
+      [tableStyle]="{ 'min-width': '50rem' }"
+    >
+      <ng-template pTemplate="caption">
+        <p-dropdown
+          [options]="modulesNames"
+          [(ngModel)]="selectedModule"
+          (onChange)="filterByModule()"
+          optionLabel="name"
+          [filter]="true"
+          filterBy="name"
+          [showClear]="true"
+          placeholder="Selecciona un módulo"
+        >
+          <ng-template pTemplate="selectedItem">
+            <div class="flex align-items-center gap-2" *ngIf="selectedModule">
+              <div>{{ selectedModule.name }}</div>
+            </div>
+          </ng-template>
+          <ng-template let-module pTemplate="item">
+            <div class="flex align-items-center gap-2">
+              <div>{{ module.name }}</div>
+            </div>
+          </ng-template>
+        </p-dropdown>
+      </ng-template>
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th>Nombre de Formulario</th>
+          <th>Módulo</th>
+          <th>Fecha de Inicio</th>
+          <th>Fecha de Finalización</th>
+          <th>Acciones</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-form let-columns="columns">
+        <tr>
+          <td>{{ form.name }}</td>
+          <td>{{ form.module.name }}</td>
+          <td>{{ form.startDate | date : "dd/MM/yyyy" }}</td>
+          <td>
+            {{ form.endDate | date : "dd/MM/yyyy" }}
+          </td>
+          <td>
+            <button
+              pButton
+              pRipple
+              style="color: white"
+              (click)="
+                openDialogViewForm(
+                  form.name,
+                  form.startDate,
+                  form.endDate,
+                  form.questionsAndAnswers,
+                  form.module.name
+                )
+              "
+              pTooltip="Ver formulario"
+              tooltipPosition="top"
+              icon="pi pi-eye"
+              class="p-button-rounded p-button-info margin-button"
+            ></button>
+            <button
+              pButton
+              pRipple
+              style="color: white"
+              (click)="
+                openDialogEditForm(
+                  form.name,
+                  form.startDate,
+                  form.endDate,
+                  form.questionsAndAnswers,
+                  form.id
+                )
+              "
+              pTooltip="Editar formulario"
+              tooltipPosition="top"
+              icon="pi pi-pencil"
+              class="p-button-rounded p-button-success margin-button"
+            ></button>
+            <button
+              pButton
+              style="color: white"
+              pRipple
+              (click)="activaOrDesactivateForm(form.status, $event, form.id)"
+              [pTooltip]="
+                form.status ? 'Desactivar formulario' : 'Activar formulario'
+              "
+              tooltipPosition="top"
+              [icon]="iconActions()"
+              class="p-button-rounded p-button-danger margin-button"
+            ></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>

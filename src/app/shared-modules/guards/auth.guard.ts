@@ -1,12 +1,17 @@
-import { inject } from '@angular/core';
-import { CanActivateFn, Router } from '@angular/router';
+import { Inject, Injectable, PLATFORM_ID, inject } from '@angular/core';
+import { ActivatedRouteSnapshot, CanActivate, CanActivateFn, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
-import { TokenDecode } from '../../security/interfaces/login.interface';
-import { UserType } from '../../security/enums/user-type.enum';
+import { TokenDecode } from '../../modules/security/interfaces/login.interface';
+import { UserType } from '../../modules/security/enums/user-type.enum';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { Observable } from 'rxjs';
+
 
 export const authGuard: CanActivateFn = (route, state) => {
+  let document= inject(DOCUMENT);
+  const sessionStorage = document.defaultView?.sessionStorage;
   let router = inject(Router);
-  const token = sessionStorage.getItem('token');
+  const token = sessionStorage?.getItem('token');
   let decoded: TokenDecode = {
     email: '',
     role: UserType.STUDENT,

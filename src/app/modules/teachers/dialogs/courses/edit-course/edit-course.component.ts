@@ -6,7 +6,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { DomSanitizer } from '@angular/platform-browser';
 import { LETTER_ICON } from '../../../../../../assets/svg/icons-svg';
 import { CommonModule } from '@angular/common';
-import { LoadingComponent } from '../../../../shared-modules/shared-components/loading/loading.component';
 import { ToastModule } from 'primeng/toast';
 import {
   FormBuilder,
@@ -16,6 +15,7 @@ import {
 } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TeacherService } from '../../../services/teacher.service';
+import { LoadingComponent } from '../../../../../shared-modules/components/loading/loading.component';
 
 @Component({
   selector: 'app-edit-course',
@@ -51,7 +51,6 @@ export class EditCourseComponent {
   }
 
   ngOnInit() {
-    console.log(this.data);
   }
 
   registerIcons() {

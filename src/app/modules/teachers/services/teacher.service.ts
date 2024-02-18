@@ -1,12 +1,12 @@
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { environment } from '../../../../environments/environment';
+import { GeneralResponse } from '../../../shared-modules/interfaces/global.interface';
+import { CourseStudentsResponse } from '../interfaces/courses-students.interface';
 import {
   CoursesRequest,
   CoursesResponse,
 } from './../interfaces/courses.interface';
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { environment } from '../../../../environments/environment.development';
-import { GeneralResponse } from '../../shared-modules/interfaces/global.interface';
-import { CourseStudentsResponse } from '../interfaces/courses-students.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +16,6 @@ export class TeacherService {
 
   //FUNCTIONS
   getMyCoursesByTeacher(status: boolean) {
-    console.log(status);
     return this.http.get<GeneralResponse<CoursesResponse[]>>(
       environment.apiUrl + '/courses/my-courses?status=' + status
     );
@@ -36,6 +35,13 @@ export class TeacherService {
     return this.http.post<GeneralResponse>(
       environment.apiUrl + '/courses',
       course
+    );
+  }
+
+  addObservations(lessonId: string, data: { observations: string }) {
+    return this.http.put<GeneralResponse>(
+      environment.apiUrl + '/lessons/add-observation/' + lessonId,
+      data
     );
   }
 

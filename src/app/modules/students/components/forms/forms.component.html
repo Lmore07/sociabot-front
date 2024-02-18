@@ -1,0 +1,42 @@
+<div class="tw-container tw-mx-auto">
+    <form class="tw-max-w-2xl tw-mx-auto tw-bg-white tw-shadow-md tw-rounded tw-px-8 tw-pt-6 tw-pb-8 tw-mb-4">
+        <h1 class="tw-text-3xl tw-font-bold tw-text-center tw-mb-4">Evaluación: {{name}}</h1>
+        @for (question of questionAndAnswer; track $index;) {
+        <div class="tw-mb-4">
+            <label class="tw-block tw-text-gray-700 tw-text-sm tw-font-bold tw-mb-2">{{question.question}}</label>
+            <select
+                class="tw-appearance-none tw-border tw-rounded tw-w-full tw-py-2 tw-px-3 tw-text-gray-700 tw-leading-tight tw-focus:outline-none tw-focus:shadow-outline"
+                id="question1" (click)="selectAnswer($event, question.question)">
+                <option value="-1" selected disabled>Selecciona una opción</option>
+                @for (answer of question.answers; track answer; let idx = $index;) {
+                <option [value]="idx">{{answer}}</option>
+                }
+            </select>
+        </div>
+        }
+        <div class="tw-flex tw-items-center tw-justify-between">
+            <button
+                class="tw-bg-blue-500 tw-hover:bg-blue-700 tw-text-white tw-font-bold tw-py-2 tw-px-4 tw-rounded tw-focus:outline-none tw-focus:shadow-outline"
+                type="button" (click)="submitForm()">
+                Evaluar
+            </button>
+        </div>
+    </form>
+
+
+    <!-- <form>
+        <h4>mat-select</h4>
+        @for (question of questionAndAnswer; track $index;) {
+        <mat-form-field>
+            <mat-label>Favorite food</mat-label>
+            <mat-select [(ngModel)]="selected" name="food">
+                @for (answer of question.answers; track answer; let idx = $index;) {
+                <mat-option [value]="idx">{{answer}}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+        }
+    </form> -->
+
+</div>
+<p-toast key="informationToast"></p-toast>

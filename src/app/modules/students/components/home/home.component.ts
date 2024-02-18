@@ -5,6 +5,7 @@ import { RouterOutlet } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { MENU_ICON } from '../../../../../assets/svg/icons-svg';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -18,7 +19,8 @@ export class HomeComponent {
 
   constructor(
     public iconRegistry: MatIconRegistry,
-    public sanitizer: DomSanitizer
+    public sanitizer: DomSanitizer,
+    private router: Router
   ) {
     this.registerIcons();
   }
@@ -34,6 +36,10 @@ export class HomeComponent {
       'iconMenu',
       this.sanitizer.bypassSecurityTrustHtml(MENU_ICON)
     );
+  }
+
+  redirect() {
+    this.router.navigate(['/students/courses']);
   }
 
   ngOnInit() {

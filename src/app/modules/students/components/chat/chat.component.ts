@@ -47,9 +47,8 @@ export class ChatComponent {
     (await this.service.getMessages(this.id)).subscribe((data: any) => {
       this.chats = data.data.interactions;
       this.status = data.data.status;
-      
-      if (this.chats.length == 0)
-        this.showDialog();
+
+      if (this.chats.length == 0) this.showDialog();
     });
   }
 
@@ -63,7 +62,7 @@ export class ChatComponent {
         date: new Date(),
       });
       this.isLoading = true;
-      this.chats.push({ message: 'typing', user: 'assistant' });
+      this.chats.push({ message: 'typing', user: 'model' });
       (await this.service.sendMessage(this.id, messageToSend)).subscribe(
         (data: any) => {
           this.chats.pop();

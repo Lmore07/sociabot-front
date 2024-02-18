@@ -2,12 +2,12 @@
 <p-toast key="informationToast"></p-toast>
 <div class="">
   <p-card>
-    <div class="tw-flex tw-flex-col">
-      <div class="tw-flex-grow tw-overflow-y-auto" #chatBox style="scroll-behavior: smooth; height: 400px">
+    <div class="tw-flex tw-flex-col" style="height: 76vh;">
+      <div class="tw-flex-grow tw-overflow-y-auto" #chatBox style="scroll-behavior: smooth;">
         <div class="tw-flex tw-flex-col tw-space-y-4 tw-p-4">
           <!-- Mensajes del chat -->
           @for (message of chats; track message.id) {
-          @if (message.user === 'assistant') {
+          @if (message.user === 'model') {
           <div class="tw-flex">
             <div class="tw-bg-gray-200 tw-rounded-lg tw-p-2">
               @if (message.message === 'typing'){
@@ -50,7 +50,8 @@
 <p-dialog [(visible)]="visible" [breakpoints]="{ '960px': '75vw' }" [style]="{ width: '50vw' }" [draggable]="false"
   [resizable]="false" header="Indicaciones para empezar a chatear" class="tw-shadow-2xl">
   <ol>
-    <li>Para empezar a chatear con el asistente, escribe un mensaje en el cuadro de texto y presiona <strong>Enter</strong> o el botón
+    <li>Para empezar a chatear con el asistente, escribe un mensaje en el cuadro de texto y presiona
+      <strong>Enter</strong> o el botón
       <strong>Enviar</strong>.
     </li>
     <li>El asistente te responderá con un mensaje.</li>

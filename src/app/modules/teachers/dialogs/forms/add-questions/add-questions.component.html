@@ -1,0 +1,171 @@
+<p-toast key="informationToast"></p-toast>
+<div style="padding: 10px">
+  <span class="title">
+    {{
+      data?.action == "edit"
+        ? "Editar "
+        : data?.action == "view"
+        ? "Ver "
+        : "Agregar "
+    }}
+    Preguntas y Respuestas</span
+  >
+</div>
+<mat-dialog-content style="overflow-x: hidden">
+  <div class="container">
+    <div class="forms">
+      <div class="form login">
+        <div class="img-titulo"></div>
+        <div>
+          <form [formGroup]="form">
+            <div formArrayName="questions">
+              <div
+                *ngFor="
+                  let question of form.controls.questions['controls'];
+                  let i = index
+                "
+                [formGroupName]="i"
+              >
+                <p-divider [align]="'center'" type="solid">
+                  <b>Pregunta {{ i + 1 }} </b>
+                </p-divider>
+                <div class="container-questions-answers">
+                  <div>
+                    <mat-form-field appearance="fill" class="mat-form-field">
+                      <input
+                        class="input"
+                        maxlength="50"
+                        matInput
+                        readonly="{{ data?.action == 'view' }}"
+                        type="text"
+                        formControlName="question"
+                        placeholder="Ingrese el contenido de la pregunta"
+                      />
+                      <mat-icon
+                        matIconPrefix
+                        svgIcon="iconLetter"
+                        aria-hidden="false"
+                      ></mat-icon>
+                      @if (data?.action == 'view') {
+                      <mat-hint>
+                        {{ "Pregunta N° " + (i + 1) }}
+                      </mat-hint>
+                      }@else {
+                      <mat-hint
+                        >Ingrese el contenido de la
+                        {{ "pregunta N° " + (i + 1) }}
+                      </mat-hint>
+                      }
+                    </mat-form-field>
+                  </div>
+                  <div>
+                    <span
+                      [hidden]="hiddenRemove(i)"
+                      nz-icon
+                      nzType="minus-circle"
+                      class="dynamic-delete-button"
+                      (click)="removeQuestion(i)"
+                    ></span>
+                  </div>
+                </div>
+                <div
+                  *ngFor="
+                    let answer of question.controls.answers.controls;
+                    let j = index
+                  "
+                >
+                  <div class="container-questions-answers">
+                    <div formArrayName="answers">
+                      <div>
+                        <mat-form-field
+                          appearance="fill"
+                          class="mat-form-field"
+                        >
+                          <input
+                            class="input"
+                            maxlength="50"
+                            matInput
+                            readonly="{{ data?.action == 'view' }}"
+                            type="text"
+                            [formControlName]="j"
+                            placeholder="Ingrese el contenido de la respuesta"
+                          />
+                          <mat-icon
+                            matIconPrefix
+                            svgIcon="iconLetter"
+                            aria-hidden="false"
+                          ></mat-icon>
+                          @if (data?.action == 'view') {
+                          <mat-hint>
+                            {{ "Respuesta N° " + (j + 1) }}
+                          </mat-hint>
+                          }@else {
+                          <mat-hint
+                            >Ingrese el contenido de la
+                            {{ "respuesta N° " + (j + 1) }}
+                          </mat-hint>
+                          }
+                        </mat-form-field>
+                      </div>
+                    </div>
+
+                    <div style="margin-right: 10px">
+                      <input
+                        type="radio"
+                        readonly="{{ data?.action == 'view' }}"
+                        [value]="j"
+                        formControlName="correctAnswer"
+                      />
+                      ¿Es correcta?
+                    </div>
+                    <div>
+                      <span
+                        [hidden]="hiddenRemove(j)"
+                        nz-icon
+                        nzType="minus-circle"
+                        class="dynamic-delete-button"
+                        (click)="removeAnswer(i, j)"
+                      ></span>
+                    </div>
+                  </div>
+                </div>
+
+                <button
+                  [hidden]="data?.action == 'view' ? true : false"
+                  nz-button
+                  nzType="dashed"
+                  style="margin-bottom: 10px"
+                  class="add-button"
+                  (click)="addAnswer(i)"
+                >
+                  <span nz-icon nzType="plus"></span>
+                  Agregar nueva respuesta
+                </button>
+              </div>
+              <button
+                [hidden]="data?.action == 'view' ? true : false"
+                nz-button
+                nzType="dashed"
+                style="margin-bottom: 10px"
+                class="add-button"
+                (click)="addQuestion()"
+              >
+                <span nz-icon nzType="plus"></span>
+                Agregar nueva pregunta
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions style="overflow: hidden" class="form">
+  <div class="input-field button">
+    <input
+      (click)="saveQuestionsOrAnswers()"
+      type="submit"
+      value="{{ data?.action != 'view' ? 'Guardar' : 'Aceptar' }}"
+    />
+  </div>
+</mat-dialog-actions>

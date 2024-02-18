@@ -181,6 +181,7 @@ small{
 
 
 
+
   @media only screen and (max-width: 1200px) {
     .container-names {
         grid-template-columns: 1fr;
