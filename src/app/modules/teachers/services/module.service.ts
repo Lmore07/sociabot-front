@@ -49,4 +49,11 @@ export class ModuleService {
       { }
     );
   }
+
+  generateGoals(title: string) {
+    return this.http.post(
+      environment.apiUrl + '/chats/create-observation',
+      { title }
+    );
+  }
 }

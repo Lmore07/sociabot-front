@@ -24,7 +24,7 @@ import { CoursesResponse } from '../../../interfaces/courses.interface';
 import { ModuleService } from '../../../services/module.service';
 import { TeacherService } from '../../../services/teacher.service';
 import { LoadingComponent } from '../../../../../shared-modules/components/loading/loading.component';
-
+import { MatGridListModule } from '@angular/material/grid-list';
 @Component({
   selector: 'app-add-module',
   standalone: true,
@@ -40,6 +40,7 @@ import { LoadingComponent } from '../../../../../shared-modules/components/loadi
     MatFormFieldModule,
     MatButtonModule,
     MatInputModule,
+    MatGridListModule
   ],
   providers: [MessageService],
   templateUrl: './add-module.component.html',
@@ -196,5 +197,15 @@ export class AddModuleComponent {
       summary: title,
       detail: message,
     });
+  }
+
+  generateGoals() {
+    if (this.addModuleFormGroup.controls.name.value !== '') {
+      this.moduleService.generateGoals(this.addModuleFormGroup.controls.name.value).subscribe( (data: any) => {
+        this.addModuleFormGroup.controls.goals.setValue(data.data);
+      }, (error) => {
+        this.showToast('informationToast', 'error', 'Ocurrió un error al generar los objetivos', 'Por favor, intente de nuevo');
+      });
+    }
   }
 }
