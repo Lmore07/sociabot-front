@@ -86,7 +86,9 @@
       <ng-template pTemplate="body" let-module let-columns="columns">
         <tr>
           <td>{{ module.name }}</td>
-          <td>{{ module.goals }}</td>
+          <td style="text-overflow: ellipsis; max-width: 20rem; white-space: nowrap; overflow: hidden;">
+            {{ module.goals }}
+          </td>
           <td>{{ module.isPublic ? "Si" : "No" }}</td>
           <td>{{ module.course.name }}</td>
           <td>
