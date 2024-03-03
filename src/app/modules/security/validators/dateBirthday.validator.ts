@@ -4,7 +4,11 @@ export function dateRangeValidator(): ValidatorFn {
   return (control: AbstractControl) => {
     const currentDate = new Date();
     const birthDate = new Date(control.value);
-
+    const maxDate = new Date(
+      currentDate.getFullYear() - 12,
+      currentDate.getMonth(),
+      currentDate.getDate()
+    );
     const minDate = new Date(
       currentDate.getFullYear() - 80,
       currentDate.getMonth(),
@@ -19,7 +23,16 @@ export function dateRangeValidator(): ValidatorFn {
       };
     }
 
+    if (birthDate > maxDate) {
+      return {
+        dateRange: {
+          message: 'Debes tener mínimo 12 años',
+        },
+      };
+    }
+
     if (birthDate < minDate) {
+
       return {
         dateRange: {
           message: 'La fecha no puede ser anterior a 80 años',

@@ -25,6 +25,7 @@ import { ModuleService } from '../../../services/module.service';
 import { TeacherService } from '../../../services/teacher.service';
 import { LoadingComponent } from '../../../../../shared-modules/components/loading/loading.component';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { selectValidator } from '../../../../security/validators/select.validator';
 @Component({
   selector: 'app-add-module',
   standalone: true,
@@ -40,7 +41,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
     MatFormFieldModule,
     MatButtonModule,
     MatInputModule,
-    MatGridListModule
+    MatGridListModule,
   ],
   providers: [MessageService],
   templateUrl: './add-module.component.html',
@@ -85,12 +86,12 @@ export class AddModuleComponent {
         )
       ).map((course) => JSON.parse(course));
       if (this.data != null) {
-        let defaultValue = response.data!.find(
+        let defaultValue = response.data.find(
           (course) => course.name === this.data.form.name
         );
         this.myControl.patchValue(defaultValue);
       }
-      this.filteredOptions = this.myControl!.valueChanges.pipe(
+      this.filteredOptions = this.myControl.valueChanges.pipe(
         skip(1),
         startWith(''),
         map((value: any) => {
@@ -98,11 +99,15 @@ export class AddModuleComponent {
           return name ? this._filter(name as string) : this.courses.slice();
         })
       );
+      this.myControl.setValidators([
+        Validators.required,
+        selectValidator(this.courses),
+      ]);
     });
   }
 
   displayFn(course: { name: string; id: number }): string {
-    return course && course.name ? course.name : '';
+    return course?.name ?? '';
   }
 
   private _filter(name: string) {
@@ -153,7 +158,7 @@ export class AddModuleComponent {
           'informationToast',
           'error',
           'Ocurrió un error',
-          'Por favor, ingrese todos los campos'
+          'Por favor, ingrese todos los campos correctamente'
         );
       }
     }
@@ -201,11 +206,21 @@ export class AddModuleComponent {
 
   generateGoals() {
     if (this.addModuleFormGroup.controls.name.value !== '') {
-      this.moduleService.generateGoals(this.addModuleFormGroup.controls.name.value).subscribe( (data: any) => {
-        this.addModuleFormGroup.controls.goals.setValue(data.data);
-      }, (error) => {
-        this.showToast('informationToast', 'error', 'Ocurrió un error al generar los objetivos', 'Por favor, intente de nuevo');
-      });
+      this.moduleService
+        .generateGoals(this.addModuleFormGroup.controls.name.value)
+        .subscribe(
+          (data: any) => {
+            this.addModuleFormGroup.controls.goals.setValue(data.data);
+          },
+          (error) => {
+            this.showToast(
+              'informationToast',
+              'error',
+              'Ocurrió un error al generar los objetivos',
+              'Por favor, intente de nuevo'
+            );
+          }
+        );
     }
   }
 }
