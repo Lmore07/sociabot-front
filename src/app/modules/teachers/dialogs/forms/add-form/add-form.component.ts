@@ -102,7 +102,7 @@ export class AddFormComponent {
     this.moduleService.getAllModules(true).subscribe((response) => {
       this.modules = Array.from(
         new Set(
-          response.data!.map((course) =>
+          response.data.map((course) =>
             JSON.stringify({
               name: course.name,
               id: course.id,
@@ -128,7 +128,7 @@ export class AddFormComponent {
   }
 
   displayFn(course: { name: string; id: number }): string {
-    return course && course.name ? course.name : '';
+    return course?.name ?? '';
   }
 
   private _filter(name: string) {

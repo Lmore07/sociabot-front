@@ -101,6 +101,55 @@ export class StudentsComponent {
       );
   }
 
+  activaOrDesactivatemodule(status: boolean, event: Event, moduleId: string) {
+    this.confirmationService.confirm({
+      target: event.target as EventTarget,
+      message: this.messageToastFailed(status, 1),
+      header: 'Confirmación',
+      icon: 'pi pi-info-circle',
+      acceptLabel: 'Si',
+      rejectLabel: 'No',
+      acceptButtonStyleClass: 'p-button-danger p-button-text',
+      rejectButtonStyleClass: 'p-button-text p-button-text',
+      acceptIcon: 'none',
+      rejectIcon: 'none',
+      accept: () => {
+        this.callServiceChangeStatus(status, moduleId);
+      },
+      reject: () => {
+        this.showToast(
+          'informationToast',
+          'error',
+          'Ocurrió un error',
+          this.messageToastFailed(status, 3)
+        );
+      },
+    });
+  }
+
+  
+  callServiceChangeStatus(status: boolean, moduleId: string) {
+    this.spinnerStatus = true;
+    
+  }
+
+  messageToastFailed(status: boolean, caseMessage: number) {
+    let message = '';
+    let stringStatus = status ? 'desactivar' : 'activar';
+    switch (caseMessage) {
+      case 1:
+        message = '¿Esta seguro de ' + stringStatus + ' el curso?';
+        break;
+      case 2:
+        message = 'El módulo se logro ' + stringStatus + ' correctamente';
+        break;
+      case 3:
+        message = 'El módulo no se logro ' + stringStatus + ' correctamente';
+        break;
+    }
+    return message;
+  }
+
   filterByCourse() {
     if (this.selectedCourse == null) {
       this.getAllStudents();

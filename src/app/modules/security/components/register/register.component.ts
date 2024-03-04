@@ -151,7 +151,11 @@ export class RegisterComponent {
 
   minAndMaxDate() {
     const currentDate = new Date();
-    this.maxDate = new Date();
+    this.maxDate = new Date(
+      currentDate.getFullYear() - 12,
+      currentDate.getMonth(),
+      currentDate.getDate()
+    );
     this.minDate = new Date(
       currentDate.getFullYear() - 80,
       currentDate.getMonth(),

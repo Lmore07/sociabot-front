@@ -263,6 +263,8 @@ export class FormsComponent {
       message: this.messageToastFailed(status, 1),
       header: 'Confirmación',
       icon: 'pi pi-info-circle',
+      acceptLabel: 'Si',
+      rejectLabel: 'No',
       acceptButtonStyleClass: 'p-button-danger p-button-text',
       rejectButtonStyleClass: 'p-button-text p-button-text',
       acceptIcon: 'none',

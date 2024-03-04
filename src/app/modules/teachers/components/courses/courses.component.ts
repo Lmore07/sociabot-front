@@ -179,6 +179,8 @@ export class CoursesComponent {
       header: 'Confirmación',
       icon: 'pi pi-info-circle',
       acceptButtonStyleClass: 'p-button-danger p-button-text',
+      acceptLabel: 'Si',
+      rejectLabel: 'No',
       rejectButtonStyleClass: 'p-button-text p-button-text',
       acceptIcon: 'none',
       rejectIcon: 'none',
