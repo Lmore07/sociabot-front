@@ -164,9 +164,9 @@ export class ModulesComponent {
       } else {
         this.showToast(
           'informationToast',
-          'error',
-          'Ocurrió un error',
-          'Fallo al mover el módulo'
+          'info',
+          'No se realizó la acción',
+          'No se movió el módulo'
         );
       }
       if (this.selectedCourse) {
@@ -192,9 +192,9 @@ export class ModulesComponent {
       } else {
         this.showToast(
           'informationToast',
-          'error',
-          'Ocurrió un error',
-          'Fallo al crear el módulo'
+          'info',
+          'No se realizó la acción',
+          'No se creó el módulo'
         );
       }
       if (this.selectedCourse) {
@@ -228,9 +228,9 @@ export class ModulesComponent {
       } else {
         this.showToast(
           'informationToast',
-          'error',
-          'Ocurrió un error',
-          'Fallo al crear el módulo'
+          'info',
+          'No se realizó la acción',
+          'No se editó el módulo'
         );
       }
       if (this.selectedCourse) {
@@ -259,6 +259,8 @@ export class ModulesComponent {
       message: this.messageToastFailed(status, 1),
       header: 'Confirmación',
       icon: 'pi pi-info-circle',
+      acceptLabel: 'Si',
+      rejectLabel: 'No',
       acceptButtonStyleClass: 'p-button-danger p-button-text',
       rejectButtonStyleClass: 'p-button-text p-button-text',
       acceptIcon: 'none',

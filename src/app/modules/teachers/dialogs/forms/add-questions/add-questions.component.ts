@@ -2,31 +2,48 @@ import { CommonModule } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 import {
   FormArray,
-  FormControl,
   FormGroup,
-  FormRecord,
   NonNullableFormBuilder,
   ReactiveFormsModule,
-  Validators,
 } from '@angular/forms';
+import {
+  MAT_MOMENT_DATE_ADAPTER_OPTIONS,
+  MomentDateAdapter,
+} from '@angular/material-moment-adapter';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import {
+  DateAdapter,
+  MAT_DATE_FORMATS,
+  MAT_DATE_LOCALE,
+} from '@angular/material/core';
 import {
   MAT_DIALOG_DATA,
   MatDialogModule,
   MatDialogRef,
 } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatRadioModule } from '@angular/material/radio';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { MessageService } from 'primeng/api';
-import { ToastModule } from 'primeng/toast';
-import {MatDividerModule} from '@angular/material/divider';
 import { DividerModule } from 'primeng/divider';
-import {MatRadioModule} from '@angular/material/radio';
+import { ToastModule } from 'primeng/toast';
 
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'DD MM YYYY',
+  },
+  display: {
+    dateInput: 'DD/MM/YYYY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'MM',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
 @Component({
   selector: 'app-add-questions',
   standalone: true,
@@ -48,7 +65,16 @@ import {MatRadioModule} from '@angular/material/radio';
   ],
   templateUrl: './add-questions.component.html',
   styleUrl: './add-questions.component.css',
-  providers: [MessageService],
+  providers: [
+    MessageService,
+    { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
+    },
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+  ],
 })
 export class AddQuestionsComponent {
   form: FormGroup;
