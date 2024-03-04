@@ -31,7 +31,15 @@ export class JoinCourseComponent {
         data.message,
         'Correcto'
       );
-    });
+    }, (error: any) => {
+      // alert(error.error.message);
+      this.showToast(
+        'informationToast',
+        'error',
+        'Error',
+        error.error.message,
+      );
+      });
   }
 
   showToast(keyToast: string, type: string, title: string, message: string) {
