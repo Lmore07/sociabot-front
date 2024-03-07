@@ -13,6 +13,8 @@ import { DialogModule } from 'primeng/dialog';
 import { JoinCourseComponent } from '../join-course/join-course.component';
 import { RouterModule } from '@angular/router';
 import { ToastModule } from 'primeng/toast';
+import { CardModule } from 'primeng/card';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-student-courses',
@@ -28,7 +30,9 @@ import { ToastModule } from 'primeng/toast';
     DialogModule,
     JoinCourseComponent,
     RouterModule,
-    ToastModule
+    ToastModule,
+    CardModule,
+    CommonModule,
   ],
   templateUrl: './student-courses.component.html',
   styleUrl: './student-courses.component.css',

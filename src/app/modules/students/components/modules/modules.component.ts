@@ -10,6 +10,7 @@ import { CoursesService } from '../../services/courses.service';
 import { MessageService, PrimeIcons } from 'primeng/api';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { ToastModule } from 'primeng/toast';
+import { CardModule } from 'primeng/card';
 
 
 @Component({
@@ -24,7 +25,8 @@ import { ToastModule } from 'primeng/toast';
     TagModule,
     TooltipModule,
     RouterModule,
-    ToastModule
+    ToastModule,
+    CardModule,
   ],
   templateUrl: './modules.component.html',
   styleUrl: './modules.component.css',

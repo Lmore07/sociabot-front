@@ -10,55 +10,46 @@
     </ng-template>
 
     <ng-template pTemplate="right">
-      <button pButton pRipple label="Unirse a un curso" icon="pi pi-plus" class="p-button-success margin-button"
+      <button pButton pRipple label="Unirse a un curso" icon="pi pi-plus"
+        class="p-button-success margin-button tw-bg-blue-500 tw-px-3 tw-py-2 tw-text-white"
         (click)="showDialog()"></button>
       <!-- <button pButton pRipple label="Exportar" icon="pi pi-upload" class="p-button-help"></button> -->
     </ng-template>
   </p-toolbar>
 
-  <div class="table">
-    <p-table [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5, 10, 20]" [value]="courses"
-      [tableStyle]="{ 'min-width': '50rem' }" styleClass="p-datatable-striped">
-      <ng-template pTemplate="header" let-columns>
-        <tr>
-          <th>Curso</th>
-          <th>Profesor</th>
-          <!-- <th>Estado</th> -->
-          <th>Opciones</th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-product let-columns="columns">
-        <tr>
-          <td>{{ product.course.name }}</td>
-          <td>{{ product.course.teacher.firstName }} {{ product.course.teacher.lastName }}</td>
-          <!-- <td>{{ product.code }}</td> -->
-          <!-- <td>
-              <p-tag
-                [value]="product.status ? 'Activo' : 'Inactivo'"
-                [severity]="getSeverity(product.status)"
-              ></p-tag>
-            </td> -->
-          <td>
-            <button
-                pButton
-                pRipple
-                pTooltip="Abrir curso"
-                tooltipPosition="top"
-                icon="pi pi-folder-open"
-                class="p-button-rounded p-button-success margin-button tw-mr-1"
-                [routerLink]="[product.course.id+'/modules']"
-              ></button>
-            <button pButton pRipple pTooltip="Salir del curso"
-              tooltipPosition="top" [icon]="iconActions()"
-              class="p-button-rounded p-button-danger margin-button tw-ml-1"></button>
-          </td>
-        </tr>
-      </ng-template>
-    </p-table>
+  @if (courses.length === 0) {
+  <div class="tw-flex tw-flex-col tw-items-center tw-justify-center tw-mt-14">
+    @if (formGroup.value['status']) {
+    <p class="tw-text-gray-500 tw-text-2xl">No hay cursos inscritos. ¡Únete a uno!</p>
+    }
+    @else {
+    <p class="tw-text-gray-500 tw-text-2xl">No hay cursos inactivos</p>
+    }
   </div>
+  }
+  @else {
+  <div class="tw-grid tw-grid-cols-3 tw-gap-3 tw-mt-3">
+    @for (item of courses; track $index) {
+    <p-card [header]="item.course.name" [style]="{  height: '300px' }">
+      <p>
+        Profesor: {{ item.course.teacher.firstName }} {{ item.course.teacher.lastName }}
+      </p>
+      <p>
+        Descripción: {{ item.course.description }}
+      </p>
+      <ng-template pTemplate="footer">
+        <p-button class="tw-text-white" label="Ingresar" icon="pi pi-folder-open"
+          [routerLink]="[item.course.id+'/modules']"></p-button>
+        <!-- <p-button label="Salir" icon="pi pi-times" styleClass="p-button-danger" [style]="{ 'margin-left': '.5em' }"></p-button> -->
+      </ng-template>
+    </p-card>
+    }
+  </div>
+  }
+
 </div>
-<p-dialog [(visible)]="visible" [breakpoints]="{ '960px': '75vw' }" [style]="{ width: '50vw' }"
-  [draggable]="true" [resizable]="false">
+<p-dialog [(visible)]="visible" [breakpoints]="{ '960px': '75vw' }" [style]="{ width: '50vw' }" [draggable]="true"
+  [resizable]="false">
   <app-join-course></app-join-course>
 </p-dialog>
 <p-toast key="informationToast"></p-toast>
