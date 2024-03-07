@@ -1,3 +1,5 @@
+<p-toast key="informationToast"></p-toast>
+<p-confirmDialog></p-confirmDialog>
 <h1 mat-dialog-title>Estudiantes del curso: {{ data.courseName }}</h1>
 <div mat-dialog-content>
   <div class="card">
@@ -62,7 +64,12 @@
               <button
                 pButton
                 pRipple
+                [ngClass]="{
+                  'p-button-danger': formGroup.value.status,
+                  'p-button-success': !formGroup.value.status
+                }"
                 style="color: white;"
+                (click)="activateOrDesactivateStudent($event, student.student.id)"
                 [pTooltip]="
                   formGroup.value.status
                     ? 'Eliminar del curso'
@@ -70,7 +77,7 @@
                 "
                 tooltipPosition="top"
                 [icon]="iconActions()"
-                class="p-button-rounded p-button-danger"
+                class="p-button-rounded"
               ></button>
             </td>
           </tr>

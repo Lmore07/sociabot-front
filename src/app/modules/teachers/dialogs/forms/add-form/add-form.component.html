@@ -148,7 +148,7 @@
                 nzShape="round"
               >
                 <span nz-icon nzType="download"></span>
-                {{textButtonQuestions}}
+                {{ textButtonQuestions }}
               </button>
             </div>
           </div>
@@ -164,6 +164,7 @@
                   class="input"
                   [readonly]="data?.type == 'view'"
                   matInput
+                  [min]="minDate"
                   placeholder="Fecha de Inicio"
                 />
                 <mat-datepicker-toggle
@@ -199,6 +200,7 @@
                   [matDatepicker]="pickerEnd"
                   formControlName="endDate"
                   class="input"
+                  [min]="minDateEnd ?? null"
                   [readonly]="data?.type == 'view'"
                   matInput
                   placeholder="Fecha de Finalizacion"
@@ -226,6 +228,12 @@
                 } @if (addFormGroup.get('endDate')?.hasError('required') &&
                 addFormGroup.get('endDate')?.touched) {
                 <mat-error>¡Este campo es requerido!</mat-error>
+                } @if (addFormGroup.get('endDate')?.hasError('matDatepickerMin')
+                && addFormGroup.get('endDate')?.touched) {
+                <mat-error
+                  >¡Fecha de finalización debe ser mayor a la de
+                  inicio!</mat-error
+                >
                 }
               </mat-form-field>
             </div>
