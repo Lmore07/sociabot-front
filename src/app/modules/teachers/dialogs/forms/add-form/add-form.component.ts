@@ -7,8 +7,17 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import {
+  MAT_MOMENT_DATE_ADAPTER_OPTIONS,
+  MomentDateAdapter,
+} from '@angular/material-moment-adapter';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
+import {
+  DateAdapter,
+  MAT_DATE_FORMATS,
+  MAT_DATE_LOCALE,
+} from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import {
   MAT_DIALOG_DATA,
@@ -19,16 +28,33 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { DomSanitizer } from '@angular/platform-browser';
+import moment from 'moment-timezone';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { Observable, map, skip, startWith } from 'rxjs';
-import { DATE_ICON, LETTER_ICON, QUESTION_ICON } from '../../../../../../assets/svg/icons-svg';
+import {
+  DATE_ICON,
+  LETTER_ICON,
+  QUESTION_ICON,
+} from '../../../../../../assets/svg/icons-svg';
 import { LoadingComponent } from '../../../../../shared-modules/components/loading/loading.component';
 import { ModuleResponse } from '../../../interfaces/modules.interface';
 import { FormsService } from '../../../services/forms.service';
 import { ModuleService } from '../../../services/module.service';
 import { AddQuestionsComponent } from '../add-questions/add-questions.component';
+
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'DD MM YYYY',
+  },
+  display: {
+    dateInput: 'DD/MM/YYYY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'MM',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
 
 @Component({
   selector: 'app-add-form',
@@ -46,7 +72,16 @@ import { AddQuestionsComponent } from '../add-questions/add-questions.component'
     MatDatepickerModule,
     ToastModule,
   ],
-  providers: [MessageService],
+  providers: [
+    MessageService,
+    { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
+    },
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+  ],
   templateUrl: './add-form.component.html',
   styleUrl: './add-form.component.css',
 })
@@ -58,6 +93,8 @@ export class AddFormComponent {
   filteredOptions!: Observable<any[]>;
   temporalQuestions!: [];
   textButtonQuestions = 'Agregar preguntas';
+  minDate!: Date;
+  minDateEnd!: Date;
 
   constructor(
     public dialogRef: MatDialogRef<AddFormComponent>,
@@ -71,6 +108,14 @@ export class AddFormComponent {
     private messageService: MessageService
   ) {
     this.registerIcons();
+    if (data?.type == 'view' || data?.type == 'edit') {
+      this.data.form.startDate = moment(this.data.form.startDate)
+        .locale('es')
+        .tz('America/Guayaquil');
+      this.data.form.endDate = moment(this.data.form.endDate)
+        .locale('es')
+        .tz('America/Guayaquil');
+    }
     this.createAddForm();
   }
 
@@ -80,6 +125,7 @@ export class AddFormComponent {
     } else if (this.data?.type == 'edit') {
       this.textButtonQuestions = 'Editar preguntas';
     }
+    this.dateMin();
     this.getModules();
   }
 
@@ -96,6 +142,19 @@ export class AddFormComponent {
       'iconDate',
       this.sanitizer.bypassSecurityTrustHtml(DATE_ICON)
     );
+  }
+
+  dateMin() {
+    const currentDate = new Date();
+    this.minDate = currentDate;
+    if (this.data?.type == 'edit') {
+      this.minDateEnd = this.data.form.startDate.clone().add(1, 'days');
+    }
+    this.addFormGroup.valueChanges.subscribe((value) => {
+      if (value.startDate != null) {
+        this.minDateEnd = value.startDate.clone().add(1, 'days');
+      }
+    });
   }
 
   getModules() {
@@ -148,13 +207,11 @@ export class AddFormComponent {
     if (this.data?.type == 'view') {
       this.addFormGroup.patchValue(this.data.form);
       this.addFormGroup.get('questions')?.setValue('Preguntas');
-      this.addFormGroup.get('answers')?.setValue('Respuestas');
       this.temporalQuestions = this.data.form.questions;
       this.myControl.setValue(this.data.moduleName);
     } else if (this.data?.type == 'edit') {
       this.addFormGroup.patchValue(this.data.form);
       this.addFormGroup.get('questions')?.setValue('Preguntas');
-      this.addFormGroup.get('answers')?.setValue('Respuestas');
       this.temporalQuestions = this.data.form.questions;
     }
   }
@@ -261,7 +318,7 @@ export class AddFormComponent {
       name: this.addFormGroup.get('name')?.value,
       startDate: this.addFormGroup.get('startDate')?.value,
       endDate: this.addFormGroup.get('endDate')?.value,
-      questionsAndAnswers:this.temporalQuestions
+      questionsAndAnswers: this.temporalQuestions,
     };
   }
 
