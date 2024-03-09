@@ -1,4 +1,4 @@
-import { QuestionsAndAnswers } from './../../interfaces/forms.interface';
+import { CommonModule, DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
 import {
   FormControl,
@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationService, MessageService, PrimeIcons } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DropdownModule } from 'primeng/dropdown';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
@@ -17,12 +18,10 @@ import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TooltipModule } from 'primeng/tooltip';
 import { LoadingComponent } from '../../../../shared-modules/components/loading/loading.component';
-import { TeacherService } from '../../services/teacher.service';
-import { CommonModule, DatePipe } from '@angular/common';
 import { AddFormComponent } from '../../dialogs/forms/add-form/add-form.component';
-import { DropdownModule } from 'primeng/dropdown';
-import { FormsService } from '../../services/forms.service';
 import { FormsResponse } from '../../interfaces/forms.interface';
+import { FormsService } from '../../services/forms.service';
+import { QuestionsAndAnswers } from './../../interfaces/forms.interface';
 
 @Component({
   selector: 'app-forms',
@@ -42,7 +41,7 @@ import { FormsResponse } from '../../interfaces/forms.interface';
     TooltipModule,
     LoadingComponent,
   ],
-  providers: [MessageService, ConfirmationService],
+  providers: [MessageService, ConfirmationService, DatePipe],
   templateUrl: './forms.component.html',
   styleUrl: './forms.component.css',
 })
@@ -62,7 +61,8 @@ export class FormsComponent {
     private formsService: FormsService,
     public dialog: MatDialog,
     private confirmationService: ConfirmationService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private datePipe: DatePipe
   ) {}
 
   ngOnInit() {
@@ -80,7 +80,7 @@ export class FormsComponent {
         this.forms = response.data!;
         this.modulesNames = Array.from(
           new Set(
-            response.data!.map((module) =>
+            response.data.map((module) =>
               JSON.stringify({
                 name: module.module.name,
                 id: module.module.id,
@@ -175,7 +175,7 @@ export class FormsComponent {
           name: formName,
           startDate: startDate,
           endDate: endDate,
-          questions: questionsAndAnswers
+          questions: questionsAndAnswers,
         },
         id: formId,
       },
@@ -215,7 +215,7 @@ export class FormsComponent {
           name: formName,
           startDate: startDate,
           endDate: endDate,
-          questions: questionsAndAnswers
+          questions: questionsAndAnswers,
         },
         moduleName: moduleName,
       },
