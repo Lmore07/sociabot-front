@@ -4,13 +4,13 @@ import { ButtonModule } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
 import { CoursesService } from '../../services/courses.service';
 import { MessageService } from 'primeng/api';
-import {ToastModule} from 'primeng/toast';
-
+import { ToastModule } from 'primeng/toast';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-join-course',
   standalone: true,
-  imports: [CardModule, ButtonModule, FormsModule, ToastModule],
+  imports: [CardModule, ButtonModule, FormsModule, ToastModule, RouterModule],
   templateUrl: './join-course.component.html',
   styleUrl: './join-course.component.css',
   providers: [MessageService]
@@ -18,7 +18,7 @@ import {ToastModule} from 'primeng/toast';
 export class JoinCourseComponent {
 
 
-  constructor(private service: CoursesService, private messageService: MessageService) { }
+  constructor(private service: CoursesService, private messageService: MessageService, private router: Router) { }
 
   licenseKey!: string;
 
@@ -31,6 +31,15 @@ export class JoinCourseComponent {
         data.message,
         'Correcto'
       );
+
+      setTimeout(() => {
+        console.log(this.router.url);
+        if (this.router.url === '/students/courses')
+          window.location.reload();
+        else
+          this.router.navigate(['/students/courses'], { onSameUrlNavigation: 'reload' });
+      }, 1000);
+
     }, (error: any) => {
       // alert(error.error.message);
       this.showToast(
@@ -39,7 +48,7 @@ export class JoinCourseComponent {
         'Error',
         error.error.message,
       );
-      });
+    });
   }
 
   showToast(keyToast: string, type: string, title: string, message: string) {

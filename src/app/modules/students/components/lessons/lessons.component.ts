@@ -10,6 +10,7 @@ import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsService } from '../../services/forms.service';
+import { DialogModule } from 'primeng/dialog';
 
 @Component({
   selector: 'app-lessons',
@@ -23,7 +24,8 @@ import { FormsService } from '../../services/forms.service';
     TagModule,
     TooltipModule,
     RouterModule,
-    ToastModule
+    ToastModule,
+    DialogModule,
   ],
   templateUrl: './lessons.component.html',
   styleUrl: './lessons.component.css',
@@ -32,6 +34,7 @@ import { FormsService } from '../../services/forms.service';
 export class LessonsComponent {
   constructor(private messageService: MessageService, private service: FormsService) { }
   forms!: any[];
+  visible: boolean = false;
 
   ngOnInit() {
     this.getLessons();
@@ -57,5 +60,9 @@ export class LessonsComponent {
       summary: title,
       detail: message,
     });
+  }
+
+  showDialog() {
+    this.visible = true;
   }
 }
