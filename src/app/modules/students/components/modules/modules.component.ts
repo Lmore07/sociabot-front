@@ -11,7 +11,7 @@ import { MessageService, PrimeIcons } from 'primeng/api';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { ToastModule } from 'primeng/toast';
 import { CardModule } from 'primeng/card';
-
+import { MarkdownModule, MarkdownService, provideMarkdown } from 'ngx-markdown';
 
 @Component({
   selector: 'app-modules',
@@ -27,17 +27,18 @@ import { CardModule } from 'primeng/card';
     RouterModule,
     ToastModule,
     CardModule,
+    MarkdownModule
   ],
   templateUrl: './modules.component.html',
   styleUrl: './modules.component.css',
-  providers: [MessageService],
+  providers: [MessageService, provideMarkdown()],
 })
 export class ModulesComponent {
   modules!: any[];
   id = '';
 
-    
-    constructor(private service: CoursesService, private route: ActivatedRoute, private messageService: MessageService) { }
+
+  constructor(private service: CoursesService, private route: ActivatedRoute, private messageService: MessageService) { }
 
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('courseId') || '';

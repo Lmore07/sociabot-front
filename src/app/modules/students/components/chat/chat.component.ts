@@ -7,14 +7,15 @@ import { ChatService } from '../../services/chat.service';
 import { ActivatedRoute } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { DialogModule } from 'primeng/dialog';
+import { MarkdownModule, provideMarkdown } from 'ngx-markdown';
 
 @Component({
   selector: 'app-chat',
   standalone: true,
-  imports: [CardModule, ButtonModule, FormsModule, ToastModule, DialogModule],
+  imports: [CardModule, ButtonModule, FormsModule, ToastModule, DialogModule, MarkdownModule],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.css',
-  providers: [MessageService],
+  providers: [MessageService, provideMarkdown()],
 })
 export class ChatComponent {
   constructor(
@@ -92,7 +93,9 @@ export class ChatComponent {
 
   handleKeyPress($event: KeyboardEvent) {
     if ($event.key === 'Enter' && this.newMessage !== '') {
-      this.sendMessage();
+      if (!$event.shiftKey && !$event.getModifierState('Shift')) {
+        this.sendMessage();
+      }
     }
   }
 
@@ -108,5 +111,18 @@ export class ChatComponent {
 
   showDialog() {
     this.visible = true;
+  }
+  adjustHeight(event: any): void {
+    if (event.key === 'Enter') {
+      if (event.shiftKey && event.getModifierState('Shift')) {
+        const maxHeight = 200; // Establece la altura máxima que deseas aquí
+        event.target.style.height = 'auto';
+        if (event.target.scrollHeight > maxHeight) {
+          event.target.style.height = maxHeight + 'px';
+        } else {
+          event.target.style.height = (event.target.scrollHeight) + 'px';
+        }
+      }
+    }
   }
 }

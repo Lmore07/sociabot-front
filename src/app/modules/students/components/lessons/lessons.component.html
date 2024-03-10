@@ -1,13 +1,15 @@
+<!-- <button pButton label="Información" pRipple icon="pi pi-info-circle" class="p-button-info p-button-small" size="small"></button> -->
+<p-button icon="pi pi-info-circle" label="Información" severity="info" size="small" (onClick)="showDialog()"></p-button>
 <div class="card">
     <!-- <p-toolbar styleClass="mb-4 gap-2">
       <ng-template pTemplate="left"></ng-template>
-      <ng-template pTemplate="right">
+      <ng-template pTemplate="right"> 
         <button pButton pRipple label="Nuevo chat" icon="pi pi-plus" class="p-button-success margin-button"
         (click)="newChat()"></button>
       </ng-template>
     </p-toolbar> -->
       <div class="table">
-        <p-table [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5, 10, 20]" [value]="forms" 
+        <p-table [paginator]="false" [rows]="5" [rowsPerPageOptions]="[5, 10, 20]" [value]="forms" 
           [tableStyle]="{ 'min-width': '50rem' }" styleClass="p-datatable-striped">
           <ng-template pTemplate="header" let-columns>
             <tr>
@@ -31,6 +33,7 @@
                     icon="pi pi-folder-open"
                     class="p-button-rounded p-button-success margin-button tw-mr-1"
                     [routerLink]="['form/'+form.id]"
+                    label="Intentar lección"
                   ></button>
               </td>
             </tr>
@@ -39,3 +42,9 @@
       </div>
     </div>
   <p-toast key="informationToast"></p-toast>
+  <p-dialog [(visible)]="visible" [breakpoints]="{ '960px': '75vw' }" [style]="{ width: '50vw' }" [draggable]="true"
+  [resizable]="false" header="Instrucciones">
+  <p>Realiza las lecciones que son de tipo cuestionario con una única respuesta por pregunta.</p>
+  <p>Recuerda leer cuidadosamente cada pregunta y seleccionar la respuesta correcta.</p>
+  <!-- <p>Si tienes alguna duda, puedes utilizar el botón de "Información" para obtener más detalles.</p> -->
+</p-dialog>

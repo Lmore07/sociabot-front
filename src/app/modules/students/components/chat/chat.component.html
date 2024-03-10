@@ -15,7 +15,7 @@
                 <span>.</span><span>.</span><span>.</span>
               </div>
               }@else{
-              <p class="tw-text-gray-800">{{ message.message }}</p>
+              <markdown [data]="message.message" class="tw-text-gray-800" ></markdown>
               }
             </div>
           </div>
@@ -33,9 +33,9 @@
       <div class="tw-p-4">
         <!-- Formulario de envío de mensajes -->
         <div class="tw-flex">
-          <input type="text" [disabled]="isLoading"
-            class="tw-flex-grow tw-rounded-l-lg tw-border tw-border-gray-300 tw-p-2" placeholder="Escribe un mensaje..."
-            [(ngModel)]="newMessage" (keyup)="handleKeyPress($event)" />
+          <textarea type="text" [disabled]="isLoading"
+            class="tw-flex-grow tw-rounded-l-lg tw-border tw-border-gray-300 tw-p-2 tw-resize-none" placeholder="Escribe un mensaje..."
+            [(ngModel)]="newMessage" (keydown.enter)="$event.preventDefault()" (keyup)="handleKeyPress($event); adjustHeight($event)"></textarea>
           <button [disabled]="isLoading" class="tw-bg-blue-500 tw-text-white tw-rounded-r-lg tw-px-4 tw-py-2"
             (click)="sendMessage()">
             Enviar

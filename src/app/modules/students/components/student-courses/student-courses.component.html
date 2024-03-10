@@ -30,7 +30,7 @@
   @else {
   <div class="tw-grid tw-grid-cols-3 tw-gap-3 tw-mt-3">
     @for (item of courses; track $index) {
-    <p-card [header]="item.course.name" [style]="{  height: '300px' }">
+    <p-card  #pCard [header]="item.course.name">
       <p>
         Profesor: {{ item.course.teacher.firstName }} {{ item.course.teacher.lastName }}
       </p>

@@ -11,6 +11,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { DialogModule } from 'primeng/dialog';
+import { MarkdownModule, provideMarkdown } from 'ngx-markdown';
 
 @Component({
   selector: 'app-list-chats',
@@ -26,10 +27,11 @@ import { DialogModule } from 'primeng/dialog';
     RouterModule,
     ToastModule,
     DialogModule,
+    MarkdownModule,
   ],
   templateUrl: './list-chats.component.html',
   styleUrl: './list-chats.component.css',
-  providers: [MessageService],
+  providers: [MessageService, provideMarkdown()],
 })
 export class ListChatsComponent {
   modules!: any[];

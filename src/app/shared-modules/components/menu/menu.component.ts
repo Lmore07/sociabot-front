@@ -8,7 +8,7 @@ import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ActivatedRoute, RouterModule, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule, RouterOutlet } from '@angular/router';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
@@ -60,7 +60,8 @@ export class MenuComponent {
   constructor(
     public iconRegistry: MatIconRegistry,
     public sanitizer: DomSanitizer,
-    private route: ActivatedRoute
+    private router: Router,
+    private route: ActivatedRoute,
   ) {
     this.registerIcons();
     this.assignMenuByType();
@@ -172,5 +173,16 @@ export class MenuComponent {
         routerLink: 'students',
       },
     ];
+  }
+
+  redirectToProfile() {
+    console.log('redirect');
+    // this.sidenav.close();
+      const routeAux = this.route.snapshot.url.map((seg) => seg.path).join('/');
+      if (routeAux.includes('students')) {
+        this.router.navigate(['/students/profile']);
+      } else {
+        this.router.navigate(['/teachers/profile']);
+      }
   }
 }
