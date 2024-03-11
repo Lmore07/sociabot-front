@@ -1,6 +1,13 @@
 import { TeacherService } from '../../../services/teacher.service';
 import { Component, Inject, LOCALE_ID } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogActions,
+  MatDialogClose,
+  MatDialogContent,
+  MatDialogRef,
+  MatDialogTitle,
+} from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
@@ -17,6 +24,8 @@ import localeEs from '@angular/common/locales/es';
 import { StudentsService } from '../../../services/students.service';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 registerLocaleData(localeEs);
 
@@ -26,6 +35,8 @@ registerLocaleData(localeEs);
   imports: [
     MatFormFieldModule,
     MatInputModule,
+    MatButtonModule,
+    MatIconModule,
     CommonModule,
     ReactiveFormsModule,
     TableModule,
@@ -36,6 +47,10 @@ registerLocaleData(localeEs);
     TooltipModule,
     ToastModule,
     ConfirmDialogModule,
+    MatDialogTitle,
+    MatDialogContent,
+    MatDialogActions,
+    MatDialogClose,
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'es' },

@@ -22,6 +22,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import {
   MAT_DIALOG_DATA,
   MatDialog,
+  MatDialogClose,
   MatDialogRef,
 } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -71,6 +72,7 @@ export const MY_FORMATS = {
     NzButtonModule,
     MatDatepickerModule,
     ToastModule,
+    MatDialogClose
   ],
   providers: [
     MessageService,

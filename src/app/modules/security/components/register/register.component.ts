@@ -44,6 +44,7 @@ import { LoadingComponent } from '../../../../shared-modules/components/loading/
 import { SecurityService } from '../../services/security.service';
 import { dateRangeValidator } from '../../validators/dateBirthday.validator';
 import { roleUserValidator } from '../../validators/role.validator';
+import { passwordValidator } from '../../validators/password.validator';
 
 const moment = _rollupMoment || _moment;
 export const MY_FORMATS = {
@@ -175,15 +176,7 @@ export class RegisterComponent {
           ),
         ],
       ],
-      password: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern(
-            /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*['"!@#$%^&*()_/+{}.:<>?-]).{8,20}$/
-          ),
-        ],
-      ],
+      password: ['', [Validators.required, passwordValidator()]],
       role: ['', [Validators.required, roleUserValidator()]],
       gender: ['', [Validators.required]],
       firstName: [
@@ -200,6 +193,7 @@ export class RegisterComponent {
 
   callSignUpService() {
     this.signUpFormGroup.markAllAsTouched();
+    console.log('Errors: ', this.signUpFormGroup.get('password')?.errors);
     if (this.signUpFormGroup.invalid) {
       this.showToast(
         'informationToast',

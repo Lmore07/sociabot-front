@@ -6,6 +6,7 @@
   <div class="container">
     <div class="forms">
       <div class="form login">
+        <h1 class="title-text">Bienvenido a Sociabot</h1>
         <div class="img-titulo">
           <span class="title">Registro de Usuario</span>
         </div>
@@ -203,16 +204,21 @@
                     [svgIcon]="hide ? 'iconEyeOff' : 'iconEyeOn'"
                   ></mat-icon>
                 </button>
-                <mat-hint>Ingrese su contraseña</mat-hint>
+                <mat-hint>
+                  {{ "Ingrese su contraseña" }}
+                  <br />
+                  {{
+                    "Debe tener minimo 8 caracteres, una letra mayúscula, una letra minúscula, un número y un caracter especial ((!@#$%^&*()_/+{}.:>?-))"
+                  }}
+                </mat-hint>
                 @if (signUpFormGroup.get('password')?.hasError('required') &&
                 signUpFormGroup.get('password')?.touched) {
                 <mat-error>¡La contraseña es requerida!</mat-error>
-                } @if (signUpFormGroup.get('password')?.hasError('pattern') &&
-                signUpFormGroup.get('password')?.touched) {
-                <mat-error
-                  >¡La contraseña no tiene el formato correcto!</mat-error
-                >
-                }
+                } @if (signUpFormGroup.get('password')?.errors) {
+                  <mat-error>
+                    {{ signUpFormGroup.get('password')?.errors?.message }}
+                  </mat-error>
+                 }
               </mat-form-field>
             </div>
             <div class="input-field button">
