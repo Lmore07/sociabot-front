@@ -54,6 +54,12 @@
                         >Ingrese el contenido de la
                         {{ "pregunta N° " + (i + 1) }}
                       </mat-hint>
+                      } @if(form.get('questions').get([i,
+                      'question']).hasError('required') &&
+                      form.get('questions').get([i, 'question']).touched){
+                      <mat-error>
+                        {{ "La pregunta es obligatoria" }}
+                      </mat-error>
                       }
                     </mat-form-field>
                   </div>
@@ -102,6 +108,13 @@
                             >Ingrese el contenido de la
                             {{ "respuesta N° " + (j + 1) }}
                           </mat-hint>
+                          } @if (form.get('questions').get([i, 'answers',
+                          j]).hasError('required') &&
+                          form.get('questions').get([i, 'answers', j]).touched)
+                          {
+                          <mat-error>
+                            {{ "La opción es obligatoria" }}
+                          </mat-error>
                           }
                         </mat-form-field>
                       </div>

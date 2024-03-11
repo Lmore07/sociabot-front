@@ -2,17 +2,24 @@
 @import '../../../../../assets/styles/variables.css';
 
 .body{
-    height: 100dvh;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 10%;
     background: var(--background-gradient);
+    padding-top: 5dvh;
+    padding-bottom: 5dvh;
+}
+
+.title-text{
+    text-align: center;
+    text-decoration: underline;
+    text-decoration-color: #d9ba87;
+    text-decoration-thickness: 3px;
+    text-decoration-style: wavy;
+    text-underline-offset: 5px;
 }
 
 .container{
-    margin-top: 10px;
-    margin-bottom: 10px;
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 5px 10px rgba(0,0,0,0.1);
@@ -131,7 +138,7 @@ small{
     color: #fff;
     font-size: 17px;
     font-weight: 500;
-    margin-top: 10px;
+    margin-top: 40px;
     letter-spacing: 1px;
     border-radius: 6px;
     background: var(--button-gradient);
@@ -157,7 +164,7 @@ small{
 
 
 .form .login-signup{
-    margin-top: 20px;
+    margin-top: 50px;
     text-align: center;
 }
 
@@ -179,12 +186,11 @@ small{
       }
 
       .body{
-        height: 100dvh;
-        overflow: scroll;
+        overflow: hidden;
         display: flex;
         align-items: center;
-        padding-top: 10%;
-        padding-bottom: 1%;
+        padding-top: 5dvh;
+        padding-bottom: 5dvh;
         justify-content: center;
         background: var(--background-gradient);
     }
@@ -224,7 +230,8 @@ small{
       }
 
     .body{
-        height: 100dvh;
+        padding-top: 5dvh;
+        padding-bottom: 5dvh;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -267,7 +274,8 @@ small{
         grid-template-columns: 1fr;
       }
     .body{
-        height: 100dvh;
+        padding-top: 5dvh;
+        padding-bottom: 5dvh;
         display: flex;
         align-items: center;
         justify-content: center;
