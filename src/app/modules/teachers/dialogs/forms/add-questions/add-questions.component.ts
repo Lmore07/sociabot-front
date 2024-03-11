@@ -5,6 +5,7 @@ import {
   FormGroup,
   NonNullableFormBuilder,
   ReactiveFormsModule,
+  Validators,
 } from '@angular/forms';
 import {
   MAT_MOMENT_DATE_ADAPTER_OPTIONS,
@@ -82,6 +83,7 @@ export class AddQuestionsComponent {
   constructor(
     public dialogRef: MatDialogRef<AddQuestionsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
+    private messageService: MessageService,
     private fb: NonNullableFormBuilder,
     private fbQuestion: NonNullableFormBuilder
   ) {}
@@ -101,7 +103,19 @@ export class AddQuestionsComponent {
     const answers = (this.form.get('questions') as FormArray)
       .at(index)
       .get('answers') as FormArray;
-    answers.push(this.fb.control(''));
+    if (answers.length < 5) {
+      answers.push(
+        this.fb.control('', {
+          validators: [Validators.required],
+        })
+      );
+    } else {
+      this.showToast(
+        'info',
+        'Se excedió el número de opciones',
+        'Informamos que el número máximo de opciones son 5'
+      );
+    }
   }
 
   removeAnswer(questionIndex: number, answerIndex: number) {
@@ -120,8 +134,13 @@ export class AddQuestionsComponent {
         const questions = this.form.get('questions') as FormArray;
         questions.push(
           this.fb.group({
-            question: this.fb.control(this.data.data[index].question),
-            correctAnswer: this.fb.control(this.data.data[index].correctAnswer),
+            question: this.fb.control(this.data.data[index].question, [
+              Validators.required,
+            ]),
+            correctAnswer: this.fb.control(
+              this.data.data[index].correctAnswer,
+              [Validators.required]
+            ),
             answers: this.fb.array([]),
           })
         );
@@ -129,16 +148,20 @@ export class AddQuestionsComponent {
           const answers = (this.form.get('questions') as FormArray)
             .at(index)
             .get('answers') as FormArray;
-          answers.push(this.fb.control(this.data.data[index].answers[j]));
+          answers.push(
+            this.fb.control(this.data.data[index].answers[j], [
+              Validators.required,
+            ])
+          );
         }
       }
     } else {
       this.form = this.fb.group({
         questions: this.fb.array([
           this.fb.group({
-            question: [''],
-            correctAnswer: this.fb.control(''),
-            answers: this.fb.array([this.fb.control('')]),
+            question: ['', [Validators.required]],
+            correctAnswer: this.fb.control('', [Validators.required]),
+            answers: this.fb.array([this.fb.control('', Validators.required)]),
           }),
         ]),
       });
@@ -147,19 +170,38 @@ export class AddQuestionsComponent {
 
   saveQuestionsOrAnswers() {
     if (this.data?.action != 'view') {
-      this.dialogRef.close(this.form.value.questions);
+      this.form.markAllAsTouched();
+      if (this.form.valid) {
+        this.dialogRef.close(this.form.value.questions);
+      } else {
+        this.showToast(
+          'warn',
+          'Formulario No Válido',
+          'Por favor verifique los campos obligatorios'
+        );
+      }
     } else {
       this.dialogRef.close();
     }
+  }
+
+  showToast(type: string, title: string, message: string) {
+    this.messageService.clear();
+    this.messageService.add({
+      key: 'informationToast',
+      severity: type,
+      summary: title,
+      detail: message,
+    });
   }
 
   addQuestion() {
     const questions = this.form.get('questions') as FormArray;
     questions.push(
       this.fb.group({
-        question: this.fb.control(''),
-        correctAnswer: this.fb.control(''),
-        answers: this.fb.array([this.fb.control('')]),
+        question: this.fb.control('', Validators.required),
+        correctAnswer: this.fb.control('', Validators.required),
+        answers: this.fb.array([this.fb.control('', [Validators.required])]),
       })
     );
   }

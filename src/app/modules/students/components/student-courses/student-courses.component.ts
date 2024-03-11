@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, Renderer2, ViewChildren } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { SelectButtonModule } from 'primeng/selectbutton';
@@ -41,15 +41,35 @@ import { CommonModule } from '@angular/common';
 export class StudentCoursesComponent {
 
   visible: any;
-  constructor(private service: CoursesService, private messageService: MessageService) { }
-  courses!: MyCoursesResponse[];
+  constructor(private service: CoursesService, private messageService: MessageService, private renderer: Renderer2) { }
+  courses: MyCoursesResponse[] = [];
   formGroup!: FormGroup;
+  @ViewChildren('pCard') pCards: ElementRef[];
 
   stateOptions: any[] = [
     { label: 'Activos', value: true },
     { label: 'Inactivos', value: false },
   ];
 
+  ngAfterViewInit() {
+    setTimeout(() => {
+      let maxHeight = 0;
+
+      // Encuentra la altura máxima
+      this.pCards.forEach((card) => {
+        const height = card.nativeElement.offsetHeight;
+        console.log(height);
+        if (height > maxHeight) {
+          maxHeight = height;
+        }
+      });
+
+      // Establece la altura máxima para todos los p-card
+      this.pCards.forEach((card) => {
+        this.renderer.setStyle(card.nativeElement, 'height', `${maxHeight}px`);
+      });
+    });
+  }
   ngOnInit() {
     this.formGroup = new FormGroup({
       status: new FormControl(true),

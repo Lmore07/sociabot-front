@@ -2,11 +2,12 @@
 <div class="card">
   <div class="tw-grid tw-grid-cols-2 tw-gap-5">
     @for (item of modules; track $index) {
-    <p-card [header]="item.name" >
-      <h4>Objetivos</h4>
-      <p style="text-align: justify;">
+    <p-card [header]="item.name" subheader="A continuación se muestran los objetivos del módulo o tema:">
+      <!-- <h2 class="tw-text-center">Objetivos</h2> -->
+      <!-- <p style="text-align: justify;">
         {{ item.goals }}
-      </p>
+      </p> -->
+      <markdown [data]="item.goals"></markdown>
       <ng-template pTemplate="footer">
         <p-button class="tw-text-white" label="Ver chats" icon="pi pi-folder-open"
         [routerLink]="[item.id+'/chats']"></p-button>

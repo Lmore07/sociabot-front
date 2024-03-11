@@ -27,4 +27,11 @@ export class StudentsService {
       `${environment.apiUrl}/forms/answers/${formId}`
     );
   }
+
+  changeStatusStudent(studentId: string, courseId: string) {
+    return this.http.patch<GeneralResponse<any[]>>(
+      `${environment.apiUrl}/course-students/status/${studentId}/${courseId}`,
+      {}
+    );
+  }
 }

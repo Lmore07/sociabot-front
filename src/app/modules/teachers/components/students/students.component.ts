@@ -130,7 +130,6 @@ export class StudentsComponent {
   
   callServiceChangeStatus(status: boolean, moduleId: string) {
     this.spinnerStatus = true;
-    
   }
 
   messageToastFailed(status: boolean, caseMessage: number) {
@@ -138,13 +137,13 @@ export class StudentsComponent {
     let stringStatus = status ? 'desactivar' : 'activar';
     switch (caseMessage) {
       case 1:
-        message = '¿Esta seguro de ' + stringStatus + ' el curso?';
+        message = '¿Esta seguro de ' + stringStatus + ' el estudiante del curso ?';
         break;
       case 2:
-        message = 'El módulo se logro ' + stringStatus + ' correctamente';
+        message = 'El estudiante se logro ' + stringStatus + ' correctamente';
         break;
       case 3:
-        message = 'El módulo no se logro ' + stringStatus + ' correctamente';
+        message = 'El estudiante no se logro ' + stringStatus + ' correctamente';
         break;
     }
     return message;

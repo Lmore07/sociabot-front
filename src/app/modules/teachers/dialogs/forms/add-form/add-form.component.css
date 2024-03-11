@@ -10,6 +10,26 @@
     background: var(--background-gradient);
 }
 
+.close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    border: none;
+    background: white;
+    color: #aaa;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16);  
+    cursor: pointer;
+    transition: 0.3s; 
+  }
+  
+  .close:hover {
+    transform: scale(1.1);
+    color: black;
+  }
+
 .checkbox{
     display: flex;
     align-items: center;

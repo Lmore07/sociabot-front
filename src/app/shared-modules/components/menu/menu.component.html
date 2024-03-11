@@ -65,7 +65,7 @@
             ></nz-avatar>
             <nz-dropdown-menu #menu2="nzDropdownMenu">
               <ul nz-menu>
-                <li class="option-hover" nz-menu-item>
+                <li class="option-hover" nz-menu-item (click)="redirectToProfile()">
                   <span nz-icon nzType="user"></span>
                   <span> Ver Perfil </span>
                 </li>
