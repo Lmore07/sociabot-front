@@ -18,7 +18,7 @@
               ? "Ver"
               : "Registrar"
           }}
-          Formulario</span
+          Test</span
         >
       </div>
       <div>
@@ -71,7 +71,7 @@
                 class="input"
                 maxlength="50"
                 type="text"
-                placeholder="Módulo que contiene el formulario"
+                placeholder="Módulo que contiene el Test"
                 matInput
                 [readonly]="true"
               />
@@ -80,12 +80,12 @@
                 svgIcon="iconLetter"
                 aria-hidden="false"
               ></mat-icon>
-              <mat-hint>Módulo que contiene el formulario</mat-hint>
+              <mat-hint>Módulo que contiene el Test</mat-hint>
             </mat-form-field>
           </div>
           }
 
-          <!-- NOMBRE DE FORMULARIO -->
+          <!-- NOMBRE DE Test -->
           <div class="field-container">
             <mat-form-field appearance="fill" class="mat-form-field">
               <input
@@ -94,7 +94,7 @@
                 [autofocus]="true"
                 maxlength="50"
                 type="text"
-                placeholder="Nombre de formulario"
+                placeholder="Nombre de Test"
                 matInput
                 [readonly]="data?.type == 'view'"
               />
@@ -104,9 +104,9 @@
                 aria-hidden="false"
               ></mat-icon>
               @if (data?.type == 'view') {
-              <mat-hint>Nombre del formulario</mat-hint>
+              <mat-hint>Nombre del Test</mat-hint>
               }@else {
-              <mat-hint>Ingrese el nombre del formulario</mat-hint>
+              <mat-hint>Ingrese el nombre del Test</mat-hint>
               } @if (addFormGroup.get('name')?.hasError('required') &&
               addFormGroup.get('name')?.touched) {
               <mat-error>¡Este campo es requerido!</mat-error>
@@ -185,10 +185,10 @@
                   aria-hidden="false"
                 ></mat-icon>
                 @if (data?.type == 'view') {
-                <mat-hint>Fecha de inicio de formulario</mat-hint>
+                <mat-hint>Fecha de inicio de Test</mat-hint>
                 }@else {
                 <mat-hint
-                  >Ingrese la fecha de inicio para el formulario</mat-hint
+                  >Ingrese la fecha de inicio para el Test</mat-hint
                 >
                 } @if (addFormGroup.get('startDate')?.hasError('required') &&
                 addFormGroup.get('startDate')?.touched) {
@@ -223,10 +223,10 @@
                   aria-hidden="false"
                 ></mat-icon>
                 @if (data?.type == 'view') {
-                <mat-hint>Fecha de finalización del formulario</mat-hint>
+                <mat-hint>Fecha de finalización del Test</mat-hint>
                 }@else {
                 <mat-hint
-                  >Ingrese la fecha de finalización del formulario</mat-hint
+                  >Ingrese la fecha de finalización del Test</mat-hint
                 >
                 } @if (addFormGroup.get('endDate')?.hasError('required') &&
                 addFormGroup.get('endDate')?.touched) {
