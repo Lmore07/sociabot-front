@@ -56,14 +56,6 @@ export class FormsComponent {
     this.service.getFormById(this.id).subscribe((form: any) => {
       this.questionAndAnswer = form.data.questionsAndAnswers;
       this.name = form.data.name;
-      this.correctAnswers = form.data.questionsAndAnswers.map((question: any) => {
-        return {
-          question: question.question,
-          positionAnswer: question.answers.findIndex(question.correctAnswer)
-        }
-      }
-      );
-      console.log(this.correctAnswers)
     });
   }
 
@@ -100,19 +92,29 @@ export class FormsComponent {
       this.showToast(
         'info',
         'Tus respuestas han sido enviadas',
-        `Tu nota es ${response.data.score} 🎉`
+        `Tu nota es ${response.data.score} 🎉`,
+        3000
       );
+
+        setTimeout(() => {
+          this.showDialog();
+        }, 3000);
       // this.router.navigate(['/students/lessons']);
     });
   }
 
-  showToast(type: string, title: string, message: string) {
+  showToast(type: string, title: string, message: string, duration: number) {
     this.messageService.clear();
     this.messageService.add({
       key: 'informationToast',
       severity: type,
       summary: title,
       detail: message,
+      life: duration,
     });
+  }
+
+  showDialog() {
+    this.visible = true;
   }
 }
