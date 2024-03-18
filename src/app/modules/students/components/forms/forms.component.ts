@@ -11,11 +11,12 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { DialogModule } from 'primeng/dialog';
 
 @Component({
   selector: 'app-forms',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, CommonModule, FormsModule, MatFormFieldModule, MatSelectModule, MatInputModule, ToastModule],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, FormsModule, MatFormFieldModule, MatSelectModule, MatInputModule, ToastModule, DialogModule],
   templateUrl: './forms.component.html',
   styleUrl: './forms.component.css',
   providers: [MessageService],
@@ -42,6 +43,8 @@ export class FormsComponent {
   name: string = '';
   id = '';
   selectedAnswers = [];
+  correctAnswers = [];
+  visible: boolean = false;
 
   constructor(
     private service: FormsService, private route: ActivatedRoute, private router: Router, private messageService: MessageService
@@ -53,6 +56,14 @@ export class FormsComponent {
     this.service.getFormById(this.id).subscribe((form: any) => {
       this.questionAndAnswer = form.data.questionsAndAnswers;
       this.name = form.data.name;
+      this.correctAnswers = form.data.questionsAndAnswers.map((question: any) => {
+        return {
+          question: question.question,
+          positionAnswer: question.answers.findIndex(question.correctAnswer)
+        }
+      }
+      );
+      console.log(this.correctAnswers)
     });
   }
 
