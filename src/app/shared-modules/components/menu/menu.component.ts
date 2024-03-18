@@ -163,7 +163,7 @@ export class MenuComponent {
         routerLink: '/teachers/modules',
       },
       {
-        label: 'Mis Formularios',
+        label: 'Mis Tests',
         icon: 'profile',
         routerLink: '/teachers/forms',
       },

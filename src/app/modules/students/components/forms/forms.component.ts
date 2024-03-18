@@ -11,11 +11,12 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { DialogModule } from 'primeng/dialog';
 
 @Component({
   selector: 'app-forms',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, CommonModule, FormsModule, MatFormFieldModule, MatSelectModule, MatInputModule, ToastModule],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, FormsModule, MatFormFieldModule, MatSelectModule, MatInputModule, ToastModule, DialogModule],
   templateUrl: './forms.component.html',
   styleUrl: './forms.component.css',
   providers: [MessageService],
@@ -42,6 +43,8 @@ export class FormsComponent {
   name: string = '';
   id = '';
   selectedAnswers = [];
+  correctAnswers = [];
+  visible: boolean = false;
 
   constructor(
     private service: FormsService, private route: ActivatedRoute, private router: Router, private messageService: MessageService
@@ -89,19 +92,29 @@ export class FormsComponent {
       this.showToast(
         'info',
         'Tus respuestas han sido enviadas',
-        `Tu nota es ${response.data.score} 🎉`
+        `Tu nota es ${response.data.score} 🎉`,
+        3000
       );
+
+        setTimeout(() => {
+          this.showDialog();
+        }, 3000);
       // this.router.navigate(['/students/lessons']);
     });
   }
 
-  showToast(type: string, title: string, message: string) {
+  showToast(type: string, title: string, message: string, duration: number) {
     this.messageService.clear();
     this.messageService.add({
       key: 'informationToast',
       severity: type,
       summary: title,
       detail: message,
+      life: duration,
     });
+  }
+
+  showDialog() {
+    this.visible = true;
   }
 }

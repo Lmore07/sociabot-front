@@ -40,3 +40,11 @@
 
 </div>
 <p-toast key="informationToast"></p-toast>
+<p-dialog [(visible)]="visible" [breakpoints]="{ '960px': '75vw' }" [style]="{ width: '50vw' }" [draggable]="true"
+  [resizable]="true" header="Las respuestas correctas son:" >
+    <ul>
+      @for (question of questionAndAnswer; track $index;) {
+      <li><span class="tw-font-bold">{{question.question}}:</span> {{question.answers[question.correctAnswer]}}</li>
+      }
+    </ul>
+</p-dialog>

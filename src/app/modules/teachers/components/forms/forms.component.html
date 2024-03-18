@@ -21,7 +21,7 @@
       <button
         pButton
         pRipple
-        label="Nuevo Formulario"
+        label="Nuevo Test"
         icon="pi pi-plus"
         (click)="openDialogAddForm()"
         style="color: white"
@@ -72,7 +72,7 @@
       </ng-template>
       <ng-template pTemplate="header" let-columns>
         <tr>
-          <th>Nombre de Formulario</th>
+          <th>Nombre de Test</th>
           <th>Módulo</th>
           <th>Fecha de Inicio</th>
           <th>Fecha de Finalización</th>
@@ -101,7 +101,7 @@
                   form.module.name
                 )
               "
-              pTooltip="Ver formulario"
+              pTooltip="Ver Test"
               tooltipPosition="top"
               icon="pi pi-eye"
               class="p-button-rounded p-button-info margin-button"
@@ -119,7 +119,7 @@
                   form.id
                 )
               "
-              pTooltip="Editar formulario"
+              pTooltip="Editar Test"
               tooltipPosition="top"
               icon="pi pi-pencil"
               class="p-button-rounded p-button-success margin-button"
@@ -130,7 +130,7 @@
               pRipple
               (click)="activaOrDesactivateForm(form.status, $event, form.id)"
               [pTooltip]="
-                form.status ? 'Desactivar formulario' : 'Activar formulario'
+                form.status ? 'Desactivar Test' : 'Activar Test'
               "
               tooltipPosition="top"
               [icon]="iconActions()"
